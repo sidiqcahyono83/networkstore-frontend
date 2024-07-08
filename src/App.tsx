@@ -15,9 +15,9 @@ function App() {
       </div>
       <h1>WEBSITE UNDER CONTRUCTION</h1>
       <div className="card">
-        <p>Please wait until production ready ....</p>
+        <p>Welcome in Network Strore Kebumen</p>
       </div>
-      <p className="read-the-docs">Welcome in network store</p>
+      <p className="read-the-docs">Please wait until production ready ....</p>
     </>
   );
 }
