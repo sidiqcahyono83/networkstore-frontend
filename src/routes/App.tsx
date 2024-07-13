@@ -2,7 +2,7 @@ import { Card, Carousel } from "flowbite-react";
 
 function App() {
   return (
-    <>
+    <div>
       <div className="max-w-full mx-auto items-center h-[1203px]">
         <div className="h-54 sm:h-64 xl:h-80 2xl:h-90 mt-4 bg-stone-300">
           <Carousel slideInterval={5000}>
@@ -95,7 +95,7 @@ function App() {
           </Card>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

@@ -7,6 +7,8 @@ import { Layout } from "./routes/Layout";
 import App from "./routes/App";
 import { Product } from "./components/product";
 import { Chart } from "./components/chart";
+import { Daftar } from "./components/daftar";
+import { Login } from "./components/login";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +26,14 @@ const router = createBrowserRouter([
       {
         path: "/chart",
         element: <Chart />,
+      },
+      {
+        path: "/daftar",
+        element: <Daftar />,
+      },
+      {
+        path: "/login",
+        element: <Login />,
       },
     ],
   },
