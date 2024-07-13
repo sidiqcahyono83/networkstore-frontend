@@ -3,7 +3,7 @@ import { Card } from "flowbite-react";
 export function Chart() {
   return (
     <div className="items-center  h-[1203px]">
-      <h1>Page Chart</h1>
+      <h1></h1>
       <div className="flex items-center justify-center space-x-2 my-6 mx4">
         <Card href="#" className="w-[303px] h-[404px] bg-transparent">
           <div>
