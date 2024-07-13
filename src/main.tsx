@@ -4,8 +4,9 @@ import React from "react";
 
 import "./index.css";
 import { Layout } from "./routes/Layout";
-import { Product } from "../components/product";
 import App from "./routes/App";
+import { Product } from "./components/product";
+import { Chart } from "./components/chart";
 
 const router = createBrowserRouter([
   {
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
       {
         path: "/product",
         element: <Product />,
+      },
+      {
+        path: "/chart",
+        element: <Chart />,
       },
     ],
   },
