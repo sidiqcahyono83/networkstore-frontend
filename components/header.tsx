@@ -13,7 +13,7 @@ export function Header() {
             </span>
           </a>{" "}
           <a
-            href="#"
+            href="/"
             className="flex items-center space-x-3 rtl:space-x-reverse"
           >
             <img src="ns.png" className="h-8" alt="Networkstore Logo" />
