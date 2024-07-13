@@ -1,7 +1,7 @@
 export function Header() {
   return (
     <div>
-      <nav className="bg-slate-700 border-gray-500 dark:bg-gray-900">
+      <nav className="bg-stone-700 border-gray-500 dark:bg-gray-900 rounded-md">
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 bg-white">
           <a
             href="/"
@@ -23,7 +23,7 @@ export function Header() {
           </a>
         </div>
 
-        <div className="flex justify-between mx-4 px-4 py-4 bg-slate-900">
+        <div className="flex justify-between mx-4 px-4 py-4 bg-stone-600">
           <div>
             <ul className="flex items-center justify-center space-x-4">
               <li>

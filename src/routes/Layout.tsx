@@ -4,12 +4,14 @@ import { Footer } from "../../components/footer";
 
 export function Layout() {
   return (
-    <div className="max-w-screen-xl mx-auto">
-      <section className="bg-stone-500 font-bold">
-        <Header />
-      </section>
-      <Outlet />
-      <Footer />
+    <div className="w-full mx-auto">
+      <main className="max-w-screen-lg mx-auto">
+        <section className="bg-stone-500 font-bold">
+          <Header />
+        </section>
+        <Outlet />
+        <Footer />
+      </main>
     </div>
   );
 }
