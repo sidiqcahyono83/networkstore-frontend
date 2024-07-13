@@ -8,7 +8,7 @@ function App() {
         <div className="flex items-center justify-center space-x-2 my-6 mx4">
           <Card href="#" className="w-[303px] h-[404px] bg-transparent">
             <div>
-              <img src="../../public/CCR3.png" alt="" sizes="6" />
+              <img src="/CCR3.png" alt="CCR3" />
             </div>
             <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
               Routerboard CCR2004-1G-12S+2XS
@@ -22,7 +22,7 @@ function App() {
           </Card>{" "}
           <Card href="#" className="w-[303px] h-[404px] bg-transparent">
             <div>
-              <img src="../../public/CCR3.png" alt="" sizes="6" />
+              <img src="/CCR3.png" alt="CCR3" />
             </div>
             <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
               Routerboard CCR2004-1G-12S+2XS
@@ -35,7 +35,7 @@ function App() {
             <p className="text-center font-bold">Rp. 8.240.000,00</p>
           </Card>{" "}
           <Card href="#" className="w-[303px] h-[404px] bg-transparent">
-            <img src="../../public/CCR3.png" alt="" sizes="6" />
+            <img src="/CCR3.png" alt="CCR3" />
             <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
               Routerboard CCR2004-1G-12S+2XS
             </h5>
@@ -50,7 +50,7 @@ function App() {
         <div className="flex items-center justify-center space-x-2 my-6 mx4">
           <Card href="#" className="w-[303px] h-[404px] bg-transparent">
             <div>
-              <img src="../../public/4011.png" alt="" sizes="6" />
+              <img src="/4011.png" alt="4011" />
             </div>
             <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
               RB4011iGS+RM
@@ -63,7 +63,7 @@ function App() {
           </Card>{" "}
           <Card href="#" className="w-[303px] h-[404px] bg-transparent">
             <div>
-              <img src="../../public/4011.png" alt="" sizes="6" />
+              <img src="/4011.png" alt="4011" />
             </div>
             <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
               RB4011iGS+RM
@@ -76,7 +76,7 @@ function App() {
           </Card>{" "}
           <Card href="#" className="w-[303px] h-[404px] bg-transparent">
             <div>
-              <img src="../../public/4011.png" alt="" sizes="6" />
+              <img src="/4011.png" alt="4011" />
             </div>
             <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
               RB4011iGS+RM

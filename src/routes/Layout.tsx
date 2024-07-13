@@ -10,7 +10,7 @@ export function Layout() {
           <Header />
         </section>
         <Outlet />
-        <section className="bg-stone-400 dark:bg-gray-900 rounded rounded-lg">
+        <section className="bg-stone-400 dark:bg-gray-900">
           <Footer />
         </section>
       </main>
