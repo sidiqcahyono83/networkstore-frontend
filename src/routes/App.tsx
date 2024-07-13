@@ -1,10 +1,16 @@
-import { Card } from "flowbite-react";
+import { Card, Carousel } from "flowbite-react";
 
 function App() {
   return (
     <>
       <div className="max-w-full mx-auto items-center h-[1203px]">
-        <h1></h1>
+        <div className="h-54 sm:h-64 xl:h-80 2xl:h-90 mt-4 bg-stone-300">
+          <Carousel slideInterval={5000}>
+            <img src="/CCR3.png" alt="..." />
+            <img src="/4011.png" alt="..." />
+            <img src="/CCr3.png" alt="..." />
+          </Carousel>
+        </div>
         <div className="flex items-center justify-center space-x-2 my-6 mx4">
           <Card href="#" className="w-[303px] h-[404px] bg-transparent">
             <div>
