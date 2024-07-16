@@ -22,7 +22,7 @@ export function App() {
   return (
     <div>
       <div>
-        <div className="flex items-center justify-center space-x-2 my-6 mx4  grid grid-cols-3 gap-3">
+        <div className=" items-center justify-center space-x-2 my-6 mx4  grid grid-cols-3 gap-3">
           {products.map((product) => {
             return (
               <Card
