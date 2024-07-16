@@ -4,7 +4,7 @@ import React from "react";
 
 import "./index.css";
 import { Layout } from "./routes/Layout";
-import App from "./routes/App";
+import { App, loader as appLoader } from "./routes/App";
 import { Product } from "./components/product";
 import { Chart } from "./components/chart";
 import { Daftar } from "./components/daftar";
@@ -18,6 +18,7 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <App />,
+        loader: appLoader,
       },
       {
         path: "/product",
