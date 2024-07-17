@@ -1,6 +1,6 @@
 import { Button, Checkbox, Label, TextInput } from "flowbite-react";
 
-export function Daftar() {
+export function Register() {
   return (
     <div className="h-[1280px] mx-8 my-10 justify-center">
       <form className="flex justify-center max-w-md flex-col gap-4">
