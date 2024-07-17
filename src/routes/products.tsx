@@ -2,7 +2,6 @@ import { Card } from "flowbite-react";
 import type { Product } from "../types/product";
 import { useLoaderData } from "react-router-dom";
 import { formatIDR } from "../lib/formatCurency";
-import { FaCartShopping } from "react-icons/fa6";
 
 export async function loader() {
   try {
@@ -45,14 +44,6 @@ export function Products() {
               <p className="text-center font-bold">
                 {formatIDR(product.price)}
               </p>
-              <div className="flex justify-between">
-                <button>
-                  <FaCartShopping />
-                </button>{" "}
-                <button>
-                  <FaCartShopping />
-                </button>
-              </div>
             </Card>
           );
         })}
