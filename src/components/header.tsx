@@ -7,7 +7,7 @@ export function Header() {
             href="/"
             className="flex items-center space-x-3 rtl:space-x-reverse"
           >
-            <img src="ns.png" className="h-8" alt="Networkstore Logo" />
+            <img src="/ns.png" className="h-8" alt="Networkstore Logo" />
             <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
               NETWORK STORE
             </span>
@@ -16,7 +16,7 @@ export function Header() {
             href="/"
             className="flex items-center space-x-3 rtl:space-x-reverse"
           >
-            <img src="ns.png" className="h-8" alt="Networkstore Logo" />
+            <img src="/ns.png" className="h-8" alt="Networkstore Logo" />
             <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
               NETWORK STORE
             </span>
@@ -48,7 +48,7 @@ export function Header() {
                   href="/chart"
                   className="block py-2 px-3 text-yellow-500 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
                 >
-                  Chart
+                  Cart
                 </a>
               </li>
             </ul>

@@ -30,7 +30,7 @@ export function Product() {
   return (
     <div className="mx-auto">
       <div className="items-center justify-center grid grid-cols-3 gap-4 my-4">
-        <Card key={product.id} className="w-full bg-transparent mx-auto">
+        <Card key={product.id} className="w- bg-transparent mx-auto">
           <div>
             <img src={product.imageUrl} alt={product.name} />
           </div>
