@@ -1,6 +1,7 @@
 import { useLoaderData } from "react-router-dom";
 import type { Product } from "../types/product";
 import { Card } from "flowbite-react";
+import { formatIDR } from "../lib/formatCurency";
 
 export async function loader() {
   try {
