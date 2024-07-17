@@ -22,14 +22,14 @@ export function Product() {
   const { products } = useLoaderData() as Awaited<ReturnType<typeof loader>>;
 
   return (
-    <div>
-      <div className=" items-center justify-center grid grid-cols-3 gap-3">
+    <div className="mx-auto">
+      <div className=" items-center justify-center grid grid-cols-3 gap-4 my-4">
         {products.map((product) => {
           return (
             <Card
               key={product.id}
               href={`/product/${product.id}`}
-              className="w-[303px] h-[404px] bg-transparent"
+              className="w-[303px] h-[404px] bg-transparent mx-auto"
             >
               <div>
                 <img src={product.imageUrl} alt={product.name} />
