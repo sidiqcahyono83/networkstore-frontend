@@ -1,7 +1,7 @@
 import { useLoaderData } from "react-router-dom";
 import type { Product } from "../types/product";
 import { Card } from "flowbite-react";
-import { formatIDR } from "../lib/formatCurency";
+// import { formatIDR } from "../lib/formatCurency";
 
 export async function loader() {
   try {
@@ -26,7 +26,7 @@ export function App() {
         return (
           <Card
             key={product.id}
-            href={`/product/${product.id}`}
+            href={`/products/${product.id}`}
             className="w-[303px] h-[404px] bg-transparent mx-auto"
           >
             <div>

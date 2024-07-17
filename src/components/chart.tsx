@@ -1,6 +1,6 @@
 import { Card } from "flowbite-react";
 
-export function Chart() {
+export function Cart() {
   return (
     <div className="items-center  h-[1203px]">
       <h1></h1>

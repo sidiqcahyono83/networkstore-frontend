@@ -18,7 +18,7 @@ export async function loader() {
   }
 }
 
-export function Product() {
+export function Products() {
   const { products } = useLoaderData() as Awaited<ReturnType<typeof loader>>;
 
   return (
@@ -28,7 +28,7 @@ export function Product() {
           return (
             <Card
               key={product.id}
-              href={`/product/${product.id}`}
+              href={`/products/${product.id}`}
               className="w-[303px] h-[404px] bg-transparent mx-auto"
             >
               <div>
