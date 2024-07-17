@@ -11,37 +11,37 @@ import { Daftar } from "./components/daftar";
 import { Login } from "./components/login";
 
 const router = createBrowserRouter([
-	{
-		path: "/",
-		element: <Layout />,
-		children: [
-			{
-				path: "/",
-				element: <App />,
-				loader: appLoader,
-			},
-			{
-				path: "/products",
-				element: <Product />,
-			},
-			{
-				path: "/chart",
-				element: <Chart />,
-			},
-			{
-				path: "/daftar",
-				element: <Daftar />,
-			},
-			{
-				path: "/login",
-				element: <Login />,
-			},
-		],
-	},
+  {
+    path: "/",
+    element: <Layout />,
+    children: [
+      {
+        path: "/",
+        element: <App />,
+        loader: appLoader,
+      },
+      {
+        path: "/product",
+        element: <Product />,
+      },
+      {
+        path: "/chart",
+        element: <Chart />,
+      },
+      {
+        path: "/daftar",
+        element: <Daftar />,
+      },
+      {
+        path: "/login",
+        element: <Login />,
+      },
+    ],
+  },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-	<React.StrictMode>
-		<RouterProvider router={router} />
-	</React.StrictMode>
+  <React.StrictMode>
+    <RouterProvider router={router} />
+  </React.StrictMode>
 );
