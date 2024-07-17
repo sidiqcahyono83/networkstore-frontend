@@ -11,15 +11,6 @@ export function Header() {
             <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
               NETWORK STORE
             </span>
-          </a>{" "}
-          <a
-            href="/"
-            className="flex items-center space-x-3 rtl:space-x-reverse"
-          >
-            <img src="/ns.png" className="h-8" alt="Networkstore Logo" />
-            <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
-              NETWORK STORE
-            </span>
           </a>
         </div>
 
