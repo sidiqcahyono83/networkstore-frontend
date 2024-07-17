@@ -5,10 +5,12 @@ import React from "react";
 import "./index.css";
 import { Layout } from "./routes/Layout";
 import { App, loader as appLoader } from "./routes/App";
-import { Products, loader as productLoader } from "./routes/products";
-import { Cart } from "./routes/cart";
+import { Products, loader as productsLoader } from "./routes/products";
+import { Product, loader as productLoader } from "./routes/product";
+
 import { Register } from "./routes/register";
 import { Login } from "./routes/login";
+import { Cart } from "./routes/cart";
 
 const router = createBrowserRouter([
   {
@@ -23,8 +25,14 @@ const router = createBrowserRouter([
       {
         path: "/products",
         element: <Products />,
+        loader: productsLoader,
+      },
+      {
+        path: "/products/:productId",
+        element: <Product />,
         loader: productLoader,
       },
+
       {
         path: "/cart",
         element: <Cart />,
