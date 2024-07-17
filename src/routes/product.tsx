@@ -2,6 +2,7 @@ import { type LoaderFunctionArgs, useLoaderData } from "react-router-dom";
 
 import type { Product } from "../types/product";
 import { Card } from "flowbite-react";
+import { formatIDR } from "../lib/formatCurency";
 
 export async function loader({ params }: LoaderFunctionArgs) {
   const productId = String(params.productId);
@@ -29,8 +30,8 @@ export function Product() {
 
   return (
     <div className="mx-auto">
-      <div className="items-center justify-center grid grid-cols-3 gap-4 my-4">
-        <Card key={product.id} className="w- bg-transparent mx-auto">
+      <div className="items-center justify-center">
+        <Card key={product.id} className="max-w-2lg bg-transparent mx-auto">
           <div>
             <img src={product.imageUrl} alt={product.name} />
           </div>
@@ -40,7 +41,7 @@ export function Product() {
           <p className="font-normal text-gray-700 dark:text-gray-400">
             {product.description}
           </p>
-          <p className="text-center font-bold">{product.price}</p>
+          <p className="text-center font-bold">{formatIDR(product.price)}</p>
         </Card>
       </div>
     </div>

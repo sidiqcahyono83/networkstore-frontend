@@ -1,6 +1,7 @@
 import { useLoaderData } from "react-router-dom";
 import type { Product } from "../types/product";
 import { Card } from "flowbite-react";
+import { formatIDR } from "../lib/formatCurency";
 // import { formatIDR } from "../lib/formatCurency";
 
 export async function loader() {
@@ -38,7 +39,7 @@ export function App() {
             <p className="font-normal text-gray-700 dark:text-gray-400">
               {product.description}
             </p>
-            <p className="text-center font-bold">{product.price}</p>
+            <p className="text-center font-bold">{formatIDR(product.price)}</p>
           </Card>
         );
       })}
