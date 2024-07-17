@@ -45,9 +45,14 @@ export function Products() {
               <p className="text-center font-bold">
                 {formatIDR(product.price)}
               </p>
-              <button>
-                <FaCartShopping />
-              </button>
+              <div className="flex justify-between">
+                <button>
+                  <FaCartShopping />
+                </button>{" "}
+                <button>
+                  <FaCartShopping />
+                </button>
+              </div>
             </Card>
           );
         })}
