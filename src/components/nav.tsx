@@ -43,7 +43,7 @@ export default function Navbar() {
 						<div className="flex flex-shrink-0 items-center">
 							<img
 								alt="Your Company"
-								src="/public/ns.png"
+								src="/ns.png"
 								className="h-8 w-auto"
 							/>
 						</div>
@@ -89,7 +89,7 @@ export default function Navbar() {
 									</span>
 									<img
 										alt=""
-										src="/public/2024.png"
+										src="/2024.png"
 										className="h-8 w-8 rounded-full"
 									/>
 								</MenuButton>
