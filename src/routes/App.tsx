@@ -33,7 +33,7 @@ export function App() {
 						<div className="max-h-[200px] max-w-[150px] mx-auto">
 							<img src={product.imageUrl} alt={product.name} />
 						</div>
-						<h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+						<h5 className="text-lg font-bold tracking-tight text-gray-900 dark:text-white">
 							{product.name}
 						</h5>
 						<p className="font-normal text-gray-700 dark:text-gray-400">

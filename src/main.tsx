@@ -11,7 +11,7 @@ import { Cart, loader as cartLoader } from "./routes/cart";
 
 import { Register } from "./routes/register";
 import { Login } from "./routes/login";
-import Example from "./components/nav";
+import { Shopping } from "./routes/shooping";
 
 const router = createBrowserRouter([
 	{
@@ -48,8 +48,8 @@ const router = createBrowserRouter([
 				element: <Login />,
 			},
 			{
-				path: "/nav",
-				element: <Example />,
+				path: "/shopping",
+				element: <Shopping />,
 			},
 		],
 	},

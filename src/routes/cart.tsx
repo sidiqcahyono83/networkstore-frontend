@@ -1,9 +1,9 @@
 import { type LoaderFunctionArgs, useLoaderData } from "react-router-dom";
 
 import type { Product } from "../types/product";
-import { Card } from "flowbite-react";
+import { Button, Card } from "flowbite-react";
 import { formatIDR } from "../lib/formatCurency";
-import { FaCartShopping } from "react-icons/fa6";
+import { HiOutlineArrowRight, HiShoppingCart } from "react-icons/hi";
 
 export async function loader({ params }: LoaderFunctionArgs) {
 	const productId = String(params.productId);
@@ -42,16 +42,26 @@ export function Cart() {
 					<h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
 						{product.name}
 					</h5>
+					<div className="justify-center items-center">
+						<button className="">1</button>
+						<input type="button" value="" className="" />
+						<button>+</button>
+					</div>
 					<p className="font-normal text-gray-700 dark:text-gray-400">
 						{product.description}
 					</p>
 					<p className="text-center font-bold">
 						{formatIDR(product.price)}
 					</p>
-					<div className="flex">
-						<button>
-							<FaCartShopping />
-						</button>
+					<div className="flex flex-wrap gap-2">
+						<Button>
+							<HiShoppingCart className="mr-2 h-5 w-5" />
+							Buy now
+						</Button>
+						<Button>
+							Choose plan
+							<HiOutlineArrowRight className="ml-2 h-5 w-5" />
+						</Button>
 					</div>
 				</Card>
 			</div>
