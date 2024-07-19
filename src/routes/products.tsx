@@ -24,7 +24,7 @@ export function Products() {
 
 	return (
 		<div className="mx-auto">
-			<div className=" items-center justify-center grid sm:grid-cols-3 md:grid-cols-2 gap-4 my-4">
+			<div className=" items-center justify-center grid sm:grid-cols-3 gap-4 my-4 mx-auto">
 				{products.map((product) => {
 					return (
 						<div className="grid grid-flow-col">

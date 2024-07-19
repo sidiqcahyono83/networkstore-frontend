@@ -48,10 +48,7 @@ export function Cart() {
 					<p className="text-center font-bold">
 						{formatIDR(product.price)}
 					</p>
-					<div className="flex justify-between">
-						<button>
-							<FaCartShopping />
-						</button>
+					<div className="flex">
 						<button>
 							<FaCartShopping />
 						</button>
