@@ -1,51 +1,63 @@
+import { type LoaderFunctionArgs, useLoaderData } from "react-router-dom";
+
+import type { Product } from "../types/product";
 import { Card } from "flowbite-react";
+import { formatIDR } from "../lib/formatCurency";
+import { FaCartShopping } from "react-icons/fa6";
+
+export async function loader({ params }: LoaderFunctionArgs) {
+	const productId = String(params.productId);
+
+	try {
+		const response = await fetch(
+			`${import.meta.env.VITE_BACKEND_API_URL}/products/${productId}`
+		);
+		const responseJSON = await response.json();
+
+		const product: Product = responseJSON.data;
+
+		console.log(product);
+		return { product };
+	} catch (error) {
+		return { product: null };
+	}
+}
 
 export function Cart() {
-  return (
-    <div className="items-center  h-[1203px]">
-      <h1></h1>
-      <div className="flex items-center justify-center space-x-2 my-6 mx4">
-        <Card href="#" className="w-[303px] h-[404px] bg-transparent">
-          <div>
-            <img src="/CCR3.png" alt="CCR3" />
-          </div>
-          <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-            Routerboard CCR2004-1G-12S+2XS
-          </h5>
-          <p className="font-normal text-gray-700 dark:text-gray-400">
-            The Connectivity Router - your best companion when it comes to SFP,
-            SFP+ and SFP28 management! 1, 10 and 25 Gbps ports in a single
-            device to make your life easier
-          </p>
-          <p className="text-center font-bold">Rp. 8.240.000,00</p>
-        </Card>{" "}
-        <Card href="#" className="w-[303px] h-[404px] bg-transparent">
-          <div>
-            <img src="/CCR3.png" alt="CCR3" />
-          </div>
-          <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-            Routerboard CCR2004-1G-12S+2XS
-          </h5>
-          <p className="font-normal text-gray-700 dark:text-gray-400">
-            The Connectivity Router - your best companion when it comes to SFP,
-            SFP+ and SFP28 management! 1, 10 and 25 Gbps ports in a single
-            device to make your life easier
-          </p>
-          <p className="text-center font-bold">Rp. 8.240.000,00</p>
-        </Card>{" "}
-        <Card href="#" className="w-[303px] h-[404px] bg-transparent">
-          <img src="/CCR3.png" alt="CCR3" />
-          <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-            Routerboard CCR2004-1G-12S+2XS
-          </h5>
-          <p className="font-normal text-gray-700 dark:text-gray-400">
-            The Connectivity Router - your best companion when it comes to SFP,
-            SFP+ and SFP28 management! 1, 10 and 25 Gbps ports in a single
-            device to make your life easier
-          </p>
-          <p className="text-center font-bold">Rp. 8.240.000,00</p>
-        </Card>
-      </div>
-    </div>
-  );
+	const { product } = useLoaderData() as Awaited<ReturnType<typeof loader>>;
+	if (!product) {
+		return "Product not found";
+	}
+
+	return (
+		<div className="mx-auto">
+			<div className="items-center justify-center">
+				<Card
+					key={product.id}
+					className="max-w-2lg bg-transparent mx-auto"
+				>
+					<div>
+						<img src={product.imageUrl} alt={product.name} />
+					</div>
+					<h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+						{product.name}
+					</h5>
+					<p className="font-normal text-gray-700 dark:text-gray-400">
+						{product.description}
+					</p>
+					<p className="text-center font-bold">
+						{formatIDR(product.price)}
+					</p>
+					<div className="flex justify-between">
+						<button>
+							<FaCartShopping />
+						</button>
+						<button>
+							<FaCartShopping />
+						</button>
+					</div>
+				</Card>
+			</div>
+		</div>
+	);
 }

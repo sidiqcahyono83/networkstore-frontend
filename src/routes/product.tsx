@@ -6,53 +6,58 @@ import { formatIDR } from "../lib/formatCurency";
 import { FaCartShopping } from "react-icons/fa6";
 
 export async function loader({ params }: LoaderFunctionArgs) {
-  const productId = String(params.productId);
+	const productId = String(params.productId);
 
-  try {
-    const response = await fetch(
-      `${import.meta.env.VITE_BACKEND_API_URL}/products/${productId}`
-    );
-    const responseJSON = await response.json();
+	try {
+		const response = await fetch(
+			`${import.meta.env.VITE_BACKEND_API_URL}/products/${productId}`
+		);
+		const responseJSON = await response.json();
 
-    const product: Product = responseJSON.data;
+		const product: Product = responseJSON.data;
 
-    console.log(product);
-    return { product };
-  } catch (error) {
-    return { product: null };
-  }
+		console.log(product);
+		return { product };
+	} catch (error) {
+		return { product: null };
+	}
 }
 
 export function Product() {
-  const { product } = useLoaderData() as Awaited<ReturnType<typeof loader>>;
-  if (!product) {
-    return "Product not found";
-  }
+	const { product } = useLoaderData() as Awaited<ReturnType<typeof loader>>;
+	if (!product) {
+		return "Product not found";
+	}
 
-  return (
-    <div className="mx-auto">
-      <div className="items-center justify-center">
-        <Card key={product.id} className="max-w-2lg bg-transparent mx-auto">
-          <div>
-            <img src={product.imageUrl} alt={product.name} />
-          </div>
-          <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-            {product.name}
-          </h5>
-          <p className="font-normal text-gray-700 dark:text-gray-400">
-            {product.description}
-          </p>
-          <p className="text-center font-bold">{formatIDR(product.price)}</p>
-          <div className="flex justify-between">
-            <button>
-              <FaCartShopping />
-            </button>
-            <button>
-              <FaCartShopping />
-            </button>
-          </div>
-        </Card>
-      </div>
-    </div>
-  );
+	return (
+		<div className="mx-auto">
+			<div className="items-center justify-center">
+				<Card
+					key={product.id}
+					className="max-w-2lg bg-transparent mx-auto"
+				>
+					<div>
+						<img src={product.imageUrl} alt={product.name} />
+					</div>
+					<h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+						{product.name}
+					</h5>
+					<p className="font-normal text-gray-700 dark:text-gray-400">
+						{product.description}
+					</p>
+					<p className="text-center font-bold">
+						{formatIDR(product.price)}
+					</p>
+					<div className="flex justify-between">
+						<a href={`/cart/${product.id}`}>
+							<FaCartShopping />
+						</a>
+						<button>
+							<FaCartShopping />
+						</button>
+					</div>
+				</Card>
+			</div>
+		</div>
+	);
 }
