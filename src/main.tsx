@@ -11,6 +11,7 @@ import { Cart, loader as cartLoader } from "./routes/cart";
 
 import { Register } from "./routes/register";
 import { Login } from "./routes/login";
+import Example from "./components/nav";
 
 const router = createBrowserRouter([
 	{
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
 			{
 				path: "/login",
 				element: <Login />,
+			},
+			{
+				path: "/nav",
+				element: <Example />,
 			},
 		],
 	},
