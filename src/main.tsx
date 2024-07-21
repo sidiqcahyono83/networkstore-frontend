@@ -11,8 +11,8 @@ import { Cart, loader as cartLoader } from "./routes/cart";
 
 import { Register } from "./routes/register";
 import { Login } from "./routes/login";
-import { Shopping } from "./routes/shooping";
 import { Cartitem } from "./routes/cartitem";
+import { Component } from "./routes/acordion";
 
 const router = createBrowserRouter([
 	{
@@ -52,8 +52,8 @@ const router = createBrowserRouter([
 				element: <Login />,
 			},
 			{
-				path: "/shopping",
-				element: <Shopping />,
+				path: "/component",
+				element: <Component />,
 			},
 		],
 	},
