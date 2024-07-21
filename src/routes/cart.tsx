@@ -1,7 +1,7 @@
 import { type LoaderFunctionArgs, useLoaderData } from "react-router-dom";
 
 import type { Product } from "../types/product";
-import { Button, Card } from "flowbite-react";
+import { Button } from "flowbite-react";
 import { formatIDR } from "../lib/formatCurency";
 import { HiShoppingCart } from "react-icons/hi";
 

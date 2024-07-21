@@ -12,6 +12,7 @@ import { Cart, loader as cartLoader } from "./routes/cart";
 import { Register } from "./routes/register";
 import { Login } from "./routes/login";
 import { Shopping } from "./routes/shooping";
+import { Cartitem } from "./routes/cartitem";
 
 const router = createBrowserRouter([
 	{
@@ -33,7 +34,10 @@ const router = createBrowserRouter([
 				element: <Product />,
 				loader: productLoader,
 			},
-
+			{
+				path: "/cart",
+				element: <Cartitem />,
+			},
 			{
 				path: "/cart/:productId",
 				element: <Cart />,
