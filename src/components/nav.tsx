@@ -8,6 +8,7 @@ import {
 	MenuItems,
 } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { IoPerson } from "react-icons/io5";
 
 const navigation = [
 	{ name: "Home", href: "/", current: true },
@@ -87,11 +88,7 @@ export default function Navbar() {
 									<span className="sr-only">
 										Open user menu
 									</span>
-									<img
-										alt=""
-										src="/2024.png"
-										className="h-8 w-8 rounded-full"
-									/>
+									<IoPerson className="h-8 w-8 rounded-full" />
 								</MenuButton>
 							</div>
 							<MenuItems
