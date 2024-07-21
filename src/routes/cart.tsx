@@ -90,7 +90,7 @@ export function Cart() {
 							</div>
 							<Button
 								type="submit"
-								className="mt-8 rounded-md h-12 w-full uppercase  hover:bg-b-pink-dark"
+								className="mt-8 rounded-md h-12 w-full uppercase items-center "
 							>
 								Add to cart
 							</Button>
