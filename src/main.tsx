@@ -10,7 +10,11 @@ import { ProductRoute, loader as productLoader } from "./routes/product";
 
 import { Register, action as addUserAction } from "./routes/register";
 import { Login } from "./routes/login";
+<<<<<<< HEAD
 import { Cartitem, loader as cartLoader } from "./routes/cartitem";
+=======
+import { Cartitem, loader as cartitemLoader } from "./routes/cartitem";
+>>>>>>> 4490607e99b405046de700a7de091ff6582ea760
 import { Component } from "./routes/acordion";
 
 const router = createBrowserRouter([
@@ -36,12 +40,20 @@ const router = createBrowserRouter([
 			{
 				path: "/cart",
 				element: <Cartitem />,
+<<<<<<< HEAD
 				loader: cartLoader,
 			},
 			{
 				path: "/register",
 				element: <Register />,
 				action: addUserAction,
+=======
+				loader: cartitemLoader,
+			},
+			{
+				path: "/daftar",
+				element: <Register />,
+>>>>>>> 4490607e99b405046de700a7de091ff6582ea760
 			},
 			{
 				path: "/login",
