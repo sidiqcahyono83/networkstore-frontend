@@ -9,6 +9,7 @@ import {
 } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { IoPerson } from "react-icons/io5";
+import { IoCaretForwardCircleSharp } from "react-icons/io5";
 
 const navigation = [
 	{ name: "Home", href: "/", current: true },
@@ -87,8 +88,10 @@ export default function Navbar() {
 									<span className="absolute -inset-1.5" />
 									<span className="sr-only">
 										Open user menu
-									</span>
-									<IoPerson className="h-8 w-8 rounded-full" />
+									</span>{" "}
+									{}
+									<IoCaretForwardCircleSharp className="h-8 w-8 rounded-full" />
+									<IoPerson />
 								</MenuButton>
 							</div>
 							<MenuItems
