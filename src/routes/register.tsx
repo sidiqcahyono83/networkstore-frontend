@@ -6,8 +6,8 @@ export async function action({ request }: ActionFunctionArgs) {
 	const formData = await request.formData();
 	const userData = {
 		username: formData.get("username"),
-		email: formData.get("email2"),
-		password: formData.get("password2"),
+		email: formData.get("email"),
+		password: formData.get("password"),
 	};
 
 	const response = await fetch(
@@ -53,8 +53,8 @@ export function Register() {
 						<Label htmlFor="email2" value="Your email" />
 					</div>
 					<TextInput
-						id="email2"
-						name="email2"
+						id="email"
+						name="email"
 						type="email"
 						placeholder="name@flowbite.com"
 						required
@@ -66,8 +66,8 @@ export function Register() {
 						<Label htmlFor="password2" value="Your password" />
 					</div>
 					<TextInput
-						id="password2"
-						name="password2"
+						id="password"
+						name="password"
 						type="password"
 						required
 						shadow
