@@ -10,51 +10,52 @@ import { ProductRoute, loader as productLoader } from "./routes/product";
 
 import { Register } from "./routes/register";
 import { Login } from "./routes/login";
-import { Cartitem } from "./routes/cartitem";
+import { Cartitem, loader as cartitemLoader } from "./routes/cartitem";
 import { Component } from "./routes/acordion";
 
 const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Layout />,
-    children: [
-      {
-        path: "/",
-        element: <App />,
-        loader: appLoader,
-      },
-      {
-        path: "/products",
-        element: <Products />,
-        loader: productsLoader,
-      },
-      {
-        path: "/products/:productId",
-        element: <ProductRoute />,
-        loader: productLoader,
-      },
-      {
-        path: "/cart",
-        element: <Cartitem />,
-      },
-      {
-        path: "/daftar",
-        element: <Register />,
-      },
-      {
-        path: "/login",
-        element: <Login />,
-      },
-      {
-        path: "/component",
-        element: <Component />,
-      },
-    ],
-  },
+	{
+		path: "/",
+		element: <Layout />,
+		children: [
+			{
+				path: "/",
+				element: <App />,
+				loader: appLoader,
+			},
+			{
+				path: "/products",
+				element: <Products />,
+				loader: productsLoader,
+			},
+			{
+				path: "/products/:productId",
+				element: <ProductRoute />,
+				loader: productLoader,
+			},
+			{
+				path: "/cart",
+				element: <Cartitem />,
+				loader: cartitemLoader,
+			},
+			{
+				path: "/daftar",
+				element: <Register />,
+			},
+			{
+				path: "/login",
+				element: <Login />,
+			},
+			{
+				path: "/component",
+				element: <Component />,
+			},
+		],
+	},
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <React.StrictMode>
-    <RouterProvider router={router} />
-  </React.StrictMode>
+	<React.StrictMode>
+		<RouterProvider router={router} />
+	</React.StrictMode>
 );

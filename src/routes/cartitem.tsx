@@ -1,4 +1,28 @@
+import { useLoaderData } from "react-router-dom";
+import { type ShoppingCart } from "../types/cartitem";
+
+export async function loader() {
+	try {
+		const response = await fetch(
+			`${import.meta.env.VITE_BACKEND_API_URL}/cart`
+		);
+		const responseJSON = await response.json();
+
+		const shoppingCarts: ShoppingCart[] = responseJSON.data;
+
+		// console.log(products);
+		return { shoppingCarts };
+	} catch (error) {
+		return { shoppingCarts: [] };
+	}
+}
+
 export const Cartitem = () => {
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	const { shoppingCarts } = useLoaderData() as Awaited<
+		ReturnType<typeof loader>
+	>;
+	console.log(shoppingCarts);
 	return (
 		<div className=" my-6 mx-6">
 			<div className="max-w-sm">
@@ -14,56 +38,34 @@ export const Cartitem = () => {
 					</a>
 				</div>
 				<div className="flow-root">
-					<ul className="divide-y divide-gray-200 dark:divide-gray-700">
-						<li className="py-3 sm:py-4">
-							<div className="flex items-center space-x-4">
-								<div className="shrink-0">
-									<img
-										alt="CCR"
-										height="32"
-										src="/CCR.png"
-										width="32"
-										className="rounded-full"
-									/>
+					{shoppingCarts.map((cartitem) => (
+						<ul className="divide-y divide-gray-200 dark:divide-gray-700">
+							<li className="py-3 sm:py-4" key={cartitem.id}>
+								<div className="flex items-center space-x-4">
+									<div className="shrink-0">
+										<img
+											alt={cartitem.userId}
+											height="32"
+											src="/CCR.png"
+											width="32"
+											className="rounded-full"
+										/>
+									</div>
+									<div className="min-w-0 flex-1">
+										<p className="truncate text-sm font-medium text-gray-900 dark:text-white">
+											{cartitem.totalPrice}
+										</p>
+										<p className="truncate text-sm text-gray-500 dark:text-gray-400">
+											===
+										</p>
+									</div>
+									<div className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+										{cartitem.totalPrice}
+									</div>
 								</div>
-								<div className="min-w-0 flex-1">
-									<p className="truncate text-sm font-medium text-gray-900 dark:text-white">
-										CCR 2024
-									</p>
-									<p className="truncate text-sm text-gray-500 dark:text-gray-400">
-										===
-									</p>
-								</div>
-								<div className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-									8240000
-								</div>
-							</div>
-						</li>
-						<li className="py-3 sm:py-4">
-							<div className="flex items-center space-x-4">
-								<div className="shrink-0">
-									<img
-										alt="Bonnie image"
-										height="32"
-										src="/4011.png"
-										width="32"
-										className="rounded-full"
-									/>
-								</div>
-								<div className="min-w-0 flex-1">
-									<p className="truncate text-sm font-medium text-gray-900 dark:text-white">
-										RB 4011
-									</p>
-									<p className="truncate text-sm text-gray-500 dark:text-gray-400">
-										email@windster.com
-									</p>
-								</div>
-								<div className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-									350000
-								</div>
-							</div>
-						</li>
-					</ul>
+							</li>
+						</ul>
+					))}
 				</div>
 			</div>
 		</div>
