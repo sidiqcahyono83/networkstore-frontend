@@ -3,15 +3,11 @@ import {
 	DisclosureButton,
 	DisclosurePanel,
 	Menu,
-	MenuButton,
 	MenuItem,
 	MenuItems,
 } from "@headlessui/react";
-import { BellIcon } from "@heroicons/react/16/solid";
 
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import { IoPerson } from "react-icons/io5";
-import { IoCaretForwardCircleSharp } from "react-icons/io5";
 
 const navigation = [
 	// { name: "Home", href: "/", current: true },
