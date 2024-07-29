@@ -11,7 +11,6 @@ export async function loader() {
 
 		const carts: Cart[] = responseJSON.data;
 
-		// console.log(products);
 		return { carts };
 	} catch (error) {
 		return { carts: [] };

@@ -2,16 +2,16 @@ import {
 	Disclosure,
 	DisclosureButton,
 	DisclosurePanel,
+	Menu,
+	MenuButton,
+	MenuItem,
+	MenuItems,
 } from "@headlessui/react";
+import { BellIcon } from "@heroicons/react/16/solid";
 
-// Menu,
-// MenuButton,
-// MenuItem,
-// MenuItems,
-//  BellIcon,
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-// import { IoPerson } from "react-icons/io5";
-// import { IoCaretForwardCircleSharp } from "react-icons/io5";
+import { IoPerson } from "react-icons/io5";
+import { IoCaretForwardCircleSharp } from "react-icons/io5";
 
 const navigation = [
 	// { name: "Home", href: "/", current: true },
@@ -76,27 +76,16 @@ export default function Navbar() {
 						</div>
 					</div>
 					<div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-						{/* <button
-							type="button"
-							className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-						>
-							<span className="absolute -inset-1.5" />
-							<span className="sr-only">View notifications</span>
-							<BellIcon aria-hidden="true" className="h-6 w-6" />
-						</button> */}
-
 						{/* Profile dropdown */}
-						{/* <Menu as="div" className="relative ml-3">
-							<div>
-								<MenuButton className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-									<span className="absolute -inset-1.5" />
-									<span className="sr-only">
-										Open user menu
-									</span>{" "}
-									{}
-									<IoCaretForwardCircleSharp className="h-8 w-8 rounded-full" />
-									<IoPerson />
-								</MenuButton>
+						<Menu
+							as="div"
+							className="relative ml-3 flex justify-center items-center"
+						>
+							<div className="text-white gap-2 mx-2">
+								<a href="/register">Register</a>
+							</div>
+							<div className="text-white gap-2 mx-2">
+								<a href="/login">Login</a>
 							</div>
 							<MenuItems
 								transition
@@ -104,7 +93,7 @@ export default function Navbar() {
 							>
 								<MenuItem>
 									<a
-										href="#"
+										href="/auth/me"
 										className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
 									>
 										Your Profile
@@ -127,7 +116,7 @@ export default function Navbar() {
 									</a>
 								</MenuItem>
 							</MenuItems>
-						</Menu> */}
+						</Menu>
 					</div>
 				</div>
 			</div>
