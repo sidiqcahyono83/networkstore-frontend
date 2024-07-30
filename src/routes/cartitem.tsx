@@ -51,6 +51,9 @@ export const Cartitem = () => {
 												/>
 											))}
 										</div>
+										<pre>
+											{JSON.stringify(carts, null, 2)}
+										</pre>
 										<div className="min-w-0 flex-1">
 											<p className="truncate text-sm font-medium text-gray-900 dark:text-white">
 												{cart.user}
