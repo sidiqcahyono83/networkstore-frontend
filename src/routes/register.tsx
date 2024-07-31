@@ -1,5 +1,11 @@
 import { Button, Label, TextInput } from "flowbite-react";
-import { ActionFunctionArgs, redirect } from "react-router-dom";
+import { ActionFunctionArgs, Form, redirect } from "react-router-dom";
+import { User } from "../types/product";
+
+type RegisterResponse = {
+	message: string;
+	newUser: Pick<User, "username">;
+};
 
 // Fungsi untuk menangani aksi form submission
 export async function action({ request }: ActionFunctionArgs) {
@@ -11,7 +17,7 @@ export async function action({ request }: ActionFunctionArgs) {
 	};
 
 	const response = await fetch(
-		`${import.meta.env.VITE_BACKEND_API_URL}/users`,
+		`${import.meta.env.VITE_BACKEND_API_URL}/auth/register`,
 		{
 			method: "POST",
 			headers: {
@@ -20,11 +26,11 @@ export async function action({ request }: ActionFunctionArgs) {
 			body: JSON.stringify(userData),
 		}
 	);
+	console.log(userData);
+	const registerResponse: RegisterResponse = await response.json();
 
-	if (!response.ok) {
-		// Tangani kesalahan jika permintaan tidak berhasil
-		const errorData = await response.json();
-		return { error: errorData.message };
+	if (!registerResponse) {
+		return null;
 	}
 
 	// Alihkan pengguna ke halaman login setelah registrasi berhasil
@@ -35,7 +41,7 @@ export async function action({ request }: ActionFunctionArgs) {
 export function Register() {
 	return (
 		<div className="h-[1280px] mx-8 my-10 justify-center">
-			<form method="post" className="flex justify-center flex-col gap-4">
+			<Form method="post" className="flex justify-center flex-col gap-4">
 				<div className="justify-center">
 					<div className="mb-2 block">
 						<Label htmlFor="username" value="Your username" />
@@ -76,7 +82,7 @@ export function Register() {
 
 				<div className="flex items-center gap-2"></div>
 				<Button type="submit">Register new account</Button>
-			</form>
+			</Form>
 		</div>
 	);
 }

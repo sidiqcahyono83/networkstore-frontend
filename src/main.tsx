@@ -8,10 +8,10 @@ import { App, loader as appLoader } from "./routes/App";
 import { Products, loader as productsLoader } from "./routes/products";
 import { ProductRoute, loader as productLoader } from "./routes/product";
 
-import { Login } from "./routes/login";
+import { Login, action as loginAction } from "./routes/login";
 import { Cartitem, loader as cartLoader } from "./routes/cartitem";
 import { Component } from "./routes/acordion";
-import { Register } from "./routes/register";
+import { Register, action as registerAction } from "./routes/register";
 
 const router = createBrowserRouter([
 	{
@@ -22,6 +22,17 @@ const router = createBrowserRouter([
 				path: "/",
 				element: <App />,
 				loader: appLoader,
+			},
+			{
+				path: "/register",
+				element: <Register />,
+				action: registerAction,
+			},
+
+			{
+				path: "/login",
+				element: <Login />,
+				action: loginAction,
 			},
 			{
 				path: "/products",
@@ -38,15 +49,7 @@ const router = createBrowserRouter([
 				element: <Cartitem />,
 				loader: cartLoader,
 			},
-			{
-				path: "/register",
-				element: <Register />,
-			},
 
-			{
-				path: "/login",
-				element: <Login />,
-			},
 			{
 				path: "/component",
 				element: <Component />,
