@@ -6,7 +6,11 @@ import "./index.css";
 import { Layout } from "./routes/Layout";
 import { App, loader as appLoader } from "./routes/App";
 import { Products, loader as productsLoader } from "./routes/products";
-import { ProductRoute, loader as productLoader } from "./routes/product";
+import {
+	ProductRoute,
+	loader as productLoader,
+	action as cartItemAction,
+} from "./routes/product";
 
 import { Login, action as loginAction } from "./routes/login";
 import { Cartitem, loader as cartLoader } from "./routes/cartitem";
@@ -43,6 +47,7 @@ const router = createBrowserRouter([
 				path: "/products/:productId",
 				element: <ProductRoute />,
 				loader: productLoader,
+				action: cartItemAction,
 			},
 			{
 				path: "/cart",
