@@ -6,9 +6,9 @@ export const Navbar = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    localStorage.removeItem("adminId"); // Ensure adminId is removed
+    localStorage.removeItem("adminId");
     localStorage.removeItem("username");
-    navigate("/"); // Use navigate to redirect to the homepage
+    navigate("/");
   };
 
   return (
@@ -25,6 +25,9 @@ export const Navbar = () => {
         </Link>
         <Link to="/pembayaran" className="text-white">
           Pembayaran
+        </Link>
+        <Link to="/filterpembayaran" className="text-white">
+          Filter-Pembayaran
         </Link>
       </div>
       <div className="text-white">

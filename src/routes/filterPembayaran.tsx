@@ -24,6 +24,7 @@ const months = [
   { value: "Desember", label: "Desember" },
 ];
 
+// Fungsi untuk memformat tanggal dalam format Indonesia
 const formatDateIndonesian = (dateString: string): string => {
   const options: Intl.DateTimeFormatOptions = {
     year: "numeric",
@@ -35,18 +36,18 @@ const formatDateIndonesian = (dateString: string): string => {
   return new Intl.DateTimeFormat("id-ID", options).format(new Date(dateString));
 };
 
-// Komponen PembayaranForm
+// Komponen PembayaranFilter
 export function PembayaranFilter() {
   const [month, setMonth] = useState<string>("");
   const [metode, setMetode] = useState<string>("");
   const [adminUsername, setAdminUsername] = useState<string>("");
-  const [date, setDate] = useState<string>(""); // New state for date
+  const [date, setDate] = useState<string>(""); // State baru untuk tanggal
   const [, setPembayaran] = useState<Pembayaran[]>([]);
   const [filteredData, setFilteredData] = useState<Pembayaran[]>([]);
   const [metodeOptions, setMetodeOptions] = useState<string[]>([]);
   const [adminOptions, setAdminOptions] = useState<string[]>([]);
 
-  // Fetch data pembayaran dan set metode serta admin username
+  // Mengambil data pembayaran dan mengatur opsi metode serta admin username
   const fetchPembayaran = async () => {
     const token = localStorage.getItem("token");
     if (!token) return redirect("/login");
@@ -79,7 +80,7 @@ export function PembayaranFilter() {
     setAdminOptions(uniqueAdmin);
   };
 
-  // Fetch data berdasarkan filter
+  // Mengambil data berdasarkan filter
   const fetchFilteredPembayaran = async () => {
     const token = localStorage.getItem("token");
     if (!token) return redirect("/login");
@@ -87,7 +88,7 @@ export function PembayaranFilter() {
     const response = await fetch(
       `${
         import.meta.env.VITE_BACKEND_API_URL
-      }/pembayaran/users/pembayaran/${month}/${metode}/${adminUsername}/${date}`, // Include date in the API call
+      }/pembayaran/users/pembayaran/${month}/${metode}/${adminUsername}/${date}`, // Menyertakan tanggal dalam pemanggilan API
       {
         headers: { Authorization: `Bearer ${token}` },
       }
@@ -104,7 +105,7 @@ export function PembayaranFilter() {
   };
 
   useEffect(() => {
-    // Fetch semua pembayaran dan set opsi metode serta admin username
+    // Mengambil semua pembayaran dan mengatur opsi metode serta admin username
     fetchPembayaran();
   }, []);
 
@@ -115,13 +116,13 @@ export function PembayaranFilter() {
 
   // Menghitung total harga keseluruhan
   const totalPrice = filteredData.reduce((total, item) => {
-    return total + item.totalBayar; // Jumlahkan totalBayar dari setiap item
+    return total + item.totalBayar; // Menjumlahkan totalBayar dari setiap item
   }, 0);
 
   return (
     <div className="my-6 mx-6">
       <h2 className="text-xl font-bold leading-none text-gray-900 dark:text-white">
-        Shopping pembayaran
+        Filter Pembayaran
       </h2>
 
       <form onSubmit={handleFilter}>
@@ -168,7 +169,7 @@ export function PembayaranFilter() {
             onChange={(e) => setAdminUsername(e.target.value)}
             className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
           >
-            <option value="">Pilih Admin Username</option>
+            <option value="">Pilih Admin</option>
             {adminOptions.map((option) => (
               <option key={option} value={option}>
                 {option}
@@ -237,16 +238,25 @@ export function PembayaranFilter() {
               </tr>
             ))}
           </tbody>
+          <tfoot>
+            <tr>
+              <td
+                colSpan={4}
+                className="px-6 py-4 text-right font-bold text-gray-900 dark:text-white"
+              >
+                Total
+              </td>
+              <td className="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">
+                {formatIDR(totalPrice)}
+              </td>
+            </tr>
+          </tfoot>
         </table>
       ) : (
         <div className="mt-4 text-gray-500 dark:text-gray-400">
-          No data found
+          Tidak ada data pembayaran yang sesuai.
         </div>
       )}
-
-      <div className="mt-4">
-        <strong>Total Harga Keseluruhan: {formatIDR(totalPrice)}</strong>
-      </div>
     </div>
   );
 }
