@@ -1,14 +1,14 @@
-// src/components/Navbar.tsx
-
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export const Navbar = () => {
   const username = localStorage.getItem("username");
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("adminId"); // Ensure adminId is removed
     localStorage.removeItem("username");
-    window.location.reload(); // Reload page after logout
+    navigate("/"); // Use navigate to redirect to the homepage
   };
 
   return (

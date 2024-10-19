@@ -14,7 +14,7 @@ import { App, loader as appLoader } from "./routes/App";
 //   action as cartItemAction,
 // } from "./routes/product";
 
-import { CartRoute, loader as cartLoader } from "./routes/cart";
+// import { CartRoute, loader as cartLoader } from "./routes/cart";
 import { Component } from "./routes/acordion";
 import { Register, action as registerAction } from "./routes/register";
 import { Users, loader as userLoader } from "./routes/users";
@@ -24,6 +24,12 @@ import {
   loader as pembayaranLoader,
 } from "./routes/pembayaran";
 import { PembayaranFilter } from "./routes/filterPembayaran";
+import {
+  PembayaranByUserId,
+  loader as pembayaranByUserIdLoader,
+  action as pembayaranAction,
+} from "./routes/userById";
+import { AdminDashboard } from "./routes/dashboard";
 
 const router = createBrowserRouter([
   {
@@ -45,6 +51,10 @@ const router = createBrowserRouter([
         element: <Login />,
       },
       {
+        path: "/adminDashboard",
+        element: <AdminDashboard />,
+      },
+      {
         path: "/pembayaran",
         element: <PembayaranList />,
         loader: pembayaranLoader,
@@ -61,9 +71,10 @@ const router = createBrowserRouter([
         // action: cartItemAction,
       },
       {
-        path: "/cart",
-        element: <CartRoute />,
-        loader: cartLoader,
+        path: "/users/:id",
+        element: <PembayaranByUserId />,
+        loader: pembayaranByUserIdLoader,
+        action: pembayaranAction,
       },
       {
         path: "/component",

@@ -26,9 +26,12 @@ export const Login = () => {
       const data = await response.json();
 
       if (response.ok) {
+        // Simpan token dan adminId di localStorage
         localStorage.setItem("token", data.token);
+        localStorage.setItem("adminId", data.adminId); // Pastikan adminId ada dalam respons
         localStorage.setItem("username", username);
-        navigate("/users");
+
+        navigate("/adminDashboard");
       } else {
         setError(data.message);
       }
