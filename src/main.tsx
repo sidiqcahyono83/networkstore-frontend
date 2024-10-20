@@ -21,7 +21,8 @@ import {
   action as pembayaranAction,
 } from "./routes/userById";
 import { AdminDashboard } from "./routes/dashboard";
-import { UsersBelumBayar } from "./routes/usersbelumbayar";
+import { UsersBelumBayar, usersBelumbayarLoader } from "./routes/usersbelumbayar";
+import { UsersSudahBayar, usersSudahbayarLoader  } from "./routes/usersSudahBayar";
 
 const router = createBrowserRouter([
   {
@@ -63,8 +64,15 @@ const router = createBrowserRouter([
         // action: cartItemAction,
       },
       {
-        path: "/UsersBelumBayar/:bulan",
-        element: <UsersBelumBayar />,},
+        path: "/usersSudahBayar",
+        element: <UsersSudahBayar />,
+        loader: usersSudahbayarLoader,
+      },
+      {
+        path: "/UsersBelumBayar",
+        element: <UsersBelumBayar />,
+        loader: usersBelumbayarLoader,
+      },
       {
         path: "/users/:id",
         element: <PembayaranByUserId />,
