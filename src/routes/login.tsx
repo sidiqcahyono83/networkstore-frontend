@@ -1,84 +1,73 @@
-import { Button, Label, TextInput } from "flowbite-react";
-import { ActionFunctionArgs, Form, redirect } from "react-router-dom";
-import { authCookie } from "../modules/auth";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-type LoginResponse = {
-  message: string;
-  token: string;
-};
+export const Login = () => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
 
-// Fungsi untuk menangani aksi form submission
-export async function action({ request }: ActionFunctionArgs) {
-  const formData = await request.formData();
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError("");
 
-  const userData = {
-    username: formData.get("username")?.toString(),
-    password: formData.get("password")?.toString(),
+    try {
+      const response = await fetch(
+        "https://teranet.cahyonomuslimsidiq.com/auth/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ username, password }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (response.ok) {
+        // Simpan token dan adminId di localStorage
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("adminId", data.adminId); // Pastikan adminId ada dalam respons
+        localStorage.setItem("username", username);
+
+        navigate("/adminDashboard");
+      } else {
+        setError(data.message);
+      }
+    } catch (err) {
+      setError("Login failed. Please try again.");
+    }
   };
 
-  const response = await fetch(
-    `${import.meta.env.VITE_BACKEND_API_URL}/auth/login`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(userData),
-    }
-  );
-
-  const loginResponse: LoginResponse = await response.json();
-
-  if (!loginResponse.token) {
-    return null;
-  }
-
-  //mengambil token
-  const token = loginResponse.token;
-
-  //Set token di cookie
-  authCookie.set("token", token);
-
-  return redirect("/products");
-}
-
-export function Login() {
   return (
-    <div className="h-[1280px] mx-8 my-10 justify-center">
-      <Form
-        method="post"
-        className="flex justify-center max-w-md flex-col gap-4"
-      >
-        <div className="justify-center">
-          <div className="mb-2 block">
-            <Label htmlFor="username" value="username" />
-          </div>
-          <TextInput
-            id="username"
-            type="username"
-            name="username"
-            placeholder="username"
-            required
-            shadow
-          />
-        </div>
-
-        <div className="justify-center">
-          <div className="mb-2 block">
-            <Label htmlFor="password" value="password" />
-          </div>
-          <TextInput
-            id="password"
-            type="password"
-            name="password"
-            placeholder="password"
-            required
-            shadow
-          />
-        </div>
-
-        <Button type="submit">Login</Button>
-      </Form>
+    <div className="flex items-center justify-center min-h-screen">
+      <form onSubmit={handleLogin} className="bg-white p-6 rounded shadow-md">
+        <h1 className="text-2xl mb-4">Login</h1>
+        {error && <p className="text-red-500">{error}</p>}
+        <input
+          type="text"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          placeholder="Username"
+          className="block w-full p-2 mb-4 border border-gray-300 rounded"
+          required
+        />
+        <input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Password"
+          className="block w-full p-2 mb-4 border border-gray-300 rounded"
+          required
+        />
+        <button
+          type="submit"
+          className="w-full p-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+        >
+          Login
+        </button>
+      </form>
     </div>
   );
-}
+};

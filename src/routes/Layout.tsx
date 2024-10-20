@@ -1,21 +1,17 @@
-import { Outlet } from "react-router-dom";
-import { Footer } from "../components/footer";
-import Navbar from "../components/nav";
+// src/routes/Layout.tsx
 
-export function Layout() {
-	return (
-		<>
-			<div className="w-full mx-auto  h-[1203px]">
-				<main className="max-w-screen-lg mx-auto h-[1203px]">
-					<section className="bg-gray-900-500 font-bold">
-						<Navbar />
-					</section>
-					<Outlet />
-					<section className="bg-gray-900-500">
-						<Footer />
-					</section>
-				</main>
-			</div>
-		</>
-	);
-}
+import { Footer } from "../components/footer";
+import { Navbar } from "../components/navbar";
+import { Outlet } from "react-router-dom";
+
+export const Layout = () => {
+  return (
+    <div>
+      <Navbar />
+      <main>
+        <Outlet />
+      </main>
+      <Footer />
+    </div>
+  );
+};
