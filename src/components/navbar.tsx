@@ -17,9 +17,9 @@ export const Navbar = () => {
         <Link to="/" className="text-white mr-4">
           Home
         </Link>
-        <Link to="/products" className="text-white mr-4">
+        {/* <Link to="/products" className="text-white mr-4">
           Products
-        </Link>
+        </Link> */}
         <Link to="/users" className="text-white mr-4">
           Users
         </Link>
