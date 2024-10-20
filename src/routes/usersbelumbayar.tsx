@@ -16,7 +16,7 @@ export const usersBelumbayarLoader = async () => {
 
   // Mendapatkan nama bulan sekarang dengan format "MMMM" dan menggunakan locale Indonesia
   const currentMonth = format(new Date(), "MMMM", { locale: id });
-  console.log(currentMonth); // Menampilkan nama bulan untuk pengecekan
+  // console.log(currentMonth); // Menampilkan nama bulan untuk pengecekan
 
   const response = await fetch(
     `${
