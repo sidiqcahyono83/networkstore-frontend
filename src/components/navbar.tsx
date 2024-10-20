@@ -23,7 +23,7 @@ export const Navbar = () => {
         <Link to="/users" className="text-white mr-4">
           Users
         </Link>
-        <Link to="/pembayaran" className="text-white">
+        <Link to="/pembayaran" className="text-white mr-4">
           Pembayaran
         </Link>
         <Link to="/filterpembayaran" className="text-white">

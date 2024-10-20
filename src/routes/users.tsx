@@ -57,10 +57,12 @@ export function Users() {
   };
 
   return (
-    <div className="my-6 mx-6">
-      <h2 className="text-xl font-bold leading-none text-gray-900 dark:text-white">
-        Customer List
-      </h2>
+    <div className="my-4 mx-4">
+      <div className=" flex items-center justify-center">
+        <h2 className="text-xl font-bold leading-none text-gray-900 dark:text-white">
+          Customer List
+        </h2>
+      </div>
 
       {/* Search input */}
       <input
@@ -112,7 +114,7 @@ export function Users() {
             </th>
             <th
               scope="col"
-              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
             >
               Aksi
             </th>
@@ -142,9 +144,9 @@ export function Users() {
                 {user.ontName}
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400 flex items-center justify-center gap-4">
-                <Button className="bg-blue-700">Edt</Button>
+                {/* <Button className="bg-blue-700">Edt</Button> */}
                 <Button type="submit" href={`/users/${user.id}`}>
-                  $
+                  BAYAR
                 </Button>
               </td>
             </tr>
