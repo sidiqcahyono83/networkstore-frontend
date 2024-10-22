@@ -1,3 +1,4 @@
+import { Dropdown } from "flowbite-react";
 import { Link, useNavigate } from "react-router-dom";
 
 export const Navbar = () => {
@@ -14,12 +15,9 @@ export const Navbar = () => {
   return (
     <nav className="bg-gray-800 p-4 flex justify-between">
       <div>
-        <Link to="/" className="text-white mr-4">
-          Home
+        <Link to="/pppoe" className="text-white mr-4">
+          PPP
         </Link>
-        {/* <Link to="/usersSudahbayar" className="text-white mr-4">
-          Sudah Bayar
-        </Link> */}
         <Link to="/users" className="text-white mr-4">
           Users
         </Link>

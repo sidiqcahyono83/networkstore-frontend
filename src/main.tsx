@@ -21,8 +21,13 @@ import {
   action as pembayaranAction,
 } from "./routes/userById";
 import { AdminDashboard } from "./routes/dashboard";
-import { UsersBelumBayar, usersBelumbayarLoader } from "./routes/usersbelumbayar";
-import { UsersSudahBayar, usersSudahbayarLoader  } from "./routes/usersSudahBayar";
+import {
+  UsersBelumBayar,
+  usersBelumbayarLoader,
+} from "./routes/usersbelumbayar";
+
+import PppActive from "./routes/pppoe";
+import PppoeNonactive from "./routes/pppNonactive";
 
 const router = createBrowserRouter([
   {
@@ -64,9 +69,12 @@ const router = createBrowserRouter([
         // action: cartItemAction,
       },
       {
-        path: "/usersSudahBayar",
-        element: <UsersSudahBayar />,
-        loader: usersSudahbayarLoader,
+        path: "/pppoe",
+        element: <PppActive />,
+      },
+      {
+        path: "/nonactive",
+        element: <PppoeNonactive />,
       },
       {
         path: "/UsersBelumBayar",
