@@ -1,54 +1,37 @@
 import { useEffect, useState } from "react";
+import { getAllUsers } from "../lib/actionusers"; // Import function
 
 export const AdminDashboard = () => {
-  const [adminData, setAdminData] = useState(null);
+  const [userCount, setUserCount] = useState(0);
   const [error, setError] = useState("");
-  const token = localStorage.getItem("token");
 
   useEffect(() => {
-    const fetchAdminData = async () => {
-      try {
-        if (!token) {
-          throw new Error("No token found");
-        }
+    const fetchUsers = async () => {
+      const { users, error } = await getAllUsers();
+      if (error) {
+        setError(error); // Set error if there's an issue with fetching
+        return { error };
+      }
 
-        const response = await fetch(
-          "https://teranet.cahyonomuslimsidiq.com/auth/me",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData.message || "Failed to fetch admin data");
-        }
-
-        const data = await response.json();
-        setAdminData(data);
-      } catch (err) {
-        setError("Login failed. Please try again.");
+      if (users.length > 0) {
+        setUserCount(users.length); // Set total number of users
       }
     };
 
-    fetchAdminData();
-  }, [token]);
+    fetchUsers(); // Fetch users when component mounts
+  }, []);
 
   if (error) {
-    return <div>Error: {error}</div>;
-  }
-
-  if (!adminData) {
-    return <div>Loading...</div>; // Consider adding a spinner here
+    return <div>Error: {error}</div>; // Handle error
   }
 
   return (
     <div>
       <h1>Admin Dashboard</h1>
-      <pre>{JSON.stringify(adminData, null, 2)}</pre>
-      {/* You could format this to display user-friendly data */}
+      <p>Total Users: {userCount}</p>
+
+      <h2>Areas</h2>
+      <ul></ul>
     </div>
   );
 };
