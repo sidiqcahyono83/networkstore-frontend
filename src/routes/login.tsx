@@ -41,33 +41,47 @@ export const Login = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen">
-      <form onSubmit={handleLogin} className="bg-white p-6 rounded shadow-md">
-        <h1 className="text-2xl mb-4">Login</h1>
-        {error && <p className="text-red-500">{error}</p>}
-        <input
-          type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          placeholder="Username"
-          className="block w-full p-2 mb-4 border border-gray-300 rounded"
-          required
-        />
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Password"
-          className="block w-full p-2 mb-4 border border-gray-300 rounded"
-          required
-        />
-        <button
-          type="submit"
-          className="w-full p-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-        >
-          Login
-        </button>
-      </form>
+    <div className="bg-gray-100">
+      <div className="flex flex-col items-center justify-between px-g py-6 mx-auto h-screen">
+        <form onSubmit={handleLogin} className="space-y-4">
+          <h1 className="text-2xl mb-4">Login</h1>
+          <label
+            htmlFor="username"
+            className="block mb-2 text-sm font-medium text-gray-900"
+          >
+            Username
+          </label>
+          {error && <p className="text-red-500">{error}</p>}
+          <input
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            placeholder="Username"
+            className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg w-full p-2.5"
+            required
+          />
+          <label
+            htmlFor="password"
+            className="block mb-2 text-sm font-medium text-gray-900"
+          >
+            Password
+          </label>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Password"
+            className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg w-full p-2.5"
+            required
+          />
+          <button
+            type="submit"
+            className="w-full p-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+          >
+            Login
+          </button>
+        </form>
+      </div>
     </div>
   );
 };

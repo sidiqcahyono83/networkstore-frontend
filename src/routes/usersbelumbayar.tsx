@@ -1,4 +1,4 @@
-import { useLoaderData, json } from "react-router-dom";
+import { useLoaderData, json, redirect } from "react-router-dom";
 import type { User } from "../data/typedata"; // Pastikan tipe User ada di typedata
 import { Table, Pagination } from "flowbite-react";
 import { useState } from "react";
@@ -13,6 +13,8 @@ type Pembayaran = {
 // Loader function untuk fetching data
 export const usersBelumbayarLoader = async () => {
   const token = localStorage.getItem("token");
+
+  if (!token) return redirect("/login");
 
   // Mendapatkan nama bulan sekarang dengan format "MMMM" dan menggunakan locale Indonesia
   const currentMonth = format(new Date(), "MMMM", { locale: id });
