@@ -110,7 +110,7 @@ export function PembayaranByUserId() {
           type="number"
           name="diskon"
           id="diskon"
-          defaultValue={0} // Set default to user's paket harga
+          defaultValue={user.diskon} // Set default to user's paket harga
           className="mb-4 p-2 border rounded-md"
           required
         />

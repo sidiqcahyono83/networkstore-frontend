@@ -7,6 +7,7 @@ export type User = {
   address: string;
   phoneNumber: string;
   paket: Paket;
+  diskon: number;
   Area: Area;
   Odp: Odp;
   modem: Modem;
