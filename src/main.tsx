@@ -21,8 +21,14 @@ import {
   action as pembayaranAction,
 } from "./routes/userById";
 import { AdminDashboard } from "./routes/dashboard";
-import { UsersBelumBayar, usersBelumbayarLoader } from "./routes/usersbelumbayar";
-import { UsersSudahBayar, usersSudahbayarLoader  } from "./routes/usersSudahBayar";
+import {
+  UsersBelumBayar,
+  usersBelumbayarLoader,
+} from "./routes/usersbelumbayar";
+// import {
+//   UsersSudahBayar,
+//   usersSudahbayarLoader,
+// } from "./routes/usersSudahBayar";
 
 const router = createBrowserRouter([
   {
@@ -63,11 +69,11 @@ const router = createBrowserRouter([
         // loader: productLoader,
         // action: cartItemAction,
       },
-      {
-        path: "/usersSudahBayar",
-        element: <UsersSudahBayar />,
-        loader: usersSudahbayarLoader,
-      },
+      // {
+      //   path: "/usersSudahBayar",
+      //   element: <UsersSudahBayar />,
+      //   loader: usersSudahbayarLoader,
+      // },
       {
         path: "/UsersBelumBayar",
         element: <UsersBelumBayar />,

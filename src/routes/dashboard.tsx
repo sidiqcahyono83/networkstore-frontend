@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Card } from "flowbite-react";
 
 export const AdminDashboard = () => {
   const [adminData, setAdminData] = useState(null);
@@ -47,8 +48,17 @@ export const AdminDashboard = () => {
   return (
     <div>
       <h1>Admin Dashboard</h1>
-      <pre>{JSON.stringify(adminData, null, 2)}</pre>
-      {/* You could format this to display user-friendly data */}
+
+      {/* Menampilkan data admin dalam format JSON */}
+      {/* <pre>{JSON.stringify(adminData, null, 2)}</pre> */}
+
+      <Card href="/pppoe" className="max-w-sm">
+        {/* Menampilkan username dan fullname langsung dari adminData */}
+        <div>
+          <h5>{adminData?.user?.username}</h5>
+          <p>{adminData?.user?.fullName}</p>
+        </div>
+      </Card>
     </div>
   );
 };

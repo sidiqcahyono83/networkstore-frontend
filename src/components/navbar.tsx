@@ -17,14 +17,14 @@ export const Navbar = () => {
         <Link to="/" className="text-white mr-4">
           Home
         </Link>
-        <Link to="/usersBelumBayar" className="text-white mr-4">
-          Belum Bayar
-        </Link>
-        <Link to="/usersSudahbayar" className="text-white mr-4">
+        {/* <Link to="/usersSudahbayar" className="text-white mr-4">
           Sudah Bayar
-        </Link>
+        </Link> */}
         <Link to="/users" className="text-white mr-4">
           Users
+        </Link>
+        <Link to="/usersBelumBayar" className="text-white mr-4">
+          Belum Bayar
         </Link>
         <Link to="/pembayaran" className="text-white mr-4">
           Pembayaran
