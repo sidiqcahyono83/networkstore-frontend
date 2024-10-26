@@ -2,8 +2,8 @@ import { useLoaderData, json, redirect } from "react-router-dom";
 import type { User } from "../data/typedata"; // Pastikan tipe User ada di typedata
 import { Table, Pagination } from "flowbite-react";
 import { useState } from "react";
-import { format } from "date-fns";
-import { id } from "date-fns/locale";
+import { currentMonth } from "../lib/formatBulanIdn";
+import { formatIDR } from "../lib/formatCurency";
 
 type Pembayaran = {
   message: string;
@@ -13,12 +13,7 @@ type Pembayaran = {
 // Loader function untuk fetching data
 export const usersBelumbayarLoader = async () => {
   const token = localStorage.getItem("token");
-
   if (!token) return redirect("/login");
-
-  // Mendapatkan nama bulan sekarang dengan format "MMMM" dan menggunakan locale Indonesia
-  const currentMonth = format(new Date(), "MMMM", { locale: id });
-  // console.log(currentMonth); // Menampilkan nama bulan untuk pengecekan
 
   const response = await fetch(
     `${
@@ -97,7 +92,7 @@ export function UsersBelumBayar() {
         </p>
         <p>
           Total Tagihan yang Belum Dibayar:{" "}
-          <strong>Rp {totalBelumBayar.toLocaleString("id-ID")}</strong>
+          <strong>{formatIDR(totalBelumBayar)}</strong>
         </p>
       </div>
 
