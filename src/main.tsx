@@ -25,16 +25,13 @@ import {
   UsersBelumBayar,
   usersBelumbayarLoader,
 } from "./routes/usersbelumbayar";
-<<<<<<< HEAD
 // import {
 //   UsersSudahBayar,
 //   usersSudahbayarLoader,
 // } from "./routes/usersSudahBayar";
-=======
 
 import PppActive from "./routes/pppoe";
 import PppoeNonactive from "./routes/pppNonactive";
->>>>>>> e456fe0be430d401cfc93c9f57a06232ad53ad81
 
 const router = createBrowserRouter([
   {
@@ -75,13 +72,11 @@ const router = createBrowserRouter([
         // loader: productLoader,
         // action: cartItemAction,
       },
-<<<<<<< HEAD
       // {
       //   path: "/usersSudahBayar",
       //   element: <UsersSudahBayar />,
       //   loader: usersSudahbayarLoader,
       // },
-=======
       {
         path: "/pppoe",
         element: <PppActive />,
@@ -90,7 +85,6 @@ const router = createBrowserRouter([
         path: "/nonactive",
         element: <PppoeNonactive />,
       },
->>>>>>> e456fe0be430d401cfc93c9f57a06232ad53ad81
       {
         path: "/UsersBelumBayar",
         element: <UsersBelumBayar />,

@@ -10,7 +10,6 @@ import type { User } from "../data/typedata";
 
 // Loader function to fetch user by ID
 export async function loader({ params }: LoaderFunctionArgs) {
-  const token = localStorage.getItem("token");
   const userId = params.id;
 
   try {
@@ -23,29 +22,9 @@ export async function loader({ params }: LoaderFunctionArgs) {
     }
 
     const responseJSON = await response.json();
-    const user: User = responseJSON.user; // Assuming 'User' matches your data structure
+    const user: User = responseJSON.user;
 
-    // Fetch admin data from auth/me
-    const responseAdmin = await fetch(
-      "https://teranet.cahyonomuslimsidiq.com/auth/me",
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-
-    if (!responseAdmin.ok) {
-      throw new Error("Failed to fetch admin data");
-    }
-
-    const adminResponseJSON = await responseAdmin.json();
-    const adminId = adminResponseJSON.user.id; // Get admin ID
-
-    // Store adminId in localStorage for later use in form submission
-    localStorage.setItem("adminId", adminId);
-
-    return { user, adminId };
+    return { user };
   } catch (error) {
     return { user: null }; // Return null if there is any error
   }
@@ -54,13 +33,12 @@ export async function loader({ params }: LoaderFunctionArgs) {
 // Component to display and manage user pembayaran
 export function PembayaranByUserId() {
   const { user } = useLoaderData() as Awaited<ReturnType<typeof loader>>;
+  const adminId = localStorage.getItem("adminId");
 
   // Check if user data was successfully loaded
   if (!user) {
     return <p>User not found</p>;
   }
-
-  const adminId = localStorage.getItem("adminId");
 
   // Display user information and form for pembayaran
   return (
@@ -70,9 +48,8 @@ export function PembayaranByUserId() {
       {/* Pembayaran form */}
       <Form method="post">
         <input type="hidden" name="userId" defaultValue={user.id ?? ""} />
-        {/* Hidden input for adminId */}
-        <input type="hidden" name="adminId" defaultValue={adminId ?? ""} />{" "}
-        {/* Use adminId if available */}
+        <input type="hidden" name="adminId" defaultValue={adminId ?? ""} />
+
         <label
           htmlFor="metode"
           className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
@@ -86,6 +63,7 @@ export function PembayaranByUserId() {
         >
           <option value={user.id}>{user.fullname}</option>
         </select>
+
         <label
           htmlFor="harga"
           className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
@@ -96,12 +74,13 @@ export function PembayaranByUserId() {
           type="number"
           name="harga"
           id="harga"
-          defaultValue={user.paket?.harga ?? 0} // Set default to user's paket harga
+          defaultValue={user.paket?.harga ?? 0}
           className="mb-4 p-2 border rounded-md"
           required
         />
+
         <label
-          htmlFor="harga"
+          htmlFor="diskon"
           className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
         >
           Diskon
@@ -110,10 +89,11 @@ export function PembayaranByUserId() {
           type="number"
           name="diskon"
           id="diskon"
-          defaultValue={user.diskon} // Set default to user's paket harga
+          defaultValue={user.diskon ?? 0}
           className="mb-4 p-2 border rounded-md"
           required
         />
+
         <label
           htmlFor="metode"
           className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
@@ -130,8 +110,9 @@ export function PembayaranByUserId() {
           <option value={"Transfer BRI"}>Transfer BRI</option>
           <option value={"Transfer BNI"}>Transfer BNI</option>
         </select>
+
         <label
-          htmlFor="harga"
+          htmlFor="totalBayar"
           className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
         >
           Total Bayar
@@ -140,10 +121,11 @@ export function PembayaranByUserId() {
           type="number"
           name="totalBayar"
           id="totalBayar"
-          defaultValue={user.paket?.harga ?? -user.diskon} // Set default to user's paket harga
+          defaultValue={user.paket?.harga - (user.diskon ?? 0)}
           className="mb-4 p-2 border rounded-md"
           required
         />
+
         {/* Submit button */}
         <Button type="submit">Add to Pembayaran</Button>
       </Form>
@@ -152,23 +134,22 @@ export function PembayaranByUserId() {
 }
 
 export async function action({ request }: ActionFunctionArgs) {
-  const token = localStorage.getItem("token");
   const formData = await request.formData();
+  const token = localStorage.getItem("token");
 
-  const harga = Number(formData.get("harga")); // Get the harga from the form
-  const diskon = Number(formData.get("diskon")); // Get the discount from the form
-  const totalHarga = harga - diskon; // Calculate the total price after discount
+  const harga = Number(formData.get("harga"));
+  const diskon = Number(formData.get("diskon"));
+  const totalHarga = harga - diskon;
 
   const addToPembayaranData = {
     userId: formData.get("userId")?.toString(),
-    adminId: localStorage.getItem("adminId"), // Ensure adminId is retrieved properly
-    periode: new Date().toISOString().split("T")[0], // Set to today's date (YYYY-MM-DD)
+    adminId: localStorage.getItem("adminId"),
+    periode: new Date().toISOString().split("T")[0],
     metode: formData.get("metode"),
-    ppn: 0, // Set PPN to 0
-    totalBayar: totalHarga, // Use the calculated total price
+    ppn: 0,
+    totalBayar: totalHarga,
   };
 
-  // Send the data to your backend
   const response = await fetch(
     `${import.meta.env.VITE_BACKEND_API_URL}/pembayaran`,
     {
@@ -181,9 +162,7 @@ export async function action({ request }: ActionFunctionArgs) {
     }
   );
 
-  const addToPembayaranResponse = await response.json();
-
-  if (!addToPembayaranResponse || !response.ok) {
+  if (!response.ok) {
     return { error: "Pembayaran failed" };
   }
 
