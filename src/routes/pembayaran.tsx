@@ -1,6 +1,7 @@
 import { redirect, useLoaderData } from "react-router-dom";
 import { Pembayaran } from "../data/typedata";
 import { formatIDR } from "../lib/formatCurency";
+import { useState } from "react";
 
 // Mendefinisikan tipe untuk respons pembayaran
 type PembayaranResponse = {
@@ -35,14 +36,20 @@ export async function loader() {
 // Komponen PembayaranForm
 export function PembayaranList() {
   const data = useLoaderData() as Awaited<ReturnType<typeof loader>>;
+  const [searchUser, setSearchUser] = useState("");
 
   // Cek apakah data valid
-  if (data instanceof Response) return null; // Menangani kesalahan jika data adalah Response
+  if (data instanceof Response) return null;
 
   const { pembayaran } = data;
 
+  // Filter data berdasarkan nama pengguna yang sesuai dengan pencarian
+  const filteredPembayaran = pembayaran.filter((item) =>
+    item.user.fullname.toLowerCase().includes(searchUser.toLowerCase())
+  );
+
   // Pastikan ada pembayaran untuk ditampilkan
-  if (!pembayaran || pembayaran.length === 0) {
+  if (!filteredPembayaran || filteredPembayaran.length === 0) {
     return (
       <p className="text-sm text-gray-500 dark:text-gray-400">
         No items in the pembayaran.
@@ -50,9 +57,9 @@ export function PembayaranList() {
     );
   }
 
-  // Menghitung total harga keseluruhan
-  const totalPrice = pembayaran.reduce((total, item) => {
-    return total + item.totalBayar; // Jumlahkan totalBayar dari setiap item
+  // Menghitung total harga keseluruhan untuk hasil filter
+  const totalPrice = filteredPembayaran.reduce((total, item) => {
+    return total + item.totalBayar;
   }, 0);
 
   return (
@@ -60,6 +67,15 @@ export function PembayaranList() {
       <h2 className="text-xl font-bold leading-none text-gray-900 dark:text-white">
         Pembayaran
       </h2>
+
+      {/* Input pencarian */}
+      <input
+        type="text"
+        placeholder="Cari user..."
+        value={searchUser}
+        onChange={(e) => setSearchUser(e.target.value)}
+        className="mb-4 p-2 border rounded-md w-full"
+      />
 
       <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
         <thead className="bg-gray-50 dark:bg-gray-700">
@@ -82,7 +98,7 @@ export function PembayaranList() {
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
-          {pembayaran.map((item) => (
+          {filteredPembayaran.map((item) => (
             <tr key={item.id}>
               <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">
                 {item.user.fullname}-({item.user.username})
