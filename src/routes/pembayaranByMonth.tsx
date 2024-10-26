@@ -2,7 +2,7 @@ import { redirect, useLoaderData } from "react-router-dom";
 import { Pembayaran } from "../data/typedata";
 import { formatIDR } from "../lib/formatCurency";
 import { useState } from "react";
-import { Button } from "flowbite-react";
+import { currentMonth } from "../lib/formatBulanIdn";
 
 // Mendefinisikan tipe untuk respons pembayaran
 type PembayaranResponse = {
@@ -16,7 +16,9 @@ export async function loader() {
   if (!token) return redirect("/login");
 
   const response = await fetch(
-    `${import.meta.env.VITE_BACKEND_API_URL}/pembayaran`,
+    `${
+      import.meta.env.VITE_BACKEND_API_URL
+    }/pembayaran/pembayaran/${currentMonth}`,
     {
       headers: { Authorization: `Bearer ${token}` },
     }
@@ -31,21 +33,24 @@ export async function loader() {
 
   // Ambil data pembayaran
   const pembayaranResponse: PembayaranResponse = await response.json();
-  return { pembayaran: pembayaranResponse.data }; // Mengambil data dari response
+  return { pembayaranByMonth: pembayaranResponse.data }; // Mengambil data dari response
 }
 
 // Komponen PembayaranForm
-export function PembayaranList() {
+export function PembayaranByBulanIni() {
   const data = useLoaderData() as Awaited<ReturnType<typeof loader>>;
   const [searchUser, setSearchUser] = useState("");
 
   // Cek apakah data valid
   if (data instanceof Response) return null;
 
-  const { pembayaran } = data;
+  const { pembayaranByMonth: pembayaran } = data;
+
+  // Pastikan pembayaran adalah array, jika tidak, inisialisasi dengan array kosong
+  const validPembayaran = Array.isArray(pembayaran) ? pembayaran : [];
 
   // Filter data berdasarkan nama pengguna yang sesuai dengan pencarian
-  const filteredPembayaran = pembayaran.filter((item) =>
+  const filteredPembayaran = validPembayaran.filter((item) =>
     item.user.fullname.toLowerCase().includes(searchUser.toLowerCase())
   );
 
@@ -99,9 +104,6 @@ export function PembayaranList() {
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               Total Bayar
             </th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Aksi
-            </th>
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
@@ -113,7 +115,7 @@ export function PembayaranList() {
               <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">
                 {item.user.fullname}-({item.user.username})
               </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">
                 {item.admin.username}-({item.admin.level})
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
@@ -124,15 +126,6 @@ export function PembayaranList() {
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
                 {formatIDR(item.totalBayar)}
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
-                <Button
-                  type="submit"
-                  className="btn"
-                  href={`/pembayaran/${item.id}`}
-                >
-                  Update
-                </Button>
               </td>
             </tr>
           ))}

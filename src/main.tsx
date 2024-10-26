@@ -32,6 +32,14 @@ import {
 
 import PppActive from "./routes/pppoe";
 import PppoeNonactive from "./routes/pppNonactive";
+import {
+  PembayaranByBulanIni,
+  loader as pembayaranBulanIniLoader,
+} from "./routes/pembayaranByMonth";
+import {
+  PembayaranById,
+  loader as pembayaranByIdLoader,
+} from "./routes/pembayaranById";
 
 const router = createBrowserRouter([
   {
@@ -57,14 +65,14 @@ const router = createBrowserRouter([
         element: <AdminDashboard />,
       },
       {
-        path: "/pembayaran",
-        element: <PembayaranList />,
-        loader: pembayaranLoader,
-      },
-      {
         path: "/users",
         element: <Users />,
         loader: userLoader,
+      },
+      {
+        path: "/pembayaran",
+        element: <PembayaranList />,
+        loader: pembayaranLoader,
       },
       {
         path: "/filterpembayaran",
@@ -72,11 +80,16 @@ const router = createBrowserRouter([
         // loader: productLoader,
         // action: cartItemAction,
       },
-      // {
-      //   path: "/usersSudahBayar",
-      //   element: <UsersSudahBayar />,
-      //   loader: usersSudahbayarLoader,
-      // },
+      {
+        path: "/pembayaran/:id",
+        element: <PembayaranById />,
+        loader: pembayaranByIdLoader,
+      },
+      {
+        path: "/pembayaranBulanIni",
+        element: <PembayaranByBulanIni />,
+        loader: pembayaranBulanIniLoader,
+      },
       {
         path: "/pppoe",
         element: <PppActive />,
