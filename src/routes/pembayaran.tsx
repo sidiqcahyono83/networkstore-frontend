@@ -49,7 +49,7 @@ export function PembayaranList() {
   );
 
   // Pastikan ada pembayaran untuk ditampilkan
-  if (!filteredPembayaran || filteredPembayaran.length === 0) {
+  if (filteredPembayaran.length === 0) {
     return (
       <p className="text-sm text-gray-500 dark:text-gray-400">
         No items in the pembayaran.
@@ -98,8 +98,11 @@ export function PembayaranList() {
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
-          {filteredPembayaran.map((item) => (
+          {filteredPembayaran.map((item, index) => (
             <tr key={item.id}>
+              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">
+                {index + 1}
+              </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">
                 {item.user.fullname}-({item.user.username})
               </td>
