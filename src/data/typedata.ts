@@ -7,6 +7,7 @@ export type User = {
   address: string;
   phoneNumber: string;
   paket: Paket;
+  diskon: number;
   Area: Area;
   Odp: Odp;
   modem: Modem;
@@ -94,4 +95,13 @@ export type Modem = {
   onOder: string;
   createdAt: string;
   updatedAt: string;
+};
+
+export type Pppoe = {
+  id: string;
+  name: string;
+  serservice: string;
+  address: string;
+  uptime: string;
+  disabled: boolean;
 };

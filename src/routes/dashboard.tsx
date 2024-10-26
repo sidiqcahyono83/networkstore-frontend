@@ -1,48 +1,29 @@
 import { useEffect, useState } from "react";
+import { getAllUsers } from "../lib/actionusers";
 import { Card } from "flowbite-react";
 
 export const AdminDashboard = () => {
-  const [adminData, setAdminData] = useState(null);
+  const [userCount, setUserCount] = useState(0);
   const [error, setError] = useState("");
-  const token = localStorage.getItem("token");
 
   useEffect(() => {
-    const fetchAdminData = async () => {
-      try {
-        if (!token) {
-          throw new Error("No token found");
-        }
+    const fetchUsers = async () => {
+      const { users, error } = await getAllUsers();
+      if (error) {
+        setError(error); // Set error if there's an issue with fetching
+        return { error };
+      }
 
-        const response = await fetch(
-          "https://teranet.cahyonomuslimsidiq.com/auth/me",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData.message || "Failed to fetch admin data");
-        }
-
-        const data = await response.json();
-        setAdminData(data);
-      } catch (err) {
-        setError("Login failed. Please try again.");
+      if (users.length > 0) {
+        setUserCount(users.length); // Set total number of users
       }
     };
 
-    fetchAdminData();
-  }, [token]);
+    fetchUsers(); // Fetch users when component mounts
+  }, []);
 
   if (error) {
-    return <div>Error: {error}</div>;
-  }
-
-  if (!adminData) {
-    return <div>Loading...</div>; // Consider adding a spinner here
+    return <div>Error: {error}</div>; // Handle error
   }
 
   return (
@@ -59,6 +40,11 @@ export const AdminDashboard = () => {
           <p>{adminData?.user?.fullName}</p>
         </div>
       </Card>
+      <p>Total Users: {userCount}</p>
+      <p>Nama : </p>
+
+      <h2>Areas</h2>
+      <ul></ul>
     </div>
   );
 };

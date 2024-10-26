@@ -8,6 +8,7 @@ export const Navbar = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("adminId");
     localStorage.removeItem("username");
+    localStorage.removeItem("level");
     navigate("/");
   };
 
@@ -32,6 +33,32 @@ export const Navbar = () => {
         <Link to="/filterpembayaran" className="text-white">
           Filter-Pembayaran
         </Link>
+        {username === "sidiqcahyono" && (
+          <>
+            <Link to="/users" className="text-white mr-4">
+              Users
+            </Link>
+            <Link to="/usersBelumBayar" className="text-white mr-4">
+              Users Belum Bayar
+            </Link>
+            <Link to="/pembayaran" className="text-white mr-4">
+              Pembayaran
+            </Link>
+            <Link to="/filterpembayaran" className="text-white">
+              Filter-Pembayaran
+            </Link>
+          </>
+        )}
+        {(username === "hujin" || username === "misbah") && (
+          <>
+            <Link to="/usersBelumBayar" className="text-white mr-4">
+              Users Belum Bayar
+            </Link>
+            <Link to="/pppoe" className="text-white mr-4">
+              PPP
+            </Link>
+          </>
+        )}
       </div>
       <div className="text-white">
         {username ? (
