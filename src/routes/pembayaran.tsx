@@ -81,25 +81,25 @@ export function PembayaranList() {
         <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
           <thead className="bg-gray-50 dark:bg-gray-700">
             <tr>
-              <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 No
               </th>
-              <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 User
               </th>
-              <th className="hidden md:table-cell px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="hidden md:table-cell px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Admin
               </th>
-              <th className="hidden md:table-cell px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="hidden md:table-cell px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Periode
               </th>
-              <th className="hidden md:table-cell px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="hidden md:table-cell px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Metode
               </th>
-              <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Total Bayar
               </th>
-              <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Aksi
               </th>
             </tr>
@@ -107,25 +107,25 @@ export function PembayaranList() {
           <tbody className="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
             {filteredPembayaran.map((item, index) => (
               <tr key={item.id}>
-                <td className="px-4 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">
+                <td className="px-2 py-2 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">
                   {index + 1}
                 </td>
-                <td className="px-4 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">
-                  {item.user.fullname}-({item.user.username})
+                <td className="px-2 py-2 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">
+                  {item.user.fullname}
                 </td>
-                <td className="hidden md:table-cell px-4 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
-                  {item.admin.username}-({item.admin.level})
+                <td className="hidden md:table-cell px-2 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                  {item.admin.username}
                 </td>
-                <td className="hidden md:table-cell px-4 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                <td className="hidden md:table-cell px-2 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
                   {new Date(item.periode).toLocaleDateString()}
                 </td>
-                <td className="hidden md:table-cell px-4 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                <td className="hidden md:table-cell px-2 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
                   {item.metode}
                 </td>
-                <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                <td className="px-2 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
                   {formatIDR(item.totalBayar)}
                 </td>
-                <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                <td className="px-2 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
                   <Button
                     type="submit"
                     className="btn"
@@ -141,11 +141,11 @@ export function PembayaranList() {
             <tr>
               <td
                 colSpan={4}
-                className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                className="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
                 Total
               </td>
-              <td className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <td className="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 {formatIDR(totalPrice)}
               </td>
             </tr>
