@@ -135,7 +135,12 @@ export function PembayaranByUserId() {
 
 export async function action({ request }: ActionFunctionArgs) {
   const formData = await request.formData();
+
   const token = localStorage.getItem("token");
+  if (!token) {
+    // Handle missing token gracefully
+    return redirect("/login"); // Redirect to login or show an error message
+  }
 
   const harga = Number(formData.get("harga"));
   const diskon = Number(formData.get("diskon"));
@@ -163,7 +168,8 @@ export async function action({ request }: ActionFunctionArgs) {
   );
 
   if (!response.ok) {
-    return { error: "Pembayaran failed" };
+    const errorData = await response.json();
+    throw new Error(errorData.message || "Pembayaran failed"); // Improved error handling
   }
 
   return redirect(`/usersBelumBayar`);

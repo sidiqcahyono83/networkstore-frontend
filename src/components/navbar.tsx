@@ -6,6 +6,7 @@ export const Navbar = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("user");
     localStorage.removeItem("adminId");
     localStorage.removeItem("username");
     localStorage.removeItem("level");

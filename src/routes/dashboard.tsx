@@ -41,6 +41,11 @@ export const AdminDashboard = () => {
 
         const data = await response.json();
         setAdminData(data.data); // Update to access data under "data" in the response
+
+        // Set adminId and level in local storage
+        const { id, level } = data.data; // Destructure to get id and level
+        localStorage.setItem("adminId", id);
+        localStorage.setItem("level", level);
       } catch (err) {
         setError("Login failed. Please try again.");
       }

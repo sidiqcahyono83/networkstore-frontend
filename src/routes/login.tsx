@@ -28,7 +28,7 @@ export const Login = () => {
       if (response.ok) {
         // Simpan token dan adminId di localStorage
         localStorage.setItem("token", data.token);
-        localStorage.setItem("adminId", data.adminId); // Pastikan adminId ada dalam respons
+        localStorage.setItem("level", data.level); // Pastikan adminId ada dalam respons
         localStorage.setItem("username", username);
 
         navigate("/adminDashboard");

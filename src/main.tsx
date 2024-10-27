@@ -84,7 +84,7 @@ const router = createBrowserRouter([
         path: "/pembayaran/:id",
         element: <PembayaranById />,
         loader: pembayaranByIdLoader,
-        action: PembayaranByIdAction,
+        // action: PembayaranByIdAction,
       },
       {
         path: "/pembayaranBulanIni",
