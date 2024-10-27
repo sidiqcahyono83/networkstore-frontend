@@ -19,23 +19,18 @@ export async function action({ request, params }: LoaderFunctionArgs) {
   const formData = await request.formData();
 
   const updatedUser = {
-    id: formData.get("username"),
+    id: formData.get("id"),
     username: formData.get("username"),
     fullname: formData.get("fullname"),
-    ontName: Number(formData.get("ontName")),
-    redamanOlt: Number(formData.get("redamanOlt")),
+    ontName: formData.get("ontName"),
+    redamanOlt: formData.get("redamanOlt"),
     address: formData.get("address"),
     phoneNumber: formData.get("phoneNumber"),
     paketId: formData.get("paketId"),
-    diskon: Number(formData.get("diskon")),
-    areaId: formData.get("area"),
-    odpId: formData.get("odp"),
-    modem: formData.get("modem"),
   };
 
   await updateUserById(userId, updatedUser);
-  console.log(updatedUser);
-  return redirect(`/jobs/`);
+  return redirect(`/users/update/${userId}`);
 }
 
 export function UpdateUserById() {
@@ -45,74 +40,51 @@ export function UpdateUserById() {
   }
 
   return (
-    <div className="mx-auto items-center">
-      <div className="mx-auto justify-center">
+    <div className="flex justify-center   min-h-screen py-2 bg-gray-100">
+      <div className="bg-white rounded-lg shadow-md p-2 max-w-md w-full">
         <h1 className="text-4xl font-bold mb-4 text-center">Update User</h1>
-        <div className="flex flex-1 justify-center md:min-w-full">
-          <Form
-            method="post"
-            className="flex flex-col max-w-lg gap-2 justify-center"
-          >
-            {/* User ID (Hidden Field) */}
-            <TextInput type="hidden" name="id" defaultValue={user.id} />
+        <Form method="post" className="flex flex-col gap-4">
+          {/* User ID (Hidden Field) */}
+          <TextInput type="hidden" name="id" defaultValue={user.id} />
 
-            {/* Form Fields */}
-            {[
-              {
-                id: "username",
-                label: "Username",
-                defaultValue: user.username,
-              },
-              {
-                id: "fullname",
-                label: "Fullname",
-                defaultValue: user.fullname,
-              },
-              { id: "ontName", label: "ONT Name", defaultValue: user.ontName },
-              {
-                id: "redamanOlt",
-                label: "Redaman OLT",
-                defaultValue: user.redamanOlt,
-              },
-              { id: "address", label: "Address", defaultValue: user.address },
-              {
-                id: "phoneNumber",
-                label: "Phone Number",
-                defaultValue: user.phoneNumber,
-              },
-              { id: "paketId", label: "PaketId", defaultValue: user.paket?.id },
-              { id: "diskon", label: "Diskon", defaultValue: user.diskon },
-              { id: "areaId", label: "Area", defaultValue: user.Area?.name },
-              { id: "odpId", label: "ODP", defaultValue: user.Odp?.name },
-              { id: "modem", label: "Modem", defaultValue: user.modem?.name },
-            ].map(({ id, label, defaultValue }) => (
-              <div className="flex flex-col mb-2" key={id}>
-                <Label htmlFor={id} value={label} />
-                <TextInput
-                  id={id}
-                  type="text"
-                  name={id}
-                  defaultValue={defaultValue}
-                  required
-                />
-              </div>
-            ))}
-
-            {/* Pembayaran */}
-            <div className="flex flex-col mb-2">
-              <Label htmlFor="pembayaran" value="Pembayaran History" />
-              <TextInput type="text" name="pembayaran" disabled />
+          {/* Form Fields */}
+          {[
+            { id: "username", label: "Username", defaultValue: user.username },
+            { id: "fullname", label: "Fullname", defaultValue: user.fullname },
+            { id: "ontName", label: "ONT Name", defaultValue: user.ontName },
+            {
+              id: "redamanOlt",
+              label: "Redaman OLT",
+              defaultValue: user.redamanOlt,
+            },
+            { id: "address", label: "Address", defaultValue: user.address },
+            {
+              id: "phoneNumber",
+              label: "Phone Number",
+              defaultValue: user.phoneNumber,
+            },
+            { id: "paketId", label: "Paket ID", defaultValue: user.paket?.id },
+          ].map(({ id, label, defaultValue }) => (
+            <div className="flex flex-col mb-2" key={id}>
+              <Label htmlFor={id} value={label} />
+              <TextInput
+                id={id}
+                type="text"
+                name={id}
+                defaultValue={defaultValue}
+                required
+              />
             </div>
+          ))}
 
-            {/* Submit Button */}
-            <div className="flex gap-2 justify-between">
-              <Button type="submit">Update</Button>
-              <Button color="warning" as={Link} to="/users">
-                Back
-              </Button>
-            </div>
-          </Form>
-        </div>
+          {/* Submit Button */}
+          <div className="flex gap-2 justify-between mt-4">
+            <Button type="submit">Update</Button>
+            <Button color="warning" as={Link} to="/users">
+              Back
+            </Button>
+          </div>
+        </Form>
       </div>
     </div>
   );

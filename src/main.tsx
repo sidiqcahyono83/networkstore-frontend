@@ -40,6 +40,7 @@ import {
 import {
   UpdateUserById,
   loader as updateUserByIdLoader,
+  action as updateUserByIdAction,
 } from "./routes/userUpdateById";
 
 const router = createBrowserRouter([
@@ -69,6 +70,18 @@ const router = createBrowserRouter([
         path: "/users",
         element: <Users />,
         loader: userLoader,
+      },
+      // {
+      //   path: "/users/:id",
+      //   element: <UserById />,
+      //   loader: UserByIdLoader,
+      //   action: UserByIdAction,
+      // },
+      {
+        path: "/users/update/:id",
+        element: <UpdateUserById />,
+        loader: updateUserByIdLoader,
+        action: updateUserByIdAction,
       },
       {
         path: "/pembayaran",
@@ -115,6 +128,7 @@ const router = createBrowserRouter([
         path: "/update/users/:id",
         element: <UpdateUserById />,
         loader: updateUserByIdLoader,
+        action: updateUserByIdAction,
       },
       {
         path: "/component",

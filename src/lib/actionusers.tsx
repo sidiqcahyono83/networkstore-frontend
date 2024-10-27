@@ -93,7 +93,8 @@ export async function updateUserById(id: string, updates: User) {
   if (!response.ok) {
     throw new Error("Failed to update user");
   }
+  Object.assign(response, updates);
 
-  const updatedUser: User = await response.json();
+  const updatedUser = await response.json();
   return updatedUser;
 }
