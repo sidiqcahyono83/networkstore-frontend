@@ -49,9 +49,6 @@ export function UsersBelumBayar() {
   const usersPerPage = 15;
 
   // Total pengguna yang belum membayar
-  // const totalUsers = userBelumbayar.data.length;
-
-  // Menghitung total tagihan yang belum dibayar
   const totalBelumBayar = userBelumbayar.data.reduce((acc, user) => {
     return acc + user.paket.harga;
   }, 0);
@@ -70,8 +67,10 @@ export function UsersBelumBayar() {
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   return (
-    <div>
-      <h1 className="text-xl font-bold mb-4">Daftar Pengguna Belum Bayar</h1>
+    <div className="p-4 sm:p-6 lg:p-8">
+      <h1 className="text-xl font-bold mb-4 text-center sm:text-left">
+        Daftar Pengguna Belum Bayar
+      </h1>
 
       {/* Form pencarian */}
       <div className="mb-4">
@@ -80,12 +79,12 @@ export function UsersBelumBayar() {
           placeholder="Cari berdasarkan nama lengkap..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="border rounded px-2 py-1 w-full"
+          className="border rounded px-4 py-2 w-full sm:w-3/4 lg:w-1/2"
         />
       </div>
 
       {/* Menampilkan jumlah total pengguna dan total tagihan */}
-      <div className="mb-4">
+      <div className="mb-4 text-center sm:text-left">
         <p>
           Total Pengguna yang Belum Bayar:{" "}
           <strong>{filteredUsers.length}</strong>
@@ -97,52 +96,55 @@ export function UsersBelumBayar() {
       </div>
 
       {/* Tabel menggunakan Flowbite */}
-      <Table striped={true}>
-        <Table.Head>
-          <Table.HeadCell>No</Table.HeadCell>
+      <div className="overflow-x-auto">
+        <Table striped={true} className="min-w-full">
+          <Table.Head>
+            <Table.HeadCell>No</Table.HeadCell>
+            <Table.HeadCell>Full Name</Table.HeadCell>
+            <Table.HeadCell>Paket</Table.HeadCell>
+            <Table.HeadCell>Area</Table.HeadCell>
+            <Table.HeadCell>Bayar</Table.HeadCell>
+            <Table.HeadCell>
+              <span className="sr-only">Bayar</span>
+            </Table.HeadCell>
+          </Table.Head>
+          <Table.Body className="divide-y">
+            {currentUsers.map((user: User, index: number) => (
+              <Table.Row
+                key={user.id}
+                className="bg-white dark:border-gray-700 dark:bg-gray-800"
+              >
+                <Table.Cell>{indexOfFirstUser + index + 1}</Table.Cell>
+                <Table.Cell>
+                  {user.fullname} -{user.username}
+                </Table.Cell>
+                <Table.Cell>
+                  {user.paket.name}-{user.paket.harga}
+                </Table.Cell>
+                <Table.Cell>{user.Area?.name}</Table.Cell>
 
-          <Table.HeadCell>Full Name</Table.HeadCell>
-          <Table.HeadCell>Paket</Table.HeadCell>
-          <Table.HeadCell>Area</Table.HeadCell>
-          <Table.HeadCell>Bayar</Table.HeadCell>
-          <Table.HeadCell>
-            <span className="sr-only">Bayar</span>
-          </Table.HeadCell>
-        </Table.Head>
-        <Table.Body className="divide-y">
-          {currentUsers.map((user: User, index: number) => (
-            <Table.Row
-              key={user.id}
-              className="bg-white dark:border-gray-700 dark:bg-gray-800"
-            >
-              <Table.Cell>{indexOfFirstUser + index + 1}</Table.Cell>
-              <Table.Cell>
-                {user.fullname} -{user.username}
-              </Table.Cell>
-              <Table.Cell>
-                {user.paket.name}-{user.paket.harga}
-              </Table.Cell>
-              <Table.Cell>{user.Area?.name}</Table.Cell>
-
-              <Table.Cell>
-                <a
-                  href={`/users/${user.id}`}
-                  className="font-medium text-blue-600 hover:underline dark:text-blue-500"
-                >
-                  Bayar
-                </a>
-              </Table.Cell>
-            </Table.Row>
-          ))}
-        </Table.Body>
-      </Table>
+                <Table.Cell>
+                  <a
+                    href={`/users/${user.id}`}
+                    className="font-medium text-blue-600 hover:underline dark:text-blue-500"
+                  >
+                    Bayar
+                  </a>
+                </Table.Cell>
+              </Table.Row>
+            ))}
+          </Table.Body>
+        </Table>
+      </div>
 
       {/* Komponen Pagination */}
-      <Pagination
-        currentPage={currentPage}
-        totalPages={Math.ceil(filteredUsers.length / usersPerPage)}
-        onPageChange={paginate}
-      />
+      <div className="flex justify-center mt-4">
+        <Pagination
+          currentPage={currentPage}
+          totalPages={Math.ceil(filteredUsers.length / usersPerPage)}
+          onPageChange={paginate}
+        />
+      </div>
     </div>
   );
 }
