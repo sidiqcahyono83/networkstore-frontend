@@ -115,11 +115,11 @@ export function UsersBelumBayar() {
                 className="bg-white dark:border-gray-700 dark:bg-gray-800"
               >
                 <Table.Cell>{indexOfFirstUser + index + 1}</Table.Cell>
+                <Table.Cell>{user.fullname}</Table.Cell>
                 <Table.Cell>
-                  {user.fullname} -{user.username}
-                </Table.Cell>
-                <Table.Cell>
-                  {user.paket.name}-{user.paket.harga}
+                  {user.paket.name}
+                  <br />
+                  {user.paket.harga}
                 </Table.Cell>
                 <Table.Cell>{user.Area?.name}</Table.Cell>
 
