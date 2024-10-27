@@ -67,7 +67,7 @@ export function UsersBelumBayar() {
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   return (
-    <div className="p-4 sm:p-6 lg:p-8">
+    <div className="p-2 sm:p-4 lg:p-4">
       <h1 className="text-xl font-bold mb-4 text-center sm:text-left">
         Daftar Pengguna Belum Bayar
       </h1>
