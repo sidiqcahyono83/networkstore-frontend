@@ -2,7 +2,7 @@ export type User = {
   id: string;
   username: string;
   fullname: string;
-  ontName: number;
+  ontName: string;
   redamanOlt: number;
   address: string;
   phoneNumber: string;

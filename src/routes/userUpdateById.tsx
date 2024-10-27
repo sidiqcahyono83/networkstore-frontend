@@ -19,21 +19,22 @@ export async function action({ request, params }: LoaderFunctionArgs) {
   const formData = await request.formData();
 
   const updatedUser = {
+    id: formData.get("username"),
     username: formData.get("username"),
     fullname: formData.get("fullname"),
     ontName: Number(formData.get("ontName")),
     redamanOlt: Number(formData.get("redamanOlt")),
     address: formData.get("address"),
     phoneNumber: formData.get("phoneNumber"),
-    paketId: formData.get("paket"),
+    paketId: formData.get("paketId"),
     diskon: Number(formData.get("diskon")),
     areaId: formData.get("area"),
     odpId: formData.get("odp"),
     modem: formData.get("modem"),
-    pembayaranId: formData.getAll("pembayaran"),
   };
 
   await updateUserById(userId, updatedUser);
+  console.log(updatedUser);
   return redirect(`/jobs/`);
 }
 
@@ -79,7 +80,7 @@ export function UpdateUserById() {
                 label: "Phone Number",
                 defaultValue: user.phoneNumber,
               },
-              { id: "paketId", label: "Paket", defaultValue: user.paket?.name },
+              { id: "paketId", label: "PaketId", defaultValue: user.paket?.id },
               { id: "diskon", label: "Diskon", defaultValue: user.diskon },
               { id: "areaId", label: "Area", defaultValue: user.Area?.name },
               { id: "odpId", label: "ODP", defaultValue: user.Odp?.name },
