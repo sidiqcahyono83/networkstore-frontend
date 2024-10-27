@@ -149,7 +149,6 @@ export async function action({ request }: ActionFunctionArgs) {
   const addToPembayaranData = {
     userId: formData.get("userId")?.toString(),
     adminId: localStorage.getItem("adminId"),
-    periode: new Date().toISOString().split("T")[0],
     metode: formData.get("metode"),
     ppn: 0,
     totalBayar: totalHarga,
