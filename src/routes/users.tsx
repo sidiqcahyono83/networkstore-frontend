@@ -153,7 +153,13 @@ export function Users() {
                 {user.ontName}
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400 flex items-center justify-center gap-4">
-                <Button className="bg-blue-700">Edt</Button>
+                <Button
+                  type="submit"
+                  href={`/update/users/${user.id}`}
+                  className="bg-blue-700"
+                >
+                  Edt
+                </Button>
                 <Button type="submit" href={`/users/${user.id}`}>
                   BAYAR
                 </Button>

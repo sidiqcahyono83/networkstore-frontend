@@ -37,6 +37,10 @@ import {
   loader as pembayaranByIdLoader,
   action as PembayaranByIdAction,
 } from "./routes/pembayaranById";
+import {
+  UpdateUserById,
+  loader as updateUserByIdLoader,
+} from "./routes/userUpdateById";
 
 const router = createBrowserRouter([
   {
@@ -106,6 +110,11 @@ const router = createBrowserRouter([
         element: <PembayaranByUserId />,
         loader: pembayaranByUserIdLoader,
         action: PembayaranByUserIdAction,
+      },
+      {
+        path: "/update/users/:id",
+        element: <UpdateUserById />,
+        loader: updateUserByIdLoader,
       },
       {
         path: "/component",
