@@ -4,13 +4,12 @@ import { formatIDR } from "../lib/formatCurency";
 import { useState } from "react";
 import { currentMonth } from "../lib/formatBulanIdn";
 
-// Mendefinisikan tipe untuk respons pembayaran
 type PembayaranResponse = {
   message: string;
-  data: Pembayaran[]; // Sesuaikan dengan tipe data
+  data: Pembayaran[];
 };
 
-// Loader untuk mengambil data pembayaran
+// Loader for fetching payment data
 export async function loader() {
   const token = localStorage.getItem("token");
   if (!token) return redirect("/login");
@@ -24,47 +23,41 @@ export async function loader() {
     }
   );
 
-  // Cek jika respons tidak ok
   if (!response.ok) {
     throw new Response("Failed to fetch pembayaran data", {
       status: response.status,
     });
   }
 
-  // Ambil data pembayaran
   const pembayaranResponse: PembayaranResponse = await response.json();
-  return { pembayaranByMonth: pembayaranResponse.data }; // Mengambil data dari response
+  return { pembayaranByMonth: pembayaranResponse.data };
 }
 
-// Komponen PembayaranForm
+// Main component
 export function PembayaranByBulanIni() {
   const data = useLoaderData() as Awaited<ReturnType<typeof loader>>;
   const [searchUser, setSearchUser] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10; // Number of items per page
 
-  // Cek apakah data valid
   if (data instanceof Response) return null;
 
   const { pembayaranByMonth: pembayaran } = data;
-
-  // Pastikan pembayaran adalah array, jika tidak, inisialisasi dengan array kosong
   const validPembayaran = Array.isArray(pembayaran) ? pembayaran : [];
 
-  // Filter data berdasarkan nama pengguna yang sesuai dengan pencarian
+  // Filter and paginate data
   const filteredPembayaran = validPembayaran.filter((item) =>
     item.user.fullname.toLowerCase().includes(searchUser.toLowerCase())
   );
 
-  // Pastikan ada pembayaran untuk ditampilkan
-  if (filteredPembayaran.length === 0) {
-    return (
-      <p className="text-sm text-gray-500 dark:text-gray-400">
-        No items in the pembayaran.
-      </p>
-    );
-  }
+  const totalItems = filteredPembayaran.length;
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+  const paginatedPembayaran = filteredPembayaran.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
-  // Menghitung total harga keseluruhan untuk hasil filter
-  const totalPrice = filteredPembayaran.reduce((total, item) => {
+  const totalPrice = paginatedPembayaran.reduce((total, item) => {
     return total + item.totalBayar;
   }, 0);
 
@@ -74,12 +67,14 @@ export function PembayaranByBulanIni() {
         Pembayaran
       </h2>
 
-      {/* Input pencarian */}
       <input
         type="text"
         placeholder="Cari user..."
         value={searchUser}
-        onChange={(e) => setSearchUser(e.target.value)}
+        onChange={(e) => {
+          setSearchUser(e.target.value);
+          setCurrentPage(1); // Reset to the first page on search
+        }}
         className="mb-4 p-2 border rounded-md w-full"
       />
 
@@ -107,10 +102,10 @@ export function PembayaranByBulanIni() {
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
-          {filteredPembayaran.map((item, index) => (
+          {paginatedPembayaran.map((item, index) => (
             <tr key={item.id}>
               <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">
-                {index + 1}
+                {(currentPage - 1) * itemsPerPage + index + 1}
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">
                 {item.user.fullname}-({item.user.username})
@@ -133,7 +128,7 @@ export function PembayaranByBulanIni() {
         <tfoot className="bg-gray-50 dark:bg-gray-700">
           <tr>
             <td
-              colSpan={4}
+              colSpan={5}
               className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
             >
               Total
@@ -144,6 +139,29 @@ export function PembayaranByBulanIni() {
           </tr>
         </tfoot>
       </table>
+
+      {/* Pagination controls */}
+      <div className="flex justify-between items-center mt-4">
+        <button
+          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+          disabled={currentPage === 1}
+          className="px-4 py-2 bg-gray-300 dark:bg-gray-600 rounded-md disabled:opacity-50"
+        >
+          Previous
+        </button>
+        <span className="text-sm">
+          Page {currentPage} of {totalPages}
+        </span>
+        <button
+          onClick={() =>
+            setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+          }
+          disabled={currentPage === totalPages}
+          className="px-4 py-2 bg-gray-300 dark:bg-gray-600 rounded-md disabled:opacity-50"
+        >
+          Next
+        </button>
+      </div>
     </div>
   );
 }

@@ -30,9 +30,7 @@ export const Navbar = () => {
             <Link to="/usersBelumBayar" className="text-white mr-4">
               Users Belum Bayar
             </Link>
-            <Link to="/pembayaran" className="text-white mr-4">
-              Pembayaran
-            </Link>
+
             <Link to="/filterpembayaran" className="text-white">
               Filter-Pembayaran
             </Link>
@@ -42,6 +40,9 @@ export const Navbar = () => {
           <>
             <Link to="/usersBelumBayar" className="text-white mr-4">
               Users Belum Bayar
+            </Link>
+            <Link to="/pembayaran" className="text-white mr-4">
+              Pembayaran
             </Link>
             <Link to="/pppoe" className="text-white mr-4">
               PPP
