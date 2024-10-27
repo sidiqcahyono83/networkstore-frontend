@@ -27,7 +27,7 @@ export async function loader({ params }: LoaderFunctionArgs) {
 
     return { pembayaranById };
   } catch (error) {
-    return { user: null }; // Return null if there is any error
+    return { user: null };
   }
 }
 
@@ -38,12 +38,10 @@ export function PembayaranById() {
   >;
   const adminId = localStorage.getItem("adminId");
 
-  // Check if user data was successfully loaded
   if (!pembayaranById) {
     return <p>User not found</p>;
   }
 
-  // Display user information and form for pembayaran
   return (
     <div className="p-6">
       <h2 className="text-lg font-semibold">
@@ -51,34 +49,24 @@ export function PembayaranById() {
       </h2>
 
       {/* Pembayaran form */}
-      <Form method="patch">
+      <Form method="post">
+        {" "}
+        {/* Gunakan POST dan arahkan ke fungsi action */}
         <input
           type="hidden"
           name="userId"
           defaultValue={pembayaranById.id ?? ""}
         />
         <input type="hidden" name="adminId" defaultValue={adminId ?? ""} />
-
-        <label
-          htmlFor="metode"
-          className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-        >
+        <label htmlFor="metode" className="block mb-2 text-sm font-medium">
           Customer
         </label>
-        <select
-          id="metode-select"
-          className="mb-4 p-2 border rounded-md"
-          defaultValue={pembayaranById.user.fullname}
-        >
+        <select id="metode-select" className="mb-4 p-2 border rounded-md">
           <option value={pembayaranById.id}>
             {pembayaranById.user.fullname}
           </option>
         </select>
-
-        <label
-          htmlFor="harga"
-          className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-        >
+        <label htmlFor="harga" className="block mb-2 text-sm font-medium">
           Harga
         </label>
         <input
@@ -89,11 +77,7 @@ export function PembayaranById() {
           className="mb-4 p-2 border rounded-md"
           required
         />
-
-        <label
-          htmlFor="diskon"
-          className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-        >
+        <label htmlFor="diskon" className="block mb-2 text-sm font-medium">
           Diskon
         </label>
         <input
@@ -104,28 +88,19 @@ export function PembayaranById() {
           className="mb-4 p-2 border rounded-md"
           required
         />
-
-        <label
-          htmlFor="metode"
-          className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-        >
+        <label htmlFor="metode" className="block mb-2 text-sm font-medium">
           Metode
         </label>
         <select
           name="metode"
           id="metode-select"
           className="mb-4 p-2 border rounded-md"
-          defaultValue={"Cash"}
         >
-          <option value={"Cash"}>Cash</option>
-          <option value={"Transfer BRI"}>Transfer BRI</option>
-          <option value={"Transfer BNI"}>Transfer BNI</option>
+          <option value="Cash">Cash</option>
+          <option value="Transfer BRI">Transfer BRI</option>
+          <option value="Transfer BNI">Transfer BNI</option>
         </select>
-
-        <label
-          htmlFor="totalBayar"
-          className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-        >
+        <label htmlFor="totalBayar" className="block mb-2 text-sm font-medium">
           Total Bayar
         </label>
         <input
@@ -138,14 +113,13 @@ export function PembayaranById() {
           className="mb-4 p-2 border rounded-md"
           required
         />
-
-        {/* Submit button */}
         <Button type="submit">Add to Pembayaran</Button>
       </Form>
     </div>
   );
 }
 
+// Fungsi action untuk meng-handle submit form
 export async function action({ request, params }: ActionFunctionArgs) {
   const formData = await request.formData();
   const token = localStorage.getItem("token");
@@ -156,8 +130,7 @@ export async function action({ request, params }: ActionFunctionArgs) {
 
   const addToPembayaranData = {
     userId: formData.get("userId")?.toString(),
-    adminId: localStorage.getItem("adminId"),
-    periode: new Date().toISOString().split("T")[0],
+    adminId: formData.get("adminId"),
     metode: formData.get("metode"),
     ppn: 0,
     totalBayar: totalHarga,
@@ -168,7 +141,7 @@ export async function action({ request, params }: ActionFunctionArgs) {
   const response = await fetch(
     `${import.meta.env.VITE_BACKEND_API_URL}/pembayaran/${id}`,
     {
-      method: "PATCH",
+      method: "PUT",
       body: JSON.stringify(addToPembayaranData),
       headers: {
         Authorization: `Bearer ${token}`,

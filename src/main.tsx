@@ -18,7 +18,7 @@ import { PembayaranFilter } from "./routes/filterPembayaran";
 import {
   PembayaranByUserId,
   loader as pembayaranByUserIdLoader,
-  action as pembayaranAction,
+  action as PembayaranByIdAction,
 } from "./routes/userById";
 import { AdminDashboard } from "./routes/dashboard";
 import {
@@ -84,6 +84,7 @@ const router = createBrowserRouter([
         path: "/pembayaran/:id",
         element: <PembayaranById />,
         loader: pembayaranByIdLoader,
+        action: PembayaranByIdAction,
       },
       {
         path: "/pembayaranBulanIni",
@@ -107,7 +108,7 @@ const router = createBrowserRouter([
         path: "/users/:id",
         element: <PembayaranByUserId />,
         loader: pembayaranByUserIdLoader,
-        action: pembayaranAction,
+        action: PembayaranByIdAction,
       },
       {
         path: "/component",
