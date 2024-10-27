@@ -42,13 +42,13 @@ export function PembayaranById() {
 
   // Display user information and form for pembayaran
   return (
-    <div className="p-6">
+    <div className="p-2 grid justify-center ">
       <h2 className="text-lg font-semibold">
         Pembayaran for {pembayaran.user.fullname}
       </h2>
 
       {/* Pembayaran form */}
-      <Form method="post">
+      <Form method="post" className="flex-col-1 items-center justify-center">
         <input
           type="hidden"
           name="userId"

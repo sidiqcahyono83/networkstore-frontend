@@ -42,7 +42,7 @@ export function PembayaranByUserId() {
 
   // Display user information and form for pembayaran
   return (
-    <div className="p-6">
+    <div className="p-6 grid justify-center">
       <h2 className="text-lg font-semibold">Pembayaran for {user.fullname}</h2>
 
       {/* Pembayaran form */}
