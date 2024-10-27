@@ -18,17 +18,13 @@ import { PembayaranFilter } from "./routes/filterPembayaran";
 import {
   PembayaranByUserId,
   loader as pembayaranByUserIdLoader,
-  action as PembayaranByIdAction,
+  action as PembayaranByUserIdAction,
 } from "./routes/userById";
 import { AdminDashboard } from "./routes/dashboard";
 import {
   UsersBelumBayar,
   usersBelumbayarLoader,
 } from "./routes/usersbelumbayar";
-// import {
-//   UsersSudahBayar,
-//   usersSudahbayarLoader,
-// } from "./routes/usersSudahBayar";
 
 import PppActive from "./routes/pppoe";
 import PppoeNonactive from "./routes/pppNonactive";
@@ -39,6 +35,7 @@ import {
 import {
   PembayaranById,
   loader as pembayaranByIdLoader,
+  action as PembayaranByIdAction,
 } from "./routes/pembayaranById";
 
 const router = createBrowserRouter([
@@ -84,7 +81,7 @@ const router = createBrowserRouter([
         path: "/pembayaran/:id",
         element: <PembayaranById />,
         loader: pembayaranByIdLoader,
-        // action: PembayaranByIdAction,
+        action: PembayaranByIdAction,
       },
       {
         path: "/pembayaranBulanIni",
@@ -108,7 +105,7 @@ const router = createBrowserRouter([
         path: "/users/:id",
         element: <PembayaranByUserId />,
         loader: pembayaranByUserIdLoader,
-        action: PembayaranByIdAction,
+        action: PembayaranByUserIdAction,
       },
       {
         path: "/component",
