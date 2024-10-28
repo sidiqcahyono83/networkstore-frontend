@@ -13,8 +13,8 @@ import { User } from "../data/typedata";
 
 export async function loader({ params }: LoaderFunctionArgs) {
   const userId = String(params.id);
-  const user: User = await getUsersById(userId);
-  console.log(user);
+  const user = await getUsersById(userId);
+  // console.log(user);
   return user;
 }
 
@@ -63,53 +63,63 @@ export async function action({ request, params }: LoaderFunctionArgs) {
 }
 
 export function UpdateUserById() {
-  const user = useLoaderData() as Awaited<ReturnType<typeof loader>>;
+  const { user } = useLoaderData() as Awaited<ReturnType<typeof loader>>;
+  // console.log(user);
+
   if (!user) {
     return <p>User not found</p>;
   }
 
   return (
     <div className="flex justify-center min-h-screen py-2 bg-gray-100">
-      <div className="bg-white rounded-lg shadow-md p-2 max-w-md w-full">
-        <h1 className="text-4xl font-bold mb-4 text-center">Update User</h1>
+      <div className="bg-white rounded-lg shadow-md p-2 max-w-xl w-full px-8 ">
+        <h1 className="text-xl font-bold mb-2 text-center">
+          Update {user.fullname}
+        </h1>
         <Form method="post" className="flex flex-col gap-4">
           <TextInput type="hidden" name="id" defaultValue={user.id} />
-
+          {/* <pre>{JSON.stringify(user, null, 2)}</pre> */}
           {/* Form Fields */}
           {[
-            { id: "username", label: "Username", defaultValue: user.username },
-            { id: "fullname", label: "Fullname", defaultValue: user.fullname },
-            { id: "ontName", label: "ONT Name", defaultValue: user.ontName },
+            {
+              id: "fullname",
+              defaultValue: user.fullname,
+            },
+            {
+              id: "ontName",
+              label: "ONT Name",
+              defaultValue: user.ontName,
+            },
             {
               id: "redamanOlt",
               label: "Redaman OLT",
               defaultValue: user.redamanOlt,
             },
-            { id: "address", label: "Address", defaultValue: user.address },
+            {
+              id: "address",
+              label: "Address",
+              defaultValue: user.address,
+            },
             {
               id: "phoneNumber",
               label: "Phone Number",
               defaultValue: user.phoneNumber,
             },
             {
-              id: "paketId", // Updated to match `createCustomerSchema`
+              id: "paketId",
               label: "Paket ID",
-              defaultValue: user.paket?.id || "",
+              defaultValue: user.paket?.name,
             },
             {
               id: "areaId",
               label: "Area ID",
-              defaultValue: user.Area?.id || "",
+              defaultValue: user.Area?.id,
             },
-            {
-              id: "modem", // Updated to match `createCustomerSchema`
-              label: "Modem",
-              defaultValue: user.modem || "",
-            },
-            { id: "odpId", label: "ODP ID", defaultValue: user.Odp?.id || "" },
+            { id: "modem", label: "Modem", defaultValue: user.modem },
+            { id: "odpId", label: "ODP ID", defaultValue: user.Odp?.name },
           ].map(({ id, label, defaultValue }) => (
-            <div className="flex flex-col mb-2" key={id}>
-              <Label htmlFor={id} value={label} />
+            <div className="flex flex-col mb-1" key={id}>
+              <Label htmlFor={id} value={label} className="" />
               <TextInput
                 id={id}
                 type="text"
@@ -119,9 +129,8 @@ export function UpdateUserById() {
               />
             </div>
           ))}
-
           {/* Submit Button */}
-          <div className="flex gap-2 justify-between mt-4">
+          <div className="flex gap-2 justify-between mt-2">
             <Button type="submit">Update</Button>
             <Button color="warning" as={Link} to="/users">
               Back
