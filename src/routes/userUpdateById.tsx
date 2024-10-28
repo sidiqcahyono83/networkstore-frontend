@@ -8,7 +8,7 @@ import {
 import { Button, Label, TextInput } from "flowbite-react";
 import { getUsersById, updateUserById } from "../lib/actionusers";
 import { z } from "zod";
-import { createCustomerSchema } from "../data/customerSchema";
+import { updatCustomerSchema } from "../data/customerSchema";
 import { User } from "../data/typedata";
 
 export async function loader({ params }: LoaderFunctionArgs) {
@@ -25,41 +25,39 @@ export async function action({ request, params }: LoaderFunctionArgs) {
   const updatedUserInput = {
     username: formData.get("username"),
     fullname: formData.get("fullname"),
-    ontName: formData.get("ontName"),
-    redamanOlt: formData.get("redamanOlt"),
-    address: formData.get("address"),
-    phoneNumber: formData.get("phoneNumber"),
-    paketId: formData.get("paketId"), // Changed from paket to paketId
+    ontName: formData.get("ontName") || "",
+    redamanOlt: formData.get("redamanOlt") || "",
+    address: formData.get("address") || "",
+    phoneNumber: formData.get("phoneNumber") || "",
+    paketId: formData.get("paketId"),
     diskon: Number(formData.get("diskon")) || 0,
-    areaId: formData.get("areaId"),
-    odpId: formData.get("odpId"),
-    modem: formData.get("modem"),
+    areaId: formData.get("areaId") || "",
+    odpId: formData.get("odpId") || "",
+    modem: formData.get("modemId") || "",
   };
 
   try {
-    // Validate the input data according to the schema
-    const validatedUserInput = createCustomerSchema.parse(updatedUserInput);
+    const validatedUserInput = updatCustomerSchema.parse(updatedUserInput);
 
     // Construct the final user object matching User type
     const updatedUser: User = {
-      id: userId, // Add the id as required by `User`
+      id: userId,
       ...validatedUserInput,
     };
 
-    await updateUserById(userId, updatedUser);
-    return redirect(`/users/update/${userId}`);
+    await updateUserById(userId, updatedUser); // Memanggil update tanpa menyimpan hasil
+
+    return redirect(`/users/update/${userId}`); // Mengembalikan redirect setelah sukses
   } catch (error) {
     if (error instanceof z.ZodError) {
       const validationErrors = error.errors.map((e) => e.message).join(", ");
       console.error("Validation errors:", validationErrors);
-      return redirect(
-        `/users/update/${userId}?error=${encodeURIComponent(validationErrors)}`
-      );
     } else {
       console.error("Failed to update user:", error);
       return redirect(`/users/update/${userId}?error=update_failed`);
     }
   }
+  return null;
 }
 
 export function UpdateUserById() {
@@ -115,8 +113,8 @@ export function UpdateUserById() {
               label: "Area ID",
               defaultValue: user.Area?.id,
             },
-            { id: "modem", label: "Modem", defaultValue: user.modem },
-            { id: "odpId", label: "ODP ID", defaultValue: user.Odp?.name },
+            { id: "modemId", label: "Modem", defaultValue: user.modemId },
+            { id: "odpId", label: "ODP ID", defaultValue: user.Odp?.id },
           ].map(({ id, label, defaultValue }) => (
             <div className="flex flex-col mb-1" key={id}>
               <Label htmlFor={id} value={label} className="" />
@@ -125,7 +123,7 @@ export function UpdateUserById() {
                 type="text"
                 name={id}
                 defaultValue={defaultValue}
-                required={id !== "ontName" && id !== "redamanOlt"}
+               
               />
             </div>
           ))}
