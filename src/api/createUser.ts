@@ -40,7 +40,6 @@ export const getCustomerById = async (userId: string) => {
 };
 
 //Update Customer By Id
-
 export const updateCustomer = async (
   id: string,
   values: UpdateCustomerSchema,

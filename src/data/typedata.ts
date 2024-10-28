@@ -2,18 +2,15 @@ export type User = {
   id: string;
   username: string;
   fullname: string;
-  ontName: string;
-  redamanOlt: number;
-  address: string;
-  phoneNumber: string;
-  paket: Paket;
+  ontName?: string;
+  redamanOlt?: string;
+  address?: string;
+  phoneNumber?: string;
+  paket?: Paket;
   diskon: number;
-  Area: Area;
-  Odp: Odp;
-  modem: Modem;
-  Pembayaran: Pembayaran[];
-  createdAt: string;
-  updatedAt: string;
+  Area?: Area;
+  Odp?: Odp;
+  modem?: string;
 };
 
 export type Paket = {

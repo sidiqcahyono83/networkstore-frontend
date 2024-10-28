@@ -28,12 +28,14 @@ export const createCustomerSchema = z.object({
   phoneNumber: z.string().optional(),
 
   // Done
-  paketId: z.string().trim().min(1, { message: "Paket harus dipilih" }),
+  paketId: z.string().min(1, { message: "Paket harus dipilih" }),
 
   // Done
   diskon: z.number().optional().default(0),
   // Done
-  areaId: z.string().trim().min(1, { message: "Area harus dipilih" }),
+  areaId: z.string().optional(),
+  // Done
+  OdodpIdp: z.string().optional(),
 
   // Done
   modem: z.string().trim().min(1, { message: "Modem harus dipilih" }),
