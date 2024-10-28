@@ -13,7 +13,7 @@ import { User } from "../data/typedata";
 
 export async function loader({ params }: LoaderFunctionArgs) {
   const userId = String(params.id);
-  const user = await getUsersById(userId);
+  const user: User = await getUsersById(userId);
   console.log(user);
   return user;
 }
