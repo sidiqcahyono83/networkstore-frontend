@@ -1,66 +1,52 @@
 import { Accordion } from "flowbite-react";
 import { useLoaderData } from "react-router-dom";
-
-// Definisikan tipe User dan Paket
-interface Paket {
-  harga: number;
-}
-
-interface UserDetail {
-  username: string;
-  fullname: string;
-  paket: Paket;
-}
-
-interface User {
-  userId: string;
-  user: UserDetail;
-}
+import { User } from "../data/typedata";
 
 // Loader untuk mengambil data
 export async function loader() {
-  // Ambil bulan sekarang dalam format panjang (contoh: "Oktober")
-  const bulan = new Date().toLocaleString("id-ID", { month: "long" });
-
-  const response = await fetch(
-    `https://teranet.cahyonomuslimsidiq.com/pembayaran/users/sudah/pembayaran/${bulan}`
-  );
+  const baseUrl = "http://localhost:3000";
+  const response = await fetch(`${baseUrl}/users`);
 
   if (!response.ok) {
-    // Tangani error seperti 401, 500, dll.
     throw new Response("Failed to fetch data", { status: response.status });
   }
 
-  const userSudahBayar = await response.json();
-
-  return userSudahBayar.data as User[]; // Cast data ke tipe User[]
+  const users = await response.json();
+  // console.log(users);
+  return { user: users.user };
 }
 
 // Komponen untuk menampilkan data
 export function Component() {
-  const users = useLoaderData() as Awaited<ReturnType<typeof loader>>;
+  const { user } = useLoaderData() as Awaited<ReturnType<typeof loader>>;
 
   return (
     <Accordion>
       <Accordion.Panel>
-        <Accordion.Title>
-          Daftar Pengguna yang Sudah Bayar Bulan Ini
-        </Accordion.Title>
+        <Accordion.Title>Daftar Pengguna</Accordion.Title>
         <Accordion.Content>
-          <ul>
-            {users && users.length > 0 ? (
-              users.map((user: User, index: number) => (
-                <li key={index}>
-                  <strong>Nama:</strong> {user.user.fullname} <br />
-                  <strong>Username:</strong> {user.user.username} <br />
-                  <strong>Harga Paket:</strong> Rp
-                  {user.user.paket.harga.toLocaleString("id-ID")}
-                </li>
-              ))
-            ) : (
-              <li>Tidak ada pengguna yang sudah membayar bulan ini.</li>
-            )}
-          </ul>
+          {/* <p>Jumlah Pengguna: {users.length}</p> */}
+          <table className="min-w-full bg-white border border-gray-300 mt-4">
+            <thead>
+              <tr>
+                <th className="py-2 px-4 border-b">ID Pengguna</th>
+                <th className="py-2 px-4 border-b">Username</th>
+                <th className="py-2 px-4 border-b">Nama Lengkap</th>
+                <th className="py-2 px-4 border-b">Harga Paket</th>
+              </tr>
+            </thead>
+            <tbody>
+              {/* <pre>{JSON.stringify(user, null, 2)}</pre> */}
+              {user.map((items: User, index: number) => (
+                <tr key={items.id} className="text-center">
+                  <td className="py-2 px-4 border-b">{index + 1}</td>
+                  <td className="py-2 px-4 border-b">{items.username}</td>
+                  <td className="py-2 px-4 border-b">{items.fullname}</td>
+                  <td className="py-2 px-4 border-b">{items.paket?.harga}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </Accordion.Content>
       </Accordion.Panel>
     </Accordion>

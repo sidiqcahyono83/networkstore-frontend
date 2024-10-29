@@ -6,7 +6,7 @@ import "./index.css";
 import { Layout } from "./routes/Layout";
 import { App, loader as appLoader } from "./routes/App";
 
-import { Component } from "./routes/acordion";
+// import { Component, loader as componentLoader } from "./routes/acordion";
 import { Register, action as registerAction } from "./routes/register";
 import { Users, loader as userLoader } from "./routes/users";
 import { Login } from "./routes/login";
@@ -42,6 +42,7 @@ import {
   loader as updateUserByIdLoader,
   action as updateUserByIdAction,
 } from "./routes/userUpdateById";
+import { Component } from "./routes/acordion";
 
 const router = createBrowserRouter([
   {
@@ -133,6 +134,7 @@ const router = createBrowserRouter([
       {
         path: "/component",
         element: <Component />,
+        // loader: componentLoader,
       },
     ],
   },
