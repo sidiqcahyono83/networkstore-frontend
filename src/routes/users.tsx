@@ -1,4 +1,4 @@
-import { redirect, useLoaderData } from "react-router-dom";
+import { redirect, useLoaderData, Link } from "react-router-dom";
 import { useState } from "react";
 import { formatIDR } from "../lib/formatCurency";
 import { User } from "../data/typedata";
@@ -65,13 +65,18 @@ export function Users() {
       </div>
 
       {/* Search input */}
-      <input
-        type="text"
-        placeholder="Search by Full Name"
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        className="mb-4 p-2 border border-gray-300 rounded"
-      />
+      <div className="flex flex-row items-center">
+        <Button color="warning" as={Link} to="/create/users">
+          Add
+        </Button>
+        <input
+          type="text"
+          placeholder="Search by Full Name"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="mx-2 my-2 p-2 border border-gray-300 rounded-full justify-end"
+        />
+      </div>
 
       <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
         <thead className="bg-gray-50 dark:bg-gray-700">
@@ -139,15 +144,15 @@ export function Users() {
                 {user.fullname}
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
-                {user.paket.name}
+                {user.paket?.name}
                 <br />
-                {formatIDR(user.paket.harga)}
+                {user.paket?.harga}
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
                 {formatIDR(user.diskon)}
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
-                {user.Area === null ? user.address : user.Area.name}
+                {user.Area === null ? user.address : user.Area?.name}
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
                 {user.ontName}
@@ -178,7 +183,7 @@ export function Users() {
             <td className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               {formatIDR(
                 currentUsers.reduce(
-                  (total, user) => total + user.paket.harga,
+                  (total, user) => total + user.paket?.harga,
                   0
                 )
               )}

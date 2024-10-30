@@ -27,9 +27,6 @@ export type Area = {
   name: string;
   createdAt: string;
   updatedAt: string;
-  user: User[];
-  odp: Odp[];
-  administrator: Administrator[];
 };
 
 export type Odp = {

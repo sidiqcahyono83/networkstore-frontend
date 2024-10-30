@@ -35,7 +35,7 @@ export const createCustomerSchema = z.object({
   // Done
   areaId: z.string().optional(),
   // Done
-  OdodpIdp: z.string().optional(),
+  odpId: z.string().optional(),
 
   // Done
   modem: z.string().trim().min(1, { message: "Modem harus dipilih" }),
