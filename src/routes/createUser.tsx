@@ -1,6 +1,6 @@
 import { Form, Link, useLoaderData } from "react-router-dom";
 import { Button, Label, TextInput } from "flowbite-react";
-import { Area, Odp, Paket } from "../data/typedata";
+import { Area, Modem, Odp, Paket } from "../data/typedata";
 
 // loader
 export async function loader() {
@@ -20,18 +20,24 @@ export async function loader() {
     );
     const responseJSONArea = await responseArea.json();
 
+    const responseModem = await fetch(
+      `${import.meta.env.VITE_BACKEND_API_URL}/modem`
+    );
+    const responseJSONModem = await responseModem.json();
+
     const paket: Paket[] = responseJSON.data;
     const odp: Odp[] = responseJSONOdp.Odp;
     const area: Area[] = responseJSONArea.area;
+    const modem: Modem[] = responseJSONModem.modem;
 
-    return { paket: paket, odp: odp, area: area };
+    return { paket: paket, odp: odp, area: area, modem: modem };
   } catch (error) {
     return { paket: [] };
   }
 }
 
 export function CreateUser() {
-  const { paket, odp, area } = useLoaderData() as Awaited<
+  const { paket, odp, area, modem } = useLoaderData() as Awaited<
     ReturnType<typeof loader>
   >;
   // console.log(odp);
@@ -101,10 +107,19 @@ export function CreateUser() {
             >
               {paket.map((item) => (
                 <option value={item.id} key={item.id}>
-                  {item.name}
+                  {item.name} - Rp. {item.harga}
                 </option>
               ))}
             </select>
+          </div>
+          <div className="flex flex-col">
+            <Label htmlFor="diskon" className="font-normal" value="Diskon" />
+            <TextInput
+              id="diskon"
+              type="number"
+              name="diskon"
+              placeholder="10000"
+            />
           </div>
           <div className="flex flex-col">
             <Label htmlFor="paketId" className="font-normal" value="Paket" />
@@ -130,6 +145,21 @@ export function CreateUser() {
               required
             >
               {area?.map((item) => (
+                <option value={item.id} key={item.id}>
+                  {item.name}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="flex flex-col">
+            <Label htmlFor="paketId" className="font-normal" value="Paket" />
+            <select
+              name="paketId"
+              id="paketId-select"
+              className="mb-4 p-2 border rounded-md"
+              required
+            >
+              {modem?.map((item) => (
                 <option value={item.id} key={item.id}>
                   {item.name}
                 </option>
