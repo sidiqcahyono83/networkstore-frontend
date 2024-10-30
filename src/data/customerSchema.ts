@@ -39,15 +39,6 @@ export const createCustomerSchema = z.object({
 
   // Done
   modem: z.string().trim().min(1, { message: "Modem harus dipilih" }),
-
-  // Done
-  Pembayaran: z
-    .array(
-      z.object({
-        id: z.string(),
-      })
-    )
-    .optional(),
 });
 
 export type createCustomerSchema = z.infer<typeof createCustomerSchema>;

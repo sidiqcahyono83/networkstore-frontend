@@ -1,6 +1,7 @@
-import { Form, Link, useLoaderData } from "react-router-dom";
+import { Form, Link, useLoaderData, useNavigate } from "react-router-dom";
 import { Button, Label, TextInput } from "flowbite-react";
 import { Area, Modem, Odp, Paket } from "../data/typedata";
+import { useState } from "react";
 
 // loader
 export async function loader() {
@@ -30,9 +31,9 @@ export async function loader() {
     const area: Area[] = responseJSONArea.area;
     const modem: Modem[] = responseJSONModem.modem;
 
-    return { paket: paket, odp: odp, area: area, modem: modem };
+    return { paket, odp, area, modem };
   } catch (error) {
-    return { paket: [] };
+    return { paket: [], odp: [], area: [], modem: [] };
   }
 }
 
@@ -40,14 +41,48 @@ export function CreateUser() {
   const { paket, odp, area, modem } = useLoaderData() as Awaited<
     ReturnType<typeof loader>
   >;
-  // console.log(odp);
+
+  const navigate = useNavigate();
+  const [error, setError] = useState<string | null>(null);
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+
+    const data = {
+      username: formData.get("username") as string,
+      fullname: formData.get("fullname") as string,
+      ontName: formData.get("ontName") as string,
+      redamanOlt: formData.get("redamanOlt") as string,
+      address: formData.get("address") as string,
+      phoneNumber: formData.get("phoneNumber") as string,
+      paketId: formData.get("paketId") as string,
+      diskon: parseFloat(formData.get("diskon") as string),
+      odpId: formData.get("odpId") as string,
+      areaId: formData.get("areaId") as string,
+      modemId: formData.get("modemId") as string,
+    };
+
+    try {
+      const result = await CreateUser(data);
+      console.log("User created:", result);
+      navigate("/users");
+    } catch (error) {
+      console.error("Error creating user:", error);
+      setError("Failed to create user. Please try again.");
+    }
+  };
 
   return (
     <div className="flex justify-center min-h-screen py-2 bg-gray-100">
       <div className="bg-white rounded-lg shadow-md p-2 max-w-xl w-full px-8">
-        <h1 className="text-xl font-bold mb-2 text-center">Update</h1>
-        {/* <pre>{JSON.stringify(odp, null, 2)}</pre> */}
-        <Form method="post" className="flex flex-col gap-4">
+        <h1 className="text-xl font-bold mb-2 text-center">Create User</h1>
+        {error && <p className="text-red-500 text-center">{error}</p>}
+        <Form
+          method="post"
+          className="flex flex-col gap-4"
+          onSubmit={handleSubmit}
+        >
           <div className="flex flex-col">
             <Label
               htmlFor="username"
@@ -122,14 +157,14 @@ export function CreateUser() {
             />
           </div>
           <div className="flex flex-col">
-            <Label htmlFor="paketId" className="font-normal" value="Paket" />
+            <Label htmlFor="odpId" className="font-normal" value="ODP" />
             <select
-              name="paketId"
-              id="paketId-select"
+              name="odpId"
+              id="odpId-select"
               className="mb-4 p-2 border rounded-md"
               required
             >
-              {odp?.map((item) => (
+              {odp.map((item) => (
                 <option value={item.id} key={item.id}>
                   {item.name}
                 </option>
@@ -137,14 +172,14 @@ export function CreateUser() {
             </select>
           </div>
           <div className="flex flex-col">
-            <Label htmlFor="paketId" className="font-normal" value="Paket" />
+            <Label htmlFor="areaId" className="font-normal" value="Area" />
             <select
-              name="paketId"
-              id="paketId-select"
+              name="areaId"
+              id="areaId-select"
               className="mb-4 p-2 border rounded-md"
               required
             >
-              {area?.map((item) => (
+              {area.map((item) => (
                 <option value={item.id} key={item.id}>
                   {item.name}
                 </option>
@@ -152,14 +187,14 @@ export function CreateUser() {
             </select>
           </div>
           <div className="flex flex-col">
-            <Label htmlFor="paketId" className="font-normal" value="Paket" />
+            <Label htmlFor="modemId" className="font-normal" value="Modem" />
             <select
-              name="paketId"
-              id="paketId-select"
+              name="modemId"
+              id="modemId-select"
               className="mb-4 p-2 border rounded-md"
               required
             >
-              {modem?.map((item) => (
+              {modem.map((item) => (
                 <option value={item.id} key={item.id}>
                   {item.name}
                 </option>
