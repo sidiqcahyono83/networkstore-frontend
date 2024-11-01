@@ -37,7 +37,7 @@ const PppActive = () => {
     currentPage * itemsPerPage
   );
 
-  const handlePageChange = (pageNumber) => {
+  const handlePageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber);
   };
 

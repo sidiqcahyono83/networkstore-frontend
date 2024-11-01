@@ -96,3 +96,12 @@ export type Modem = {
   createdAt: string;
   updatedAt: string;
 };
+
+export type Pppoe = {
+  id: string;
+  name: string;
+  serservice: string;
+  address: string;
+  uptime: string;
+  disabled: boolean;
+};

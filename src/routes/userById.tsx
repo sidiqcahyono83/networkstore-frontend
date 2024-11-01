@@ -134,13 +134,13 @@ export function PembayaranByUserId() {
           htmlFor="harga"
           className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
         >
-          Harga
+          Total Bayar
         </label>
         <input
           type="number"
-          name="harga"
-          id="harga"
-          defaultValue={user.paket?.harga ?? 0} // Set default to user's paket harga
+          name="totalBayar"
+          id="totalBayar"
+          defaultValue={user.paket?.harga ?? -user.diskon} // Set default to user's paket harga
           className="mb-4 p-2 border rounded-md"
           required
         />
@@ -187,5 +187,5 @@ export async function action({ request }: ActionFunctionArgs) {
     return { error: "Pembayaran failed" };
   }
 
-  return redirect(`/pembayaran`);
+  return redirect(`/usersBelumBayar`);
 }

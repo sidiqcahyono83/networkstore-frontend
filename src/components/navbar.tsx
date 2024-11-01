@@ -1,4 +1,3 @@
-import { Dropdown } from "flowbite-react";
 import { Link, useNavigate } from "react-router-dom";
 
 export const Navbar = () => {
@@ -9,27 +8,42 @@ export const Navbar = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("adminId");
     localStorage.removeItem("username");
+    localStorage.removeItem("level");
     navigate("/");
   };
 
   return (
     <nav className="bg-gray-800 p-4 flex justify-between">
       <div>
-        <Link to="/pppoe" className="text-white mr-4">
-          PPP
+        <Link to="/" className="text-white mr-4">
+          Home
         </Link>
-        <Link to="/users" className="text-white mr-4">
-          Users
-        </Link>
-        <Link to="/usersBelumBayar" className="text-white mr-4">
-          Belum Bayar
-        </Link>
-        <Link to="/pembayaran" className="text-white mr-4">
-          Pembayaran
-        </Link>
-        <Link to="/filterpembayaran" className="text-white">
-          Filter-Pembayaran
-        </Link>
+        {username === "sidiqcahyono" && (
+          <>
+            <Link to="/users" className="text-white mr-4">
+              Users
+            </Link>
+            <Link to="/usersBelumBayar" className="text-white mr-4">
+              Users Belum Bayar
+            </Link>
+            <Link to="/pembayaran" className="text-white mr-4">
+              Pembayaran
+            </Link>
+            <Link to="/filterpembayaran" className="text-white">
+              Filter-Pembayaran
+            </Link>
+          </>
+        )}
+        {(username === "hujin" || username === "misbah") && (
+          <>
+            <Link to="/usersBelumBayar" className="text-white mr-4">
+              Users Belum Bayar
+            </Link>
+            <Link to="/pppoe" className="text-white mr-4">
+              PPP
+            </Link>
+          </>
+        )}
       </div>
       <div className="text-white">
         {username ? (

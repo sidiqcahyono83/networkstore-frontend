@@ -29,6 +29,7 @@ export const AdminDashboard = () => {
     <div>
       <h1>Admin Dashboard</h1>
       <p>Total Users: {userCount}</p>
+      <p>Nama : </p>
 
       <h2>Areas</h2>
       <ul></ul>
