@@ -13,7 +13,7 @@ export const Login = () => {
 
     try {
       const response = await fetch(
-        "https://teranet.cahyonomuslimsidiq.com/auth/login",
+        `${import.meta.env.VITE_BACKEND_API_URL}/auth/login`,
         {
           method: "POST",
           headers: {

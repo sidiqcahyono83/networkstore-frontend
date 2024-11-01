@@ -50,7 +50,7 @@ export function UsersBelumBayar() {
 
   // Total pengguna yang belum membayar
   const totalBelumBayar = userBelumbayar.data.reduce((acc, user) => {
-    return acc + user.paket.harga;
+    return acc + (user.paket?.harga || 0);
   }, 0);
 
   // Filter users berdasarkan search term
@@ -117,9 +117,9 @@ export function UsersBelumBayar() {
                 <Table.Cell>{indexOfFirstUser + index + 1}</Table.Cell>
                 <Table.Cell>{user.fullname}</Table.Cell>
                 <Table.Cell>
-                  {user.paket.name}
+                  {user.paket?.name}
                   <br />
-                  {user.paket.harga}
+                  {user.paket?.harga}
                 </Table.Cell>
                 <Table.Cell>{user.Area?.name}</Table.Cell>
 

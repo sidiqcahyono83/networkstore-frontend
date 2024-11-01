@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { getAllUsers } from "../lib/actionusers";
 import { Card } from "flowbite-react";
 
 // Define the type for admin data
@@ -13,7 +12,7 @@ type AdminData = {
 };
 
 export const AdminDashboard = () => {
-  const [adminData, setAdminData] = useState<AdminData | null>(null); // Apply the type here
+  const [adminData, setAdminData] = useState<AdminData | null>(null);
   const [userCount, setUserCount] = useState(0);
   const [error, setError] = useState("");
 
@@ -26,7 +25,7 @@ export const AdminDashboard = () => {
     const fetchAdminData = async () => {
       try {
         const response = await fetch(
-          "https://teranet.cahyonomuslimsidiq.com/auth/me",
+          `${import.meta.env.VITE_BACKEND_API_URL}/auth/me`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -40,10 +39,9 @@ export const AdminDashboard = () => {
         }
 
         const data = await response.json();
-        setAdminData(data.data); // Update to access data under "data" in the response
+        setAdminData(data.data);
 
-        // Set adminId and level in local storage
-        const { id, level } = data.data; // Destructure to get id and level
+        const { id, level } = data.data;
         localStorage.setItem("adminId", id);
         localStorage.setItem("level", level);
       } catch (err) {
@@ -55,20 +53,33 @@ export const AdminDashboard = () => {
   }, [token]);
 
   useEffect(() => {
-    const fetchUsers = async () => {
-      const { users, error } = await getAllUsers();
-      if (error) {
-        setError(error);
-        return;
-      }
+    if (!token) return;
 
-      if (users.length > 0) {
-        setUserCount(users.length);
+    const fetchUsers = async () => {
+      try {
+        const response = await fetch(
+          `${import.meta.env.VITE_BACKEND_API_URL}/users`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || "Failed to fetch users data");
+        }
+
+        const usersData = await response.json();
+        setUserCount(usersData.user.length); // Assuming usersData.data is an array
+      } catch (err) {
+        setError("Failed to fetch users data.");
       }
     };
 
     fetchUsers();
-  }, []);
+  }, [token]);
 
   if (error) {
     return <div>Error: {error}</div>;
@@ -94,11 +105,9 @@ export const AdminDashboard = () => {
       </Card>
 
       <h2 className="text-xl font-bold mt-6">Areas</h2>
-      {/* Placeholder example if area data is added in the future */}
       <ul>
         <li>Area 1</li>
         <li>Area 2</li>
-        {/* Modify or add area data as needed */}
       </ul>
     </div>
   );

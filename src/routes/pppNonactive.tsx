@@ -12,7 +12,7 @@ const PppoeNonactive = () => {
     const fetchNonActivePPPoE = async () => {
       try {
         const response = await fetch(
-          "https://teranet.cahyonomuslimsidiq.com/nonactive"
+          `${import.meta.env.VITE_BACKEND_API_URL}/nonactive`
         );
         const data = await response.json();
         setPppoeNonActive(data.data.inactive_ppp);

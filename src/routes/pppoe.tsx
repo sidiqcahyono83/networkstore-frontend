@@ -12,7 +12,7 @@ const PppActive = () => {
     const fetchActivePPPoE = async () => {
       try {
         const response = await fetch(
-          "https://teranet.cahyonomuslimsidiq.com/pppactive"
+          `${import.meta.env.VITE_BACKEND_API_URL}/pppactive`
         );
         const data = await response.json();
         setPppoe(data.data.active_ppp);
