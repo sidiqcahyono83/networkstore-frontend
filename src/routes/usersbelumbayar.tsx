@@ -68,8 +68,8 @@ export function UsersBelumBayar() {
 
   return (
     <div className="p-2 sm:p-4 lg:p-4">
-      <h1 className="text-xl font-bold mb-4 text-center sm:text-left">
-        Daftar Pengguna Belum Bayar
+      <h1 className="text-xl font-bold mb-4 text-center sm:text-center">
+        Daftar Pengguna Belum Bayar : <strong>{filteredUsers.length}</strong>
       </h1>
 
       {/* Form pencarian */}
@@ -79,21 +79,21 @@ export function UsersBelumBayar() {
           placeholder="Cari berdasarkan nama lengkap..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="border rounded px-4 py-2 w-full sm:w-3/4 lg:w-1/2"
+          className="mb-4 mt-4 p-2 border rounded-md w-full"
         />
       </div>
 
       {/* Menampilkan jumlah total pengguna dan total tagihan */}
-      <div className="mb-4 text-center sm:text-left">
-        <p>
-          Total Pengguna yang Belum Bayar:{" "}
-          <strong>{filteredUsers.length}</strong>
-        </p>
-        {/* <p>
+      {/* <div className="mb-4 text-center sm:text-left">
+          <p>
+            Total Pengguna yang Belum Bayar:{" "}
+            <strong>{filteredUsers.length}</strong>
+          </p> */}
+      {/* <p>
           Total Tagihan yang Belum Dibayar:{" "}
           <strong>{formatIDR(totalBelumBayar)}</strong>
         </p> */}
-      </div>
+      {/* </div> */}
 
       {/* Tabel menggunakan Flowbite */}
       <div className="overflow-x-auto">

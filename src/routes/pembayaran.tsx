@@ -65,7 +65,7 @@ export function PembayaranList() {
   return (
     <div className="my-6 mx-4">
       <h2 className="text-xl text-center font-bold leading-none text-gray-900 dark:text-white">
-        Pembayaran
+        Pembayaran : <strong>{filteredPembayaran.length}</strong>
       </h2>
 
       {/* Input pencarian */}
