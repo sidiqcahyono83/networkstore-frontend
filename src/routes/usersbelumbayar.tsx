@@ -1,9 +1,9 @@
 import { useLoaderData, json, redirect } from "react-router-dom";
 import type { User } from "../data/typedata"; // Pastikan tipe User ada di typedata
-import { Table, Pagination } from "flowbite-react";
+import { Table, Pagination, Button } from "flowbite-react";
 import { useState } from "react";
 import { currentMonth } from "../lib/formatBulanIdn";
-import { formatIDR } from "../lib/formatCurency";
+// import { formatIDR } from "../lib/formatCurency";
 
 type Pembayaran = {
   message: string;
@@ -49,13 +49,13 @@ export function UsersBelumBayar() {
   const usersPerPage = 15;
 
   // Total pengguna yang belum membayar
-  const totalBelumBayar = userBelumbayar.data.reduce((acc, user) => {
-    return acc + (user.paket?.harga || 0);
-  }, 0);
+  // const totalBelumBayar = userBelumbayar.data.reduce((acc, user) => {
+  //   return acc + (user.paket?.harga || 0);
+  // }, 0);
 
   // Filter users berdasarkan search term
   const filteredUsers = userBelumbayar.data.filter((user) =>
-    user.fullname.toLowerCase().includes(searchTerm.toLowerCase())
+    user.fullname?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   // Mengatur data untuk paginasi
@@ -89,15 +89,15 @@ export function UsersBelumBayar() {
           Total Pengguna yang Belum Bayar:{" "}
           <strong>{filteredUsers.length}</strong>
         </p>
-        <p>
+        {/* <p>
           Total Tagihan yang Belum Dibayar:{" "}
           <strong>{formatIDR(totalBelumBayar)}</strong>
-        </p>
+        </p> */}
       </div>
 
       {/* Tabel menggunakan Flowbite */}
       <div className="overflow-x-auto">
-        <Table striped={true} className="min-w-full">
+        <Table striped={true} className="min-w-min">
           <Table.Head>
             <Table.HeadCell>No</Table.HeadCell>
             <Table.HeadCell>Full Name</Table.HeadCell>
@@ -121,15 +121,14 @@ export function UsersBelumBayar() {
                   <br />
                   {user.paket?.harga}
                 </Table.Cell>
-                <Table.Cell>{user.Area?.name}</Table.Cell>
+                <Table.Cell>
+                  {user.area === null ? user.address : user.area?.name}
+                </Table.Cell>
 
                 <Table.Cell>
-                  <a
-                    href={`/users/${user.id}`}
-                    className="font-medium text-blue-600 hover:underline dark:text-blue-500"
-                  >
+                  <Button color="success" href={`/users/${user.id}`}>
                     Bayar
-                  </a>
+                  </Button>
                 </Table.Cell>
               </Table.Row>
             ))}

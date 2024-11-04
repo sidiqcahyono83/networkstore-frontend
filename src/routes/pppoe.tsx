@@ -1,6 +1,18 @@
 import { Table, TextInput, Button } from "flowbite-react";
 import { useEffect, useState } from "react";
 
+// Define an interface for the structure of each PPPoE user
+// interface PPPoEUser {
+//   id: string;
+//   name: string;
+//   service: string;
+//   profile: string;
+//   "last-logged-out": string;
+//   "last-caller-id": string;
+//   "last-disconnect-reason": string;
+//   disabled: string;
+// }
+
 const PppActive = () => {
   const [pppoe, setPppoe] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -62,13 +74,13 @@ const PppActive = () => {
             Total Pengguna Aktif: {filteredData.length}
           </p>
           <div className="flex flex-col sm:flex-row justify-center sm:justify-between items-center gap-4 flex-wrap">
-            <Button
+            {/* <Button
               color="light"
               href="/pppoesecret"
               className="w-full sm:w-auto bg-blue-700"
             >
               PPPoE Secret
-            </Button>
+            </Button> */}
             <Button
               color="light"
               href="/nonactive"
@@ -78,7 +90,7 @@ const PppActive = () => {
             </Button>
             <Button
               color="light"
-              href="/active"
+              href="/pppoe"
               className="w-full sm:w-auto bg-green-600"
             >
               Back to PPPoE

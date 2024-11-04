@@ -12,8 +12,9 @@ import { updatCustomerSchema } from "../data/customerSchema";
 import { User } from "../data/typedata";
 
 export async function loader({ params }: LoaderFunctionArgs) {
-  const userId = String(params.id);
+  const userId = String(params.userId);
   const user = await getUsersById(userId);
+
   // console.log(user);
   return user;
 }
@@ -41,7 +42,7 @@ export async function action({ request, params }: LoaderFunctionArgs) {
 
     // Construct the final user object matching User type
     const updatedUser: User = {
-      id: userId,
+      userId,
       ...validatedUserInput,
     };
 
@@ -123,7 +124,6 @@ export function UpdateUserById() {
                 type="text"
                 name={id}
                 defaultValue={defaultValue}
-               
               />
             </div>
           ))}

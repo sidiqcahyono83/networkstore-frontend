@@ -46,6 +46,15 @@ export const Navbar = () => {
                 <Link to="/users" className="text-white py-2 px-4 md:mr-4">
                   Users
                 </Link>
+                <Link to="/Area" className="text-white py-2 px-4 md:mr-4">
+                  Area
+                </Link>
+                <Link to="/" className="text-white py-2 px-4 md:mr-4">
+                  Paket
+                </Link>
+                <Link to="/odp" className="text-white py-2 px-4 md:mr-4">
+                  ODP
+                </Link>
                 <Link to="/pembayaran" className="text-white py-2 px-4 md:mr-4">
                   Pembayaran
                 </Link>

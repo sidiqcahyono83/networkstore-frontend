@@ -6,7 +6,7 @@ import "./index.css";
 import { Layout } from "./routes/Layout";
 import { App, loader as appLoader } from "./routes/App";
 
-import { Component } from "./routes/acordion";
+// import { Component } from "./routes/acordion";
 import { Register, action as registerAction } from "./routes/register";
 import { Users, loader as userLoader } from "./routes/users";
 import { Login } from "./routes/login";
@@ -37,12 +37,14 @@ import {
   loader as pembayaranByIdLoader,
   action as PembayaranByIdAction,
 } from "./routes/pembayaranById";
+
+import { CreateUser, loader as createUserLoader } from "./routes/createUser";
 import {
   UpdateUserById,
-  loader as updateUserByIdLoader,
-  action as updateUserByIdAction,
+  loader as updateLoaderUserById,
 } from "./routes/userUpdateById";
-import { CreateUser, loader as createUserLoader } from "./routes/createUser";
+import { AreaList, loader as areaLoader } from "./routes/area";
+import { OdpList, loader as odpLoader } from "./routes/odpList";
 
 const router = createBrowserRouter([
   {
@@ -78,10 +80,9 @@ const router = createBrowserRouter([
         loader: createUserLoader,
       },
       {
-        path: "/users/update/:id",
+        path: "/update/users/:userId",
         element: <UpdateUserById />,
-        loader: updateUserByIdLoader,
-        action: updateUserByIdAction,
+        loader: updateLoaderUserById,
       },
       {
         path: "/pembayaran",
@@ -125,14 +126,14 @@ const router = createBrowserRouter([
         action: PembayaranByUserIdAction,
       },
       {
-        path: "/update/users/:id",
-        element: <UpdateUserById />,
-        loader: updateUserByIdLoader,
-        action: updateUserByIdAction,
+        path: "/area",
+        element: <AreaList />,
+        loader: areaLoader,
       },
       {
-        path: "/component",
-        element: <Component />,
+        path: "/odp",
+        element: <OdpList />,
+        loader: odpLoader,
       },
     ],
   },

@@ -41,7 +41,7 @@ export function Users() {
 
   // Search and Filter logic
   const filteredUsers = users.filter((user) =>
-    user.fullname.toLowerCase().includes(searchTerm.toLowerCase())
+    user.fullname?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   // Pagination logic
@@ -74,7 +74,7 @@ export function Users() {
           placeholder="Search by Full Name"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="mx-2 my-2 p-2 border border-gray-300 rounded-full justify-end"
+          className="mx-2 my-2 p-2 border border-gray-300 rounded-md justify-end"
         />
       </div>
 
@@ -132,6 +132,7 @@ export function Users() {
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
+          {/* <pre>{JSON.stringify(currentUsers, null, 2)}</pre> */}
           {currentUsers.map((user, index) => (
             <tr key={user.id}>
               <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">
@@ -146,13 +147,13 @@ export function Users() {
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
                 {user.paket?.name}
                 <br />
-                {user.paket?.harga}
+                {formatIDR(user.paket?.harga)}
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
                 {formatIDR(user.diskon)}
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
-                {user.Area === null ? user.address : user.Area?.name}
+                {user.area === null ? user.address : user.area?.name}
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
                 {user.ontName}
@@ -183,7 +184,7 @@ export function Users() {
             <td className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               {formatIDR(
                 currentUsers.reduce(
-                  (total, user) => total + user.paket?.harga,
+                  (total, user) => total + (user.paket?.harga ?? 0),
                   0
                 )
               )}
