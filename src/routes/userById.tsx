@@ -11,10 +11,25 @@ import type { User } from "../data/typedata";
 // Loader function to fetch user by ID
 export async function loader({ params }: LoaderFunctionArgs) {
   const userId = params.id;
+  // Ambil token dan username dari localStorage
+  const token = localStorage.getItem("token");
+  const username = localStorage.getItem("username");
+
+  if (!token || !username) {
+    // Jika token atau username tidak ada, return null atau handle error
+    return { user: null, error: "Token atau username tidak ditemukan" };
+  }
 
   try {
     const response = await fetch(
-      `${import.meta.env.VITE_BACKEND_API_URL}/users/${userId}`
+      `${import.meta.env.VITE_BACKEND_API_URL}/users/${userId}`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`, // Tambahkan token di header Authorization
+          "Content-Type": "application/json",
+        },
+      }
     );
 
     if (!response.ok) {
