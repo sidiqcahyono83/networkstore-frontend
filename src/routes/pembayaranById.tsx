@@ -11,10 +11,14 @@ import type { Pembayaran } from "../data/typedata";
 // Loader function to fetch user by ID
 export async function loader({ params }: LoaderFunctionArgs) {
   const pembayaranId = params.id;
+  const token = localStorage.getItem("token");
 
   try {
     const response = await fetch(
-      `${import.meta.env.VITE_BACKEND_API_URL}/pembayaran/${pembayaranId}`
+      `${import.meta.env.VITE_BACKEND_API_URL}/pembayaran/${pembayaranId}`,
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
     );
 
     if (!response.ok) {
