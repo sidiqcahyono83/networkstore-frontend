@@ -11,23 +11,10 @@ import type { Pembayaran } from "../data/typedata";
 // Loader function to fetch user by ID
 export async function loader({ params }: LoaderFunctionArgs) {
   const pembayaranId = params.id;
-  const token = localStorage.getItem("token");
-
-  if (!token) {
-    // Jika token atau username tidak ada, return null atau handle error
-    return { error: "Token atau username tidak ditemukan" };
-  }
 
   try {
     const response = await fetch(
-      `${import.meta.env.VITE_BACKEND_API_URL}/pembayaran/${pembayaranId}`,
-      {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`, // Tambahkan token di header Authorization
-          "Content-Type": "application/json",
-        },
-      }
+      `${import.meta.env.VITE_BACKEND_API_URL}/pembayaran/${pembayaranId}`
     );
 
     if (!response.ok) {
@@ -39,7 +26,6 @@ export async function loader({ params }: LoaderFunctionArgs) {
 
     return { pembayaran: pembayaran };
   } catch (error) {
-    console.error("Error fetching pembayaran:", error);
     return { pembayaran: null }; // Return null if there is any error
   }
 }
@@ -56,13 +42,13 @@ export function PembayaranById() {
 
   // Display user information and form for pembayaran
   return (
-    <div className="p-2 grid justify-center">
+    <div className="p-2 grid justify-center ">
       <h2 className="text-lg font-semibold">
         Pembayaran for {pembayaran.user.fullname}
       </h2>
 
       {/* Pembayaran form */}
-      <Form method="put" className="flex-col-1 items-center justify-center">
+      <Form method="post" className="flex-col-1 items-center justify-center">
         <input
           type="hidden"
           name="userId"
@@ -79,8 +65,7 @@ export function PembayaranById() {
         <select
           id="metode-select"
           className="mb-4 p-2 border rounded-md"
-          defaultValue={pembayaran.user.id}
-          name="userId"
+          defaultValue={pembayaran.user.fullname}
         >
           <option value={pembayaran.user.id}>{pembayaran.user.fullname}</option>
         </select>
@@ -125,11 +110,11 @@ export function PembayaranById() {
           name="metode"
           id="metode-select"
           className="mb-4 p-2 border rounded-md"
-          defaultValue="Cash"
+          defaultValue={"Cash"}
         >
-          <option value="Cash">Cash</option>
-          <option value="Transfer BRI">Transfer BRI</option>
-          <option value="Transfer BNI">Transfer BNI</option>
+          <option value={"Cash"}>Cash</option>
+          <option value={"Transfer BRI"}>Transfer BRI</option>
+          <option value={"Transfer BNI"}>Transfer BNI</option>
         </select>
 
         <label
@@ -154,7 +139,6 @@ export function PembayaranById() {
   );
 }
 
-// Action function to handle update of pembayaran
 export async function action({ request, params }: ActionFunctionArgs) {
   const formData = await request.formData();
 
@@ -165,39 +149,36 @@ export async function action({ request, params }: ActionFunctionArgs) {
   }
 
   const id = params.id;
+
   const harga = Number(formData.get("harga"));
   const diskon = Number(formData.get("diskon"));
-  const totalBayar = harga - diskon;
+  const totalHarga = harga - diskon;
 
   const UpdatToPembayaranData = {
     userId: formData.get("userId")?.toString(),
-    adminId: formData.get("adminId")?.toString(),
-    metode: formData.get("metode")?.toString(),
+    adminId: localStorage.getItem("adminId"),
+    metode: formData.get("metode"),
     ppn: 0,
-    totalBayar,
+    totalBayar: totalHarga,
   };
+  console.log(UpdatToPembayaranData);
 
-  try {
-    const response = await fetch(
-      `${import.meta.env.VITE_BACKEND_API_URL}/pembayaran/${id}`,
-      {
-        method: "PUT",
-        body: JSON.stringify(UpdatToPembayaranData),
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      }
-    );
-
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.message || "Pembayaran update failed");
+  const response = await fetch(
+    `${import.meta.env.VITE_BACKEND_API_URL}/pembayaran/${id}`,
+    {
+      method: "PUT",
+      body: JSON.stringify(UpdatToPembayaranData),
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
     }
+  );
 
-    return redirect(`/usersBelumBayar`);
-  } catch (error) {
-    console.error("Error updating pembayaran:", error);
-    return redirect(`/error`); // Redirect to an error page if needed
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.message || "Pembayaran failed"); // Improved error handling
   }
+
+  return redirect(`/usersBelumBayar`);
 }
