@@ -42,6 +42,7 @@ import { CreateUser, loader as createUserLoader } from "./routes/createUser";
 import {
   UpdateUserById,
   loader as updateLoaderUserById,
+  action as updateActionUserById,
 } from "./routes/userUpdateById";
 import { AreaList, loader as areaLoader } from "./routes/area";
 import { OdpList, loader as odpLoader } from "./routes/odpList";
@@ -80,9 +81,10 @@ const router = createBrowserRouter([
         loader: createUserLoader,
       },
       {
-        path: "/update/users/:userId",
+        path: "/update/users/:id",
         element: <UpdateUserById />,
         loader: updateLoaderUserById,
+        action: updateActionUserById,
       },
       {
         path: "/pembayaran",

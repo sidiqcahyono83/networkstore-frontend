@@ -56,6 +56,34 @@ export function Users() {
     setCurrentPage(page);
   };
 
+  const handleDelete = async (userId: string) => {
+    try {
+      const token = localStorage.getItem("token");
+
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_API_URL}/users/${userId}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to delete user");
+      }
+
+      // alert("User deleted successfully");
+      // // Arahkan atau perbarui tampilan
+      redirect("/users"); // Contoh pengalihan ke halaman daftar pengguna
+    } catch (error) {
+      console.error("Error deleting user:", error);
+      alert("Failed to delete user");
+    }
+  };
+
   return (
     <div className="my-4 mx-4">
       <div className=" flex items-center justify-center">
@@ -164,10 +192,14 @@ export function Users() {
                   href={`/update/users/${user.id}`}
                   className="bg-blue-700"
                 >
-                  Edt
+                  Edit
                 </Button>
-                <Button type="submit" href={`/users/${user.id}`}>
-                  BAYAR
+                <Button
+                  type="button"
+                  onClick={() => handleDelete(user.id)}
+                  className="bg-red-700"
+                >
+                  Delete
                 </Button>
               </td>
             </tr>

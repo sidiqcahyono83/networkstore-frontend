@@ -14,12 +14,38 @@ interface LoaderData {
 // loader
 export async function loader(): Promise<LoaderData> {
   try {
+    const token = localStorage.getItem("token");
+
     const [paketResponse, odpResponse, areaResponse, modemResponse] =
       await Promise.all([
-        fetch(`${import.meta.env.VITE_BACKEND_API_URL}/paket`),
-        fetch(`${import.meta.env.VITE_BACKEND_API_URL}/odp`),
-        fetch(`${import.meta.env.VITE_BACKEND_API_URL}/area`),
-        fetch(`${import.meta.env.VITE_BACKEND_API_URL}/modem`),
+        fetch(`${import.meta.env.VITE_BACKEND_API_URL}/paket`, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }),
+        fetch(`${import.meta.env.VITE_BACKEND_API_URL}/odp`, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }),
+        fetch(`${import.meta.env.VITE_BACKEND_API_URL}/area`, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }),
+        fetch(`${import.meta.env.VITE_BACKEND_API_URL}/modem`, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }),
       ]);
 
     // Check for successful responses
@@ -28,22 +54,17 @@ export async function loader(): Promise<LoaderData> {
     if (!areaResponse.ok) throw new Error("Failed to fetch area data");
     if (!modemResponse.ok) throw new Error("Failed to fetch modem data");
 
-    // Assuming the data is structured as expected
-    const responseJSON = await paketResponse.json();
-    const responseJSONOdp = await odpResponse.json();
-    const responseJSONArea = await areaResponse.json();
-    const responseJSONModem = await modemResponse.json();
+    // Parse JSON responses and ensure arrays
+    const paketData = (await paketResponse.json()) || [];
+    const odpData = (await odpResponse.json()) || [];
+    const areaData = (await areaResponse.json()) || [];
+    const modemData = (await modemResponse.json()) || [];
 
-    // Log the data to debug
-    // console.log("Paket Response:", responseJSON);
-    // console.log("ODP Response:", responseJSONOdp);
-    // console.log("Area Response:", responseJSONArea);
-    // console.log("Modem Response:", responseJSONModem);
-
-    const paket: Paket[] = responseJSON.paket || [];
-    const odp: Odp[] = responseJSONOdp.odp || [];
-    const area: Area[] = responseJSONArea.area || [];
-    const modem: Modem[] = responseJSONModem.modem || [];
+    // Extract paket array from paketData
+    const paket = paketData.paket || [];
+    const odp = odpData.odp || [];
+    const area = areaData.area || [];
+    const modem = modemData.modem || [];
 
     return { paket, odp, area, modem };
   } catch (error) {
