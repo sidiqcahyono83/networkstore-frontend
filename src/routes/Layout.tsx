@@ -10,7 +10,7 @@ export const Layout = () => {
       <section className="w-full mx-auto justify-center bg-slate-700">
         <Navbar />
       </section>
-      <section className="bg-amber-500 w-full">
+      <section className="bg-slate-100 w-full">
         <main className="max-w-screen-2xl mx-auto">
           <Outlet />
         </main>

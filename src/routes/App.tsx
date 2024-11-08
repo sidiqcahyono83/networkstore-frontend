@@ -41,7 +41,7 @@ export function App() {
   return (
     <div className="container mx-auto rounded-s-2xl">
       {/* Carousel Section */}
-      <div className="h-56 sm:h-64 xl:h-80 2xl:h-96 bg-slate-100">
+      <div className="h-56 sm:h-64 xl:h-80 2xl:h-96 bg-transparent">
         <Carousel>
           <img src="/CCR.png" alt="CCR" />
           <img src="/4011.png" alt="4011" />
