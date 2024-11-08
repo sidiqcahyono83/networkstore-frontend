@@ -21,8 +21,8 @@ export function OdpList() {
   const { odp: odp } = useLoaderData() as LoaderData; // Menggunakan tipe LoaderData untuk pengetikan
 
   return (
-    <div className="my-4 mx-4">
-      <h2 className="text-xl font-bold leading-none text-gray-900 dark:text-white mb-4">
+    <div className="mx-auto">
+      <h2 className="text-xl font-bold leading-none text-gray-900 dark:text-white py-4 text-center">
         Daftar Area
       </h2>
       <Table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">

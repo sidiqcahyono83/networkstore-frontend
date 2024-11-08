@@ -104,9 +104,6 @@ export function UsersBelumBayar() {
             <Table.HeadCell>Paket</Table.HeadCell>
             <Table.HeadCell>Area</Table.HeadCell>
             <Table.HeadCell>Bayar</Table.HeadCell>
-            <Table.HeadCell>
-              <span className="sr-only">Bayar</span>
-            </Table.HeadCell>
           </Table.Head>
           <Table.Body className="divide-y">
             {currentUsers.map((user: User, index: number) => (
@@ -117,14 +114,11 @@ export function UsersBelumBayar() {
                 <Table.Cell>{indexOfFirstUser + index + 1}</Table.Cell>
                 <Table.Cell>{user.fullname}</Table.Cell>
                 <Table.Cell>
-                  {user.paket?.name}
-                  <br />
-                  {user.paket?.harga}
+                  {user.paket?.name}-{user.paket?.harga}
                 </Table.Cell>
                 <Table.Cell>
                   {user.area === null ? user.address : user.area?.name}
                 </Table.Cell>
-
                 <Table.Cell>
                   <Button color="success" href={`/users/${user.id}`}>
                     Bayar

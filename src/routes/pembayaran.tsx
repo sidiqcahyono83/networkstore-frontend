@@ -63,7 +63,7 @@ export function PembayaranList() {
     return total + item.totalBayar;
   }, 0);
   return (
-    <div className="my-6 mx-4">
+    <div className="mx-auto">
       <h2 className="text-xl text-center font-bold leading-none text-gray-900 dark:text-white">
         Pembayaran : <strong>{filteredPembayaran.length}</strong>
       </h2>

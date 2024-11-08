@@ -85,7 +85,7 @@ export function Users() {
   };
 
   return (
-    <div className="my-4 mx-4">
+    <div className="mx-auto">
       <div className=" flex items-center justify-center">
         <h2 className="text-xl font-bold leading-none text-gray-900 dark:text-white">
           Customer List
@@ -94,7 +94,12 @@ export function Users() {
 
       {/* Search input */}
       <div className="flex flex-row items-center">
-        <Button color="warning" as={Link} to="/create/users">
+        <Button
+          color="green"
+          className="bg-green-500 hover:bg-green-800 text-white"
+          as={Link}
+          to="/create/users"
+        >
           Add
         </Button>
         <input
