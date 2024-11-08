@@ -94,7 +94,11 @@ const PppoeNonactive = () => {
           Non Active: {filteredData.length}
         </p>
         <div className="flex flex-wrap gap-4">
-          <Button color="light" href="/pppoe" className="bg-green-600">
+          <Button
+            color="light"
+            href="/pppoe"
+            className="bg-green-500 text-white hover:bg-green-600"
+          >
             Back to PPPoE
           </Button>
         </div>

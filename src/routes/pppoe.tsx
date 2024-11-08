@@ -59,47 +59,36 @@ const PppActive = () => {
 
   return (
     <div className="max-w-screen-xlg mx-auto px-4 sm:px-6 lg:px-8 py-4">
-      <div className="flex gap-4 mb-4">
-        {/* Baris pertama: Input pencarian dan info jumlah pengguna */}
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-          <TextInput
-            id="search"
-            type="text"
-            placeholder="Cari nama pengguna"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-96"
-          />
-          <p className="text-lg font-semibold">
-            Total Pengguna Aktif: {filteredData.length}
-          </p>
-          <div className="flex flex-col sm:flex-row justify-center sm:justify-between items-center gap-4 flex-wrap">
-            {/* <Button
-              color="light"
-              href="/pppoesecret"
-              className="w-full sm:w-auto bg-blue-700"
-            >
-              PPPoE Secret
-            </Button> */}
-            <Button
-              color="light"
-              href="/nonactive"
-              className="w-full sm:w-auto bg-red-700"
-            >
-              PPPoE Nonactive
-            </Button>
-            <Button
-              color="light"
-              href="/pppoe"
-              className="w-full sm:w-auto bg-green-600"
-            >
-              Back to PPPoE
-            </Button>
-          </div>
+      <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
+        <TextInput
+          id="search"
+          type="text"
+          placeholder="Cari nama pengguna"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="w-96"
+        />
+        <p className="text-lg font-semibold text-center">
+          Total Pengguna Aktif: {filteredData.length}
+        </p>
+        <div className="flex justify-normal gap-2 flex-wrap mx-2">
+          <Button
+            color="light"
+            href="/nonactive"
+            className="w-full sm:w-auto bg-red-500 text-white hover:bg-red-600"
+          >
+            PPPoE Nonactive
+          </Button>
+          <Button
+            color="light"
+            href="/pppoe"
+            className="w-full sm:w-auto bg-green-500 text-white hover:bg-green-700"
+          >
+            Back to PPPoE
+          </Button>
         </div>
-
-        {/* Baris kedua: Tombol-tombol tindakan */}
       </div>
+
       <div className="overflow-x-auto mt-6">
         <Table striped>
           <Table.Head>
