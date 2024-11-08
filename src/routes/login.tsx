@@ -31,7 +31,7 @@ export const Login = () => {
         localStorage.setItem("level", data.level); // Pastikan adminId ada dalam respons
         localStorage.setItem("username", username);
 
-        navigate("/adminDashboard");
+        navigate("/dashboard");
       } else {
         setError(data.message);
       }

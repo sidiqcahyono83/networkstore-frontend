@@ -10,7 +10,7 @@ export type User = {
   paketId: string;
   diskon: number;
   ppn?: number;
-  area?: Area;
+  Area?: Area;
   areaId?: string;
   odp?: Odp;
   odpId?: string;
@@ -107,11 +107,21 @@ export type Modem = {
   user?: User[];
 };
 
-export type Pppoe = {
-  id: string;
+export type PPPoE = {
+  ".id": string;
   name: string;
   service: string;
+  "caller-id": string;
   address: string;
   uptime: string;
-  disabled: boolean;
+  encoding: string;
+  "session-id": string;
+  "limit-bytes-in": string;
+  "limit-bytes-out": string;
+  radius: string;
+  disabled: string;
+  profile: string;
+  password: string;
+  "last-logged-out": string;
+  "last-disconnect-reason": string;
 };

@@ -26,8 +26,6 @@ import {
   usersBelumbayarLoader,
 } from "./routes/usersbelumbayar";
 
-import PppActive from "./routes/pppoe";
-import PppoeNonactive from "./routes/pppNonactive";
 import {
   PembayaranByBulanIni,
   loader as pembayaranBulanIniLoader,
@@ -46,6 +44,8 @@ import {
 } from "./routes/userUpdateById";
 import { AreaList, loader as areaLoader } from "./routes/area";
 import { OdpList, loader as odpLoader } from "./routes/odpList";
+import { PppActive } from "./routes/pppoe";
+import { PppNonActive } from "./routes/pppNonactive";
 
 const router = createBrowserRouter([
   {
@@ -63,11 +63,11 @@ const router = createBrowserRouter([
         action: registerAction,
       },
       {
-        path: "/login",
+        path: "/auth/login",
         element: <Login />,
       },
       {
-        path: "/adminDashboard",
+        path: "/dashboard",
         element: <AdminDashboard />,
       },
       {
@@ -114,10 +114,10 @@ const router = createBrowserRouter([
       },
       {
         path: "/nonactive",
-        element: <PppoeNonactive />,
+        element: <PppNonActive />,
       },
       {
-        path: "/UsersBelumBayar",
+        path: "/belum-bayar",
         element: <UsersBelumBayar />,
         loader: usersBelumbayarLoader,
       },
