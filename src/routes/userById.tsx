@@ -24,7 +24,7 @@ export async function loader({ params }: LoaderFunctionArgs) {
     const responseJSON = await response.json();
     const user: User = responseJSON.user;
 
-    return { user };
+    return { user: user };
   } catch (error) {
     return { user: null }; // Return null if there is any error
   }
@@ -42,93 +42,96 @@ export function PembayaranByUserId() {
 
   // Display user information and form for pembayaran
   return (
-    <div className="p-6 grid justify-center">
-      <h2 className="text-lg font-semibold">Pembayaran for {user.fullname}</h2>
+    <div className="flex justify-center min-h-screen py-2 bg-gray-100">
+      <div className="bg-white rounded-lg shadow-md p-2 max-w-xl w-full px-8">
+        <h2 className="text-lg font-semibold">
+          Pembayaran for {user.fullname}
+        </h2>
 
-      {/* Pembayaran form */}
-      <Form method="post">
-        <input type="hidden" name="userId" defaultValue={user.id ?? ""} />
-        <input type="hidden" name="adminId" defaultValue={adminId ?? ""} />
+        {/* Pembayaran form */}
+        <Form method="post">
+          <input type="hidden" name="userId" defaultValue={user.id ?? ""} />
+          <input type="hidden" name="adminId" defaultValue={adminId ?? ""} />
 
-        <label
-          htmlFor="metode"
-          className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-        >
-          Customer
-        </label>
-        <select
-          id="metode-select"
-          className="mb-4 p-2 border rounded-md"
-          defaultValue={user.fullname}
-        >
-          <option value={user.id}>{user.fullname}</option>
-        </select>
+          <label
+            htmlFor="metode"
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+          >
+            Customer
+          </label>
+          <select
+            id="metode-select"
+            className="mb-4 p-2 border rounded-md"
+            defaultValue={user.fullname}
+          >
+            <option value={user.id}>{user.fullname}</option>
+          </select>
 
-        <label
-          htmlFor="harga"
-          className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-        >
-          Harga
-        </label>
-        <input
-          type="number"
-          name="harga"
-          id="harga"
-          defaultValue={user.paket?.harga ?? 0}
-          className="mb-4 p-2 border rounded-md"
-          required
-        />
+          <label
+            htmlFor="harga"
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+          >
+            Harga
+          </label>
+          <input
+            type="number"
+            name="harga"
+            id="harga"
+            defaultValue={user.paket?.harga ?? 0}
+            className="mb-4 p-2 border rounded-md"
+            required
+          />
 
-        <label
-          htmlFor="diskon"
-          className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-        >
-          Diskon
-        </label>
-        <input
-          type="number"
-          name="diskon"
-          id="diskon"
-          defaultValue={user.diskon ?? 0}
-          className="mb-4 p-2 border rounded-md"
-          required
-        />
+          <label
+            htmlFor="diskon"
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+          >
+            Diskon
+          </label>
+          <input
+            type="number"
+            name="diskon"
+            id="diskon"
+            defaultValue={user.diskon ?? 0}
+            className="mb-4 p-2 border rounded-md"
+            required
+          />
 
-        <label
-          htmlFor="metode"
-          className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-        >
-          Metode
-        </label>
-        <select
-          name="metode"
-          id="metode-select"
-          className="mb-4 p-2 border rounded-md"
-          defaultValue={"Cash"}
-        >
-          <option value={"Cash"}>Cash</option>
-          <option value={"Transfer BRI"}>Transfer BRI</option>
-          <option value={"Transfer BNI"}>Transfer BNI</option>
-        </select>
+          <label
+            htmlFor="metode"
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+          >
+            Metode
+          </label>
+          <select
+            name="metode"
+            id="metode-select"
+            className="mb-4 p-2 border rounded-md"
+            defaultValue={"Cash"}
+          >
+            <option value={"Cash"}>Cash</option>
+            <option value={"Transfer BRI"}>Transfer BRI</option>
+            <option value={"Transfer BNI"}>Transfer BNI</option>
+          </select>
 
-        <label
-          htmlFor="totalBayar"
-          className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-        >
-          Total Bayar
-        </label>
-        <input
-          type="number"
-          name="totalBayar"
-          id="totalBayar"
-          defaultValue={user.paket?.harga - (user.diskon ?? 0)}
-          className="mb-4 p-2 border rounded-md"
-          required
-        />
+          <label
+            htmlFor="totalBayar"
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+          >
+            Total Bayar
+          </label>
+          <input
+            type="number"
+            name="totalBayar"
+            id="totalBayar"
+            defaultValue={user.paket?.harga - (user.diskon ?? 0)}
+            className="mb-4 p-2 border rounded-md"
+          />
 
-        {/* Submit button */}
-        <Button type="submit">Add to Pembayaran</Button>
-      </Form>
+          {/* Submit button */}
+          <Button type="submit">Add to Pembayaran</Button>
+        </Form>
+      </div>
     </div>
   );
 }

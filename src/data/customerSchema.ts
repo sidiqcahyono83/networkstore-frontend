@@ -35,19 +35,10 @@ export const createCustomerSchema = z.object({
   // Done
   areaId: z.string().optional(),
   // Done
-  OdodpIdp: z.string().optional(),
+  odpId: z.string().optional(),
 
   // Done
   modem: z.string().trim().min(1, { message: "Modem harus dipilih" }),
-
-  // Done
-  Pembayaran: z
-    .array(
-      z.object({
-        id: z.string(),
-      })
-    )
-    .optional(),
 });
 
 export type createCustomerSchema = z.infer<typeof createCustomerSchema>;

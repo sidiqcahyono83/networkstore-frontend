@@ -42,6 +42,7 @@ import {
   loader as updateUserByIdLoader,
   action as updateUserByIdAction,
 } from "./routes/userUpdateById";
+import { CreateUser, loader as createUserLoader } from "./routes/createUser";
 import { Component } from "./routes/acordion";
 
 const router = createBrowserRouter([
@@ -72,12 +73,11 @@ const router = createBrowserRouter([
         element: <Users />,
         loader: userLoader,
       },
-      // {
-      //   path: "/users/:id",
-      //   element: <UserById />,
-      //   loader: UserByIdLoader,
-      //   action: UserByIdAction,
-      // },
+      {
+        path: "/create/users",
+        element: <CreateUser />,
+        loader: createUserLoader,
+      },
       {
         path: "/users/update/:id",
         element: <UpdateUserById />,

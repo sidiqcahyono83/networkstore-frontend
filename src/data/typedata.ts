@@ -23,13 +23,7 @@ export type Paket = {
 };
 
 export type Area = {
-  id: string;
   name: string;
-  createdAt: string;
-  updatedAt: string;
-  user: User[];
-  odp: Odp[];
-  administrator: Administrator[];
 };
 
 export type Odp = {

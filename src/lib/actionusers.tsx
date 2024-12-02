@@ -71,30 +71,81 @@ export async function getUsersById(id: string) {
   }
 }
 
-//Update User By Id
-export async function updateUserById(id: string, updates: User) {
+export async function updateUserById(id: string, updates: string) {
+  const token = localStorage.getItem("token");
+  if (!token) return redirect("/login");
+
+  try {
+    const response = await fetch(
+      `${import.meta.env.VITE_BACKEND_API_URL}/users/${id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(updates),
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Failed to update user");
+    }
+
+    return await response.json();
+  } catch (err) {
+    console.error("Error updating user:", err);
+    throw err;
+  }
+}
+
+export async function createUser(formData: FormData) {
   const token = localStorage.getItem("token");
   if (!token) {
-    return redirect("/login");
+    // Handle redirection differently if using a router or return null if not authorized
+    window.location.href = "/login";
+    return;
   }
 
+  // Convert formData to a plain object for JSON.stringify
+  const data = {
+    username: formData.get("username") as string,
+    fullname: formData.get("fullname") as string,
+    ontName: formData.get("ontName") as string,
+    redamanOlt: formData.get("redamanOlt") as string,
+    address: formData.get("address") as string,
+    phoneNumber: formData.get("phoneNumber") as string,
+    paketId: formData.get("paketId") as string,
+    diskon: parseFloat(formData.get("diskon") as string),
+    odpId: formData.get("odpId") as string,
+    areaId: formData.get("areaId") as string,
+    modemId: formData.get("modemId") as string,
+  };
+
+  // Send the request with JSON-encoded data
   const response = await fetch(
-    `${import.meta.env.VITE_BACKEND_API_URL}/users/${id}`,
+    `${import.meta.env.VITE_BACKEND_API_URL}/users`,
     {
-      method: "PUT", // Gunakan PUT atau PATCH sesuai kebutuhan
+      method: "POST",
       headers: {
-        "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(updates),
+      body: JSON.stringify(data),
     }
   );
 
   if (!response.ok) {
-    throw new Error("Failed to update user");
+    throw new Error("Failed to create user");
   }
-  Object.assign(response, updates);
 
-  const updatedUser = await response.json();
-  return updatedUser;
+  // Assuming `User` is your user type
+  const newUser = (await response.json()) as User;
+
+  // Update users list in your local state or storage if necessary
+  const users = await getAllUsers();
+  const newUsers = [...users, newUser];
+  await set(newUsers);
+
+  return newUser;
 }
