@@ -70,9 +70,9 @@ export const Navbar = () => {
         ODP
       </Link>
       <Link
-        to="/pembayaran"
+        to="/pembayaranBulanIni"
         className={`text-white py-2 px-4 ${
-          isActive("/pembayaran") ? "bg-blue-600 p-3 rounded-lg" : ""
+          isActive("/pembayaranBulanIni") ? "bg-blue-600 p-3 rounded-lg" : ""
         }`}
       >
         Pembayaran
@@ -117,9 +117,9 @@ export const Navbar = () => {
         Belum Bayar
       </Link>
       <Link
-        to="/pembayaran"
+        to="/pembayaranBulanIni"
         className={`text-white py-2 px-4 ${
-          isActive("/pembayaran") ? "bg-blue-600 p-3 rounded-lg" : ""
+          isActive("/pembayaranBulanIni") ? "bg-blue-600 p-3 rounded-lg" : ""
         }`}
       >
         Pembayaran
