@@ -41,7 +41,7 @@ export function Users() {
 
   // Search and Filter logic
   const filteredUsers = users.filter((user) =>
-    user.fullname.toLowerCase().includes(searchTerm.toLowerCase())
+    user.fullname?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   // Pagination logic
@@ -56,8 +56,36 @@ export function Users() {
     setCurrentPage(page);
   };
 
+  const handleDelete = async (userId: string) => {
+    try {
+      const token = localStorage.getItem("token");
+
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_API_URL}/users/${userId}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to delete user");
+      }
+
+      // alert("User deleted successfully");
+      // // Arahkan atau perbarui tampilan
+      redirect("/users"); // Contoh pengalihan ke halaman daftar pengguna
+    } catch (error) {
+      console.error("Error deleting user:", error);
+      alert("Failed to delete user");
+    }
+  };
+
   return (
-    <div className="my-4 mx-4">
+    <div className="mx-auto">
       <div className=" flex items-center justify-center">
         <h2 className="text-xl font-bold leading-none text-gray-900 dark:text-white">
           Customer List
@@ -66,7 +94,12 @@ export function Users() {
 
       {/* Search input */}
       <div className="flex flex-row items-center">
-        <Button color="warning" as={Link} to="/create/users">
+        <Button
+          color="green"
+          className="bg-green-500 hover:bg-green-800 text-white"
+          as={Link}
+          to="/create/users"
+        >
           Add
         </Button>
         <input
@@ -74,7 +107,7 @@ export function Users() {
           placeholder="Search by Full Name"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="mx-2 my-2 p-2 border border-gray-300 rounded-full justify-end"
+          className="mx-2 my-2 p-2 border border-gray-300 rounded-md justify-end"
         />
       </div>
 
@@ -132,6 +165,7 @@ export function Users() {
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
+          {/* <pre>{JSON.stringify(currentUsers, null, 2)}</pre> */}
           {currentUsers.map((user, index) => (
             <tr key={user.id}>
               <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">
@@ -146,13 +180,13 @@ export function Users() {
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
                 {user.paket?.name}
                 <br />
-                {user.paket?.harga}
+                {formatIDR(user.paket?.harga)}
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
                 {formatIDR(user.diskon)}
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
-                {user.Area === null ? user.address : user.Area?.name}
+                {user.area === null ? user.address : user.area?.name}
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
                 {user.ontName}
@@ -163,10 +197,14 @@ export function Users() {
                   href={`/update/users/${user.id}`}
                   className="bg-blue-700"
                 >
-                  Edt
+                  Edit
                 </Button>
-                <Button type="submit" href={`/users/${user.id}`}>
-                  BAYAR
+                <Button
+                  type="button"
+                  onClick={() => handleDelete(user.id)}
+                  className="bg-red-700"
+                >
+                  Delete
                 </Button>
               </td>
             </tr>
@@ -183,7 +221,7 @@ export function Users() {
             <td className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               {formatIDR(
                 currentUsers.reduce(
-                  (total, user) => total + user.paket?.harga,
+                  (total, user) => total + (user.paket?.harga ?? 0),
                   0
                 )
               )}

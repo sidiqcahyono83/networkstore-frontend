@@ -1,36 +1,39 @@
-import { Table, TextInput, Button } from "flowbite-react";
+import { Button, Table, TextInput } from "flowbite-react";
 import { useEffect, useState } from "react";
+import { PPPoE } from "../data/typedata";
 
-const PppActive = () => {
-  const [pppoe, setPppoe] = useState([]);
+export function PppActive() {
+  const [pppoe, setPppoe] = useState<PPPoE[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
   const itemsPerPage = 15;
 
   useEffect(() => {
-    const fetchActivePPPoE = async () => {
+    const fetchNonActivePPPoE = async () => {
       try {
         const response = await fetch(
-          "https://teranet.cahyonomuslimsidiq.com/pppactive"
+          `${import.meta.env.VITE_BACKEND_API_URL}/pppactive`
         );
         const data = await response.json();
         setPppoe(data.data.active_ppp);
       } catch (error) {
-        console.error("Error fetching active PPPoE data:", error);
+        console.error("Error fetching non-active PPPoE data:", error);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchActivePPPoE();
+    fetchNonActivePPPoE();
   }, []);
 
   const filteredData = pppoe.filter((user) =>
     user.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+  const totalPages = filteredData.length
+    ? Math.ceil(filteredData.length / itemsPerPage)
+    : 1;
 
   const currentData = filteredData.slice(
     (currentPage - 1) * itemsPerPage,
@@ -46,10 +49,13 @@ const PppActive = () => {
   }
 
   return (
-    <div className="max-w-screen-xlg mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div className="max-w-screen-2xl mx-auto px-4 sm:px-4 lg:px-4 py-4">
       <div className="flex gap-4 mb-4">
         {/* Baris pertama: Input pencarian dan info jumlah pengguna */}
         <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
+          <p className="text-lg font-semibold">
+            Pengguna Non-Aktif: {filteredData.length}
+          </p>
           <TextInput
             id="search"
             type="text"
@@ -58,47 +64,33 @@ const PppActive = () => {
             onChange={(e) => setSearchTerm(e.target.value)}
             className="w-96"
           />
-          <p className="text-lg font-semibold">
-            Total Pengguna Aktif: {filteredData.length}
-          </p>
-          <div className="flex flex-col sm:flex-row justify-center sm:justify-between items-center gap-4 flex-wrap">
+          <div className="flex justify-center sm:justify-between items-center gap-4 flex-wrap">
             <Button
               color="light"
-              href="/pppoesecret"
-              className="w-full sm:w-auto bg-blue-700"
-            >
-              PPPoE Secret
-            </Button>
-            <Button
-              color="light"
-              href="/nonactive"
-              className="w-full sm:w-auto bg-red-700"
+              onClick={() => (window.location.href = "/nonactive")}
+              className="w-full sm:w-auto bg-red-500 text-white hover:bg-red-600"
             >
               PPPoE Nonactive
             </Button>
             <Button
               color="light"
-              href="/active"
-              className="w-full sm:w-auto bg-green-600"
+              onClick={() => (window.location.href = "/pppoe")}
+              className="w-full sm:w-auto bg-green-600 text-slate-50 hover:bg-green-700"
             >
               Back to PPPoE
             </Button>
           </div>
         </div>
-
-        {/* Baris kedua: Tombol-tombol tindakan */}
       </div>
       <div className="overflow-x-auto mt-6">
         <Table striped>
           <Table.Head>
             <Table.HeadCell>No</Table.HeadCell>
-            <Table.HeadCell>Nama Pengguna</Table.HeadCell>
+            <Table.HeadCell>Username</Table.HeadCell>
             <Table.HeadCell>Service</Table.HeadCell>
-            <Table.HeadCell>Caller ID</Table.HeadCell>
-            <Table.HeadCell>Alamat IP</Table.HeadCell>
+            <Table.HeadCell>Address</Table.HeadCell>
             <Table.HeadCell>Uptime</Table.HeadCell>
-            <Table.HeadCell>Session ID</Table.HeadCell>
-            <Table.HeadCell>Disabled</Table.HeadCell>
+            <Table.HeadCell>Caller_Id</Table.HeadCell>
           </Table.Head>
           <Table.Body className="divide-y">
             {currentData.map((user, index) => (
@@ -111,15 +103,9 @@ const PppActive = () => {
                 </Table.Cell>
                 <Table.Cell>{user.name}</Table.Cell>
                 <Table.Cell>{user.service}</Table.Cell>
-                <Table.Cell>{user["caller-id"]}</Table.Cell>
                 <Table.Cell>{user.address}</Table.Cell>
                 <Table.Cell>{user.uptime}</Table.Cell>
-                <Table.Cell>{user["session-id"]}</Table.Cell>
-                <Table.Cell
-                  className={user.disabled === "true" ? "text-red-500" : ""}
-                >
-                  {user.disabled === "true" ? "Yes" : "No"}
-                </Table.Cell>
+                <Table.Cell>{user["caller-id"]}</Table.Cell>
               </Table.Row>
             ))}
           </Table.Body>
@@ -143,6 +129,4 @@ const PppActive = () => {
       </div>
     </div>
   );
-};
-
-export default PppActive;
+}

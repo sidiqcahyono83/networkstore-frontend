@@ -24,9 +24,9 @@ export async function getAllUsers() {
       return { error: "Failed to fetch users, server error", users: [] };
     }
 
-    const userResponse: User = await response.json();
+    const users: User = await response.json();
 
-    return { users: userResponse };
+    return { users: users };
   } catch (err) {
     // Handle network errors or unexpected issues
     return { error: "Failed to fetch users, network error", users: [] };
@@ -99,53 +99,53 @@ export async function updateUserById(id: string, updates: string) {
   }
 }
 
-export async function createUser(formData: FormData) {
-  const token = localStorage.getItem("token");
-  if (!token) {
-    // Handle redirection differently if using a router or return null if not authorized
-    window.location.href = "/login";
-    return;
-  }
+// export async function createUser(formData: FormData) {
+//   const token = localStorage.getItem("token");
+//   if (!token) {
+//     // Handle redirection differently if using a router or return null if not authorized
+//     window.location.href = "/login";
+//     return;
+//   }
 
-  // Convert formData to a plain object for JSON.stringify
-  const data = {
-    username: formData.get("username") as string,
-    fullname: formData.get("fullname") as string,
-    ontName: formData.get("ontName") as string,
-    redamanOlt: formData.get("redamanOlt") as string,
-    address: formData.get("address") as string,
-    phoneNumber: formData.get("phoneNumber") as string,
-    paketId: formData.get("paketId") as string,
-    diskon: parseFloat(formData.get("diskon") as string),
-    odpId: formData.get("odpId") as string,
-    areaId: formData.get("areaId") as string,
-    modemId: formData.get("modemId") as string,
-  };
+//   // Convert formData to a plain object for JSON.stringify
+//   const data = {
+//     username: formData.get("username") as string,
+//     fullname: formData.get("fullname") as string,
+//     ontName: formData.get("ontName") as string,
+//     redamanOlt: formData.get("redamanOlt") as string,
+//     address: formData.get("address") as string,
+//     phoneNumber: formData.get("phoneNumber") as string,
+//     paketId: formData.get("paketId") as string,
+//     diskon: parseFloat(formData.get("diskon") as string),
+//     odpId: formData.get("odpId") as string,
+//     areaId: formData.get("areaId") as string,
+//     modemId: formData.get("modemId") as string,
+//   };
 
-  // Send the request with JSON-encoded data
-  const response = await fetch(
-    `${import.meta.env.VITE_BACKEND_API_URL}/users`,
-    {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    }
-  );
+//   // Send the request with JSON-encoded data
+//   const response = await fetch(
+//     `${import.meta.env.VITE_BACKEND_API_URL}/users`,
+//     {
+//       method: "POST",
+//       headers: {
+//         Authorization: `Bearer ${token}`,
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify(data),
+//     }
+//   );
 
-  if (!response.ok) {
-    throw new Error("Failed to create user");
-  }
+//   if (!response.ok) {
+//     throw new Error("Failed to create user");
+//   }
 
-  // Assuming `User` is your user type
-  const newUser = (await response.json()) as User;
+//   // Assuming `User` is your user type
+//   const newUser = (await response.json()) as User;
 
-  // Update users list in your local state or storage if necessary
-  const users = await getAllUsers();
-  const newUsers = [...users, newUser];
-  await set(newUsers);
+//   // Update users list in your local state or storage if necessary
+//   const users = await getAllUsers();
+//   const newUsers = [...users, newUser];
+//   await set(newUsers);
 
-  return newUser;
-}
+//   return newUser;
+// }

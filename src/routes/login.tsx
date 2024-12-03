@@ -13,7 +13,7 @@ export const Login = () => {
 
     try {
       const response = await fetch(
-        "https://teranet.cahyonomuslimsidiq.com/auth/login",
+        `${import.meta.env.VITE_BACKEND_API_URL}/auth/login`,
         {
           method: "POST",
           headers: {
@@ -31,7 +31,7 @@ export const Login = () => {
         localStorage.setItem("level", data.level); // Pastikan adminId ada dalam respons
         localStorage.setItem("username", username);
 
-        navigate("/adminDashboard");
+        navigate("/dashboard");
       } else {
         setError(data.message);
       }

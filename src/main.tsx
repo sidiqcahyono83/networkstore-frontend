@@ -7,6 +7,7 @@ import { Layout } from "./routes/Layout";
 import { App, loader as appLoader } from "./routes/App";
 
 // import { Component, loader as componentLoader } from "./routes/acordion";
+// import { Component } from "./routes/acordion";
 import { Register, action as registerAction } from "./routes/register";
 import { Users, loader as userLoader } from "./routes/users";
 import { Login } from "./routes/login";
@@ -26,8 +27,6 @@ import {
   usersBelumbayarLoader,
 } from "./routes/usersbelumbayar";
 
-import PppActive from "./routes/pppoe";
-import PppoeNonactive from "./routes/pppNonactive";
 import {
   PembayaranByBulanIni,
   loader as pembayaranBulanIniLoader,
@@ -37,13 +36,16 @@ import {
   loader as pembayaranByIdLoader,
   action as PembayaranByIdAction,
 } from "./routes/pembayaranById";
+
 import {
   UpdateUserById,
-  loader as updateUserByIdLoader,
-  action as updateUserByIdAction,
+  loader as updateLoaderUserById,
+  action as updateActionUserById,
 } from "./routes/userUpdateById";
 import { CreateUser, loader as createUserLoader } from "./routes/createUser";
-import { Component } from "./routes/acordion";
+import { OdpList, loader as odpLoader } from "./routes/odpList";
+import { PppActive } from "./routes/pppoe";
+import { PppNonActive } from "./routes/pppNonactive";
 
 const router = createBrowserRouter([
   {
@@ -61,11 +63,11 @@ const router = createBrowserRouter([
         action: registerAction,
       },
       {
-        path: "/login",
+        path: "/auth/login",
         element: <Login />,
       },
       {
-        path: "/adminDashboard",
+        path: "/dashboard",
         element: <AdminDashboard />,
       },
       {
@@ -79,10 +81,10 @@ const router = createBrowserRouter([
         loader: createUserLoader,
       },
       {
-        path: "/users/update/:id",
+        path: "/update/users/:id",
         element: <UpdateUserById />,
-        loader: updateUserByIdLoader,
-        action: updateUserByIdAction,
+        loader: updateLoaderUserById,
+        action: updateActionUserById,
       },
       {
         path: "/pembayaran",
@@ -112,10 +114,10 @@ const router = createBrowserRouter([
       },
       {
         path: "/nonactive",
-        element: <PppoeNonactive />,
+        element: <PppNonActive />,
       },
       {
-        path: "/UsersBelumBayar",
+        path: "/belum-bayar",
         element: <UsersBelumBayar />,
         loader: usersBelumbayarLoader,
       },
@@ -125,16 +127,11 @@ const router = createBrowserRouter([
         loader: pembayaranByUserIdLoader,
         action: PembayaranByUserIdAction,
       },
+      {},
       {
-        path: "/update/users/:id",
-        element: <UpdateUserById />,
-        loader: updateUserByIdLoader,
-        action: updateUserByIdAction,
-      },
-      {
-        path: "/component",
-        element: <Component />,
-        // loader: componentLoader,
+        path: "/odp",
+        element: <OdpList />,
+        loader: odpLoader,
       },
     ],
   },

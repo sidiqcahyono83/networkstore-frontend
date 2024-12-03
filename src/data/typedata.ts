@@ -1,16 +1,25 @@
 export type User = {
   id: string;
   username: string;
-  fullname: string;
+  fullname?: string;
   ontName?: string;
   redamanOlt?: string;
   address?: string;
   phoneNumber?: string;
-  paket?: Paket;
+  paket: Paket;
+  paketId: string;
   diskon: number;
+  ppn?: number;
   Area?: Area;
-  Odp?: Odp;
-  modem?: string;
+  areaId?: string;
+  odp?: Odp;
+  odpId?: string;
+  modemId?: string;
+  modem?: Modem;
+  admin?: Administrator[];
+  pembayaran?: Pembayaran[];
+  createdAt: string;
+  updatedAt: string;
 };
 
 export type Paket = {
@@ -19,31 +28,39 @@ export type Paket = {
   harga: number;
   createdAt: string;
   updatedAt: string;
-  users: User[];
+  users?: User[];
 };
 
 export type Area = {
+  id: string;
   name: string;
+  createdAt: string;
+  updatedAt: string;
+  user?: User[];
+  odp?: Odp[];
+  administrator?: Administrator[];
 };
 
 export type Odp = {
   id: string;
   name: string;
-  rasio: string;
-  pasiveSpliter: string;
+  rasio?: string;
+  pasiveSpliter?: string;
   createdAt: string;
   updatedAt: string;
-  user: User[];
-  area: Area;
+  user?: User[];
+  area?: Area;
+  areaId?: string;
 };
 
 export type Pembayaran = {
   id: string;
+  userId: string;
   user: User;
+  adminId: string;
   admin: Administrator;
   periode: string;
-  ppn: number;
-  metode: string;
+  metode?: string;
   totalBayar: number;
   createdAt: string;
   updatedAt: string;
@@ -52,28 +69,30 @@ export type Pembayaran = {
 export type Administrator = {
   id: string;
   username: string;
-  fullName: string;
-  password: Password;
+  fullName?: string;
+  password?: Password;
   level: string;
   createdAt: string;
   updatedAt: string;
-  Pembayaran: Pembayaran[];
-  Modem: Modem[];
-  Area: Area[];
+  Pembayaran?: Pembayaran[];
+  Modem?: Modem[];
+  Area?: Area[];
+  users?: User[];
 };
 
 export type Password = {
   id: string;
   hash: string;
-  administrator: Administrator;
+  administrator?: Administrator;
+  administratorId: string;
 };
 
 export type Olt = {
   id: string;
-  name: string;
+  name?: string;
   username: string;
   password: string;
-  olturl: string;
+  olturl?: string;
   createdAt: string;
   updatedAt: string;
 };
@@ -82,17 +101,27 @@ export type Modem = {
   id: string;
   name: string;
   serial: string;
-  username: string;
-  onOder: string;
   createdAt: string;
   updatedAt: string;
+  orderBy?: Administrator[];
+  user?: User[];
 };
 
-export type Pppoe = {
-  id: string;
+export type PPPoE = {
+  ".id": string;
   name: string;
-  serservice: string;
+  service: string;
+  "caller-id": string;
   address: string;
   uptime: string;
-  disabled: boolean;
+  encoding: string;
+  "session-id": string;
+  "limit-bytes-in": string;
+  "limit-bytes-out": string;
+  radius: string;
+  disabled: string;
+  profile: string;
+  password: string;
+  "last-logged-out": string;
+  "last-disconnect-reason": string;
 };

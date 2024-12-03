@@ -1,9 +1,9 @@
 import { useLoaderData, json, redirect } from "react-router-dom";
 import type { User } from "../data/typedata"; // Pastikan tipe User ada di typedata
-import { Table, Pagination } from "flowbite-react";
+import { Table, Pagination, Button } from "flowbite-react";
 import { useState } from "react";
 import { currentMonth } from "../lib/formatBulanIdn";
-import { formatIDR } from "../lib/formatCurency";
+// import { formatIDR } from "../lib/formatCurency";
 
 type Pembayaran = {
   message: string;
@@ -49,13 +49,13 @@ export function UsersBelumBayar() {
   const usersPerPage = 15;
 
   // Total pengguna yang belum membayar
-  const totalBelumBayar = userBelumbayar.data.reduce((acc, user) => {
-    return acc + user.paket.harga;
-  }, 0);
+  // const totalBelumBayar = userBelumbayar.data.reduce((acc, user) => {
+  //   return acc + (user.paket?.harga || 0);
+  // }, 0);
 
   // Filter users berdasarkan search term
   const filteredUsers = userBelumbayar.data.filter((user) =>
-    user.fullname.toLowerCase().includes(searchTerm.toLowerCase())
+    user.fullname?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   // Mengatur data untuk paginasi
@@ -68,8 +68,8 @@ export function UsersBelumBayar() {
 
   return (
     <div className="p-2 sm:p-4 lg:p-4">
-      <h1 className="text-xl font-bold mb-4 text-center sm:text-left">
-        Daftar Pengguna Belum Bayar
+      <h1 className="text-xl font-bold mb-4 text-center sm:text-center">
+        Daftar Pengguna Belum Bayar : <strong>{filteredUsers.length}</strong>
       </h1>
 
       {/* Form pencarian */}
@@ -79,34 +79,31 @@ export function UsersBelumBayar() {
           placeholder="Cari berdasarkan nama lengkap..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="border rounded px-4 py-2 w-full sm:w-3/4 lg:w-1/2"
+          className="mb-4 mt-4 p-2 border rounded-md w-full"
         />
       </div>
 
       {/* Menampilkan jumlah total pengguna dan total tagihan */}
-      <div className="mb-4 text-center sm:text-left">
-        <p>
-          Total Pengguna yang Belum Bayar:{" "}
-          <strong>{filteredUsers.length}</strong>
-        </p>
-        <p>
+      {/* <div className="mb-4 text-center sm:text-left">
+          <p>
+            Total Pengguna yang Belum Bayar:{" "}
+            <strong>{filteredUsers.length}</strong>
+          </p> */}
+      {/* <p>
           Total Tagihan yang Belum Dibayar:{" "}
           <strong>{formatIDR(totalBelumBayar)}</strong>
-        </p>
-      </div>
+        </p> */}
+      {/* </div> */}
 
       {/* Tabel menggunakan Flowbite */}
       <div className="overflow-x-auto">
-        <Table striped={true} className="min-w-full">
+        <Table striped={true} className="min-w-min">
           <Table.Head>
             <Table.HeadCell>No</Table.HeadCell>
             <Table.HeadCell>Full Name</Table.HeadCell>
             <Table.HeadCell>Paket</Table.HeadCell>
             <Table.HeadCell>Area</Table.HeadCell>
             <Table.HeadCell>Bayar</Table.HeadCell>
-            <Table.HeadCell>
-              <span className="sr-only">Bayar</span>
-            </Table.HeadCell>
           </Table.Head>
           <Table.Body className="divide-y">
             {currentUsers.map((user: User, index: number) => (
@@ -117,19 +114,15 @@ export function UsersBelumBayar() {
                 <Table.Cell>{indexOfFirstUser + index + 1}</Table.Cell>
                 <Table.Cell>{user.fullname}</Table.Cell>
                 <Table.Cell>
-                  {user.paket.name}
-                  <br />
-                  {user.paket.harga}
+                  {user.paket?.name}-{user.paket?.harga}
                 </Table.Cell>
-                <Table.Cell>{user.Area?.name}</Table.Cell>
-
                 <Table.Cell>
-                  <a
-                    href={`/users/${user.id}`}
-                    className="font-medium text-blue-600 hover:underline dark:text-blue-500"
-                  >
+                  {user.area === null ? user.address : user.area?.name}
+                </Table.Cell>
+                <Table.Cell>
+                  <Button color="success" href={`/users/${user.id}`}>
                     Bayar
-                  </a>
+                  </Button>
                 </Table.Cell>
               </Table.Row>
             ))}

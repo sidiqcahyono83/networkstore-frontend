@@ -1,20 +1,34 @@
 import { useEffect, useState } from "react";
-import { getAllUsers } from "../lib/actionusers";
 import { Card } from "flowbite-react";
 
-// Define the type for admin data
+// Define the type for admin data and user data
 type AdminData = {
   id: string;
   username: string;
   fullName: string | null;
   level: string;
+  Area: [];
   createdAt: string;
   updatedAt: string;
 };
 
+type UserData = {
+  id: string;
+  username: string;
+  fullname: string;
+  address: string;
+  phoneNumber: string;
+  area: {
+    id: string;
+    name: string;
+    createdAt: string;
+    updatedAt: string;
+  };
+};
+
 export const AdminDashboard = () => {
-  const [adminData, setAdminData] = useState<AdminData | null>(null); // Apply the type here
-  const [userCount, setUserCount] = useState(0);
+  const [adminData, setAdminData] = useState<AdminData | null>(null);
+  const [userCount, setUserCount] = useState<UserData[]>([]);
   const [error, setError] = useState("");
 
   const token = localStorage.getItem("token");
@@ -26,7 +40,7 @@ export const AdminDashboard = () => {
     const fetchAdminData = async () => {
       try {
         const response = await fetch(
-          "https://teranet.cahyonomuslimsidiq.com/auth/me",
+          `${import.meta.env.VITE_BACKEND_API_URL}/auth/me`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -40,12 +54,16 @@ export const AdminDashboard = () => {
         }
 
         const data = await response.json();
-        setAdminData(data.data); // Update to access data under "data" in the response
+        if (!data) {
+          setError("Login failed. Please try again.");
+        }
 
-        // Set adminId and level in local storage
-        const { id, level } = data.data; // Destructure to get id and level
+        setAdminData(data.data);
+
+        const { id, level, username } = data.data;
         localStorage.setItem("adminId", id);
         localStorage.setItem("level", level);
+        localStorage.setItem("username", username);
       } catch (err) {
         setError("Login failed. Please try again.");
       }
@@ -55,51 +73,84 @@ export const AdminDashboard = () => {
   }, [token]);
 
   useEffect(() => {
-    const fetchUsers = async () => {
-      const { users, error } = await getAllUsers();
-      if (error) {
-        setError(error);
-        return;
-      }
+    if (!token) return;
 
-      if (users.length > 0) {
-        setUserCount(users.length);
+    const fetchUsers = async () => {
+      const username = localStorage.getItem("username");
+      try {
+        const response = await fetch(
+          `${import.meta.env.VITE_BACKEND_API_URL}/users/users/${username}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || "Failed to fetch users data");
+        }
+
+        const usersData = await response.json();
+        setUserCount(usersData.user); // Assuming usersData.user is an array
+      } catch (err) {
+        setError("Failed to fetch users data.");
       }
     };
 
     fetchUsers();
-  }, []);
+  }, [token]);
+
+  // Group users by area and count them
+  const groupedAreas = userCount.reduce((acc: Record<string, number>, user) => {
+    const areaName = user.area.name;
+    acc[areaName] = (acc[areaName] || 0) + 1;
+    return acc;
+  }, {});
 
   if (error) {
-    return <div>Error: {error}</div>;
+    return <div className="text-red-600 text-center">{error}</div>;
   }
 
   return (
-    <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">Admin Dashboard</h1>
+    <div className="p-4  mx-auto max-w-full">
+      <h1 className="text-2xl sm:text-3xl font-bold mb-4 text-center">
+        Admin Dashboard
+      </h1>
 
       {adminData && (
-        <Card className="max-w-md mx-auto mb-4">
-          <h5 className="text-lg font-bold">Admin Information</h5>
-          <p>Username: {adminData.username || "Not available"}</p>
-          <p>Level: {adminData.level || "Not available"}</p>
-          <p>Created At: {new Date(adminData.createdAt).toLocaleString()}</p>
-          <p>Updated At: {new Date(adminData.updatedAt).toLocaleString()}</p>
+        <Card className="max-w-full sm:max-w-lg mx-auto mb-4 p-4 sm:p-6 shadow-sm bg-transparent hover:bg-blue-300">
+          <p className="text-center text-2xl font-bold text-blue-700 hover:text-white">
+            {adminData.fullName || "Not available"}
+          </p>
+          <p>Username : {adminData.username || "Not available"}</p>
+          <p>Level : {adminData.level || "Not available"}</p>
         </Card>
       )}
 
-      <Card className="max-w-md mx-auto mb-4">
-        <h5 className="text-lg font-bold">User Statistics</h5>
-        <p>Total Users: {userCount}</p>
-      </Card>
-
-      <h2 className="text-xl font-bold mt-6">Areas</h2>
-      {/* Placeholder example if area data is added in the future */}
-      <ul>
-        <li>Area 1</li>
-        <li>Area 2</li>
-        {/* Modify or add area data as needed */}
-      </ul>
+      <h5 className="text-lg font-bold mb-4 text-center">Area Information</h5>
+      <div
+        className={`grid gap-4 ${
+          Object.keys(groupedAreas).length < 6 ? "justify-center" : ""
+        } grid-cols-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6`}
+      >
+        {Object.keys(groupedAreas).length > 0 ? (
+          Object.entries(groupedAreas).map(([areaName, count]) => (
+            <Card
+              key={areaName}
+              className="p-4 hover:bg-blue-700 hover:text-white"
+            >
+              <p className="text-cyan-950 font-semibold text-lg text-center">
+                {areaName}
+              </p>
+              <p className="text-center">Total Customers: {count}</p>
+            </Card>
+          ))
+        ) : (
+          <p className="col-span-full text-center">No user data available.</p>
+        )}
+      </div>
     </div>
   );
 };
