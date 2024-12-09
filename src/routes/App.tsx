@@ -10,9 +10,10 @@ export async function loader() {
     );
     const responseJSON = await response.json();
 
-    const profiles: Paket[] = responseJSON.paket;
+    const profiles: Paket[] = responseJSON.data;
+    // const profile = profiles;
 
-    // console.log(products);
+    // console.log(profile);
     return { profiles };
   } catch (error) {
     return { profiles: [] };
@@ -52,6 +53,8 @@ export function App() {
           <img src="/gr3.png" alt="gr3" />
         </Carousel>
       </div>
+
+      {/* <pre>{JSON.stringify(profiles)}</pre> */}
 
       {/* Card Section */}
       <div className="mx-auto grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 justify-center gap-2 m-2">

@@ -79,7 +79,7 @@ export const AdminDashboard = () => {
       const username = localStorage.getItem("username");
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_BACKEND_API_URL}/users/users/${username}`,
+          `${import.meta.env.VITE_BACKEND_API_URL}/users/${username}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
