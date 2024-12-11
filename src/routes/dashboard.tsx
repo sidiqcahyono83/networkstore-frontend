@@ -28,7 +28,7 @@ type UserData = {
 
 export const AdminDashboard = () => {
   const [adminData, setAdminData] = useState<AdminData | null>(null);
-  const [userCount, setUserCount] = useState<UserData[]>([]);
+  const [userCount, setUserCount] = useState<UserData[]>([]); // Initialize as an empty array
   const [error, setError] = useState("");
 
   const token = localStorage.getItem("token");
@@ -56,13 +56,13 @@ export const AdminDashboard = () => {
         const data = await response.json();
         if (!data) {
           setError("Login failed. Please try again.");
+          return;
         }
 
         setAdminData(data.data);
 
-        const { id, level, username } = data.data;
+        const { id, username } = data.data;
         localStorage.setItem("adminId", id);
-        localStorage.setItem("level", level);
         localStorage.setItem("username", username);
       } catch (err) {
         setError("Login failed. Please try again.");
@@ -93,7 +93,7 @@ export const AdminDashboard = () => {
         }
 
         const usersData = await response.json();
-        setUserCount(usersData.user); // Assuming usersData.user is an array
+        setUserCount(usersData.user || []); // Ensure usersData.user is an array
       } catch (err) {
         setError("Failed to fetch users data.");
       }
@@ -103,53 +103,57 @@ export const AdminDashboard = () => {
   }, [token]);
 
   // Group users by area and count them
-  const groupedAreas = userCount.reduce((acc: Record<string, number>, user) => {
-    const areaName = user.area.name;
-    acc[areaName] = (acc[areaName] || 0) + 1;
-    return acc;
-  }, {});
+  const groupedAreas = userCount?.length
+    ? userCount.reduce((acc: Record<string, number>, user) => {
+        const areaName = user.area.name;
+        acc[areaName] = (acc[areaName] || 0) + 1;
+        return acc;
+      }, {})
+    : {}; // Handle cases where userCount is empty
 
   if (error) {
     return <div className="text-red-600 text-center">{error}</div>;
   }
 
   return (
-    <div className="p-4  mx-auto max-w-full">
-      <h1 className="text-2xl sm:text-3xl font-bold mb-4 text-center">
-        Admin Dashboard
-      </h1>
+    <div>
+      <div className="p-4  mx-auto max-w-full">
+        <h1 className="text-2xl sm:text-3xl font-bold mb-4 text-center">
+          Admin Dashboard
+        </h1>
 
-      {adminData && (
-        <Card className="max-w-full sm:max-w-lg mx-auto mb-4 p-4 sm:p-6 shadow-sm bg-transparent hover:bg-blue-300">
-          <p className="text-center text-2xl font-bold text-blue-700 hover:text-white">
-            {adminData.fullName || "Not available"}
-          </p>
-          <p>Username : {adminData.username || "Not available"}</p>
-          <p>Level : {adminData.level || "Not available"}</p>
-        </Card>
-      )}
-
-      <h5 className="text-lg font-bold mb-4 text-center">Area Information</h5>
-      <div
-        className={`grid gap-4 ${
-          Object.keys(groupedAreas).length < 6 ? "justify-center" : ""
-        } grid-cols-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6`}
-      >
-        {Object.keys(groupedAreas).length > 0 ? (
-          Object.entries(groupedAreas).map(([areaName, count]) => (
-            <Card
-              key={areaName}
-              className="p-4 hover:bg-blue-700 hover:text-white"
-            >
-              <p className="text-cyan-950 font-semibold text-lg text-center">
-                {areaName}
-              </p>
-              <p className="text-center">Total Customers: {count}</p>
-            </Card>
-          ))
-        ) : (
-          <p className="col-span-full text-center">No user data available.</p>
+        {adminData && (
+          <Card className="max-w-full sm:max-w-lg mx-auto mb-4 p-4 sm:p-6 shadow-sm bg-transparent hover:bg-blue-300">
+            <p className="text-center text-2xl font-bold text-blue-700 hover:text-white">
+              {adminData.fullName || "Not available"}
+            </p>
+            <p>Username : {adminData.username || "Not available"}</p>
+            <p>Level : {adminData.level || "Not available"}</p>
+          </Card>
         )}
+
+        <h5 className="text-lg font-bold mb-4 text-center">Area Information</h5>
+        <div
+          className={`grid gap-4 ${
+            Object.keys(groupedAreas).length < 6 ? "justify-center" : ""
+          } grid-cols-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6`}
+        >
+          {Object.keys(groupedAreas).length > 0 ? (
+            Object.entries(groupedAreas).map(([areaName, count]) => (
+              <Card
+                key={areaName}
+                className="p-4 hover:bg-blue-700 hover:text-white"
+              >
+                <p className="text-cyan-950 font-semibold text-lg text-center">
+                  {areaName}
+                </p>
+                <p className="text-center">Total Customers: {count}</p>
+              </Card>
+            ))
+          ) : (
+            <p className="col-span-full text-center">No user data available.</p>
+          )}
+        </div>
       </div>
     </div>
   );

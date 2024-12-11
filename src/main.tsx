@@ -6,6 +6,7 @@ import "./index.css";
 import { Layout } from "./routes/Layout";
 import { App, loader as appLoader } from "./routes/App";
 
+// import { Component, loader as componentLoader } from "./routes/acordion";
 // import { Component } from "./routes/acordion";
 import { Register, action as registerAction } from "./routes/register";
 import { Users, loader as userLoader } from "./routes/users";
@@ -36,13 +37,12 @@ import {
   action as PembayaranByIdAction,
 } from "./routes/pembayaranById";
 
-import { CreateUser, loader as createUserLoader } from "./routes/createUser";
 import {
   UpdateUserById,
   loader as updateLoaderUserById,
   action as updateActionUserById,
 } from "./routes/userUpdateById";
-import { AreaList, loader as areaLoader } from "./routes/area";
+import { CreateUser, loader as createUserLoader } from "./routes/createUser";
 import { OdpList, loader as odpLoader } from "./routes/odpList";
 import { PppActive } from "./routes/pppoe";
 import { PppNonActive } from "./routes/pppNonactive";
@@ -127,11 +127,7 @@ const router = createBrowserRouter([
         loader: pembayaranByUserIdLoader,
         action: PembayaranByUserIdAction,
       },
-      {
-        path: "/area",
-        element: <AreaList />,
-        loader: areaLoader,
-      },
+      {},
       {
         path: "/odp",
         element: <OdpList />,
