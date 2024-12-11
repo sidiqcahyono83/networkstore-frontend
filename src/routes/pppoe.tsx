@@ -13,7 +13,7 @@ export function PppActive() {
     const fetchNonActivePPPoE = async () => {
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_BACKEND_API_URL}/pppactive`
+          `${import.meta.env.VITE_BACKEND_API_URL}/pppactive.php`
         );
         const data = await response.json();
         setPppoe(data.data.active_ppp);
