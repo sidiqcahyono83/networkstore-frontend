@@ -13,10 +13,10 @@ export function PppNonActive() {
     const fetchNonActivePPPoE = async () => {
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_BACKEND_API_URL}/nonactive`
+          `${import.meta.env.VITE_BACKEND_API_URL}/ppp/nonactive`
         );
         const data = await response.json();
-        setPppoe(data.data.inactive_ppp);
+        setPppoe(data.inactive_ppp);
       } catch (error) {
         console.error("Error fetching non-active PPPoE data:", error);
       } finally {
