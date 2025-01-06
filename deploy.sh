@@ -6,6 +6,6 @@ bun run build
 
 
 echo "Deoloying files to server...."
-scp -r dist/* root@192.168.4.3:/var/www/192.168.4.3/
+scp -r dist/* root@192.168.4.9:/var/www/192.168.4.3/
 
 echo "Done!"
